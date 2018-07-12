@@ -1,0 +1,76 @@
+<!-- View postura -->
+<div ng-controller="MatchesCtrl" ng-init="init_view()" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding nomargin container_posture_match">
+	<div id="posture_match_posture" class="row nomargin nopadding">
+		<div class="row nomargin nopadding tittle_gral">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<h2>Postura</h2>
+				<!-- <pre>{{posture_user | json}}</pre> -->
+			</div>
+		</div>
+
+		<div class="row nomargin nopadding container_my_posture_match">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<div class="row nopadding margin_tb_20">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center border_right_gray_simbol nopadding">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Quiere</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">
+						{{posture_user.quiero | number:2}} {{posture_user.quiero_moneda_simbolo}}
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center nopadding">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Tiene</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">{{posture_user.tengo | number:2}} {{posture_user.tengo_moneda_simbolo}}</div>
+					</div>
+				</div>
+				<div class="row nopadding margin_tb_20">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center border_right_gray_simbol nopadding">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Tasa de cambio</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">{{posture_user.tasacambio | number:2}} {{iwant_opt_s}}/{{ihave_opt_s}}</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center nopadding">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Hasta el</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">
+						{{posture_user.fechahasta | date:'dd/MM/yyyy'}}</div>
+					</div>
+				</div>
+				<div class="row nopadding margin_tb_20" ng-if="posture_user.fraccionar == 1">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding text-center"><label class="font_weight_100">Fraccionada</label></div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center font_weight_100 margin_tb_20 text_bancos_post_mantch">Bancos</label>
+				<table class="table table-responsive table_banks"> 
+     				<tr>
+     					<!-- Bancos en Bolivares -->
+     					<td class="border_right_banks" style="text-align: center; width: auto;">
+         					BsF
+						</td>
+     					<!-- Bancos en USD -->
+     					<td style="text-align: center; width: auto;">USD
+     					</td>
+     				</tr>
+     				<tr>
+     					<!-- Bancos en Bolivares -->
+     					<td class="border_right_banks">
+						    <ul class="nav_tag_bank">
+						        <li ng-repeat="item in posture_user.bancos" ng-if="item.idmonedas == 1 " id="item{{item.idusers_bancos_pais_monedas}}" class="tag_bank_li">
+						            <a class="tag_bank_a">{{item.nombre_banco}}</a>
+						            <!-- <a href="#" ng-click="deleteBank($index,0)" class="delete_bank">x</a> -->
+						        </li>
+					    	</ul>
+     					</td>
+     					<!-- Bancos en USD -->
+     					<td class="border_left_banks">
+						    <ul class="nav_tag_bank">
+						        <li ng-repeat="item in posture_user.bancos" ng-if="item.idmonedas == 2 " id="item{{item.idusers_bancos_pais_monedas}}" class="tag_bank_li">
+						            <a class="tag_bank_a">{{item.nombre_banco}}</a>
+						            <!-- <a href="#" ng-click="deleteBank($index,0)" class="delete_bank">x</a> -->
+						        </li>
+					    	</ul>
+     					</td>
+ 					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

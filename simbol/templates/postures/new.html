@@ -1,0 +1,337 @@
+<!-- Nueva postura -->
+<div ng-controller="PostureCtrl" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding nomargin container_index_posture">
+	<!-- Publicar postura -->
+	<div class="flash-m hidden" flash-message="5000">HOLA</div>
+	<!-- <div flash-message="10000">FLASH</div> -->
+	<div class="row nomargin nopadding index_posture_new_posture_tittle">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<h2>Nueva postura</h2>
+		</div>
+	</div>
+	<div class="row nomargin nopadding index_posture_new_posture">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding container_posture_new_posture">
+  			<form novalidate class="css-form form-new-posture text-center" name="form_new_posture">
+				<div class="row nomargin nopadding">
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 container_new_posture_i_want">
+						<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Quiero</label> 
+							<!-- <input type="number" ng-model="posture.iwant" required /> -->
+							<select class="form-control input_simbol font_bold" ng-change="change_coin_have_rate()" ng-model="posture.iwant_id">
+								<option ng-selected="posture.iwant_id == item.id" ng-repeat="item in monedas" ng-value="item.idmonedas">{{item.admin_simbolo}}</option>
+						    </select>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 container_new_posture_i_have">
+						<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Monto</label>
+						<div id="ihave_coin_text" class="col-lg-2 col-md-2 col-sm-2 col-xs-4 nopadding">
+						<b>{{iwant_opt}}</b>
+						</div>
+						<div class="col-lg-10 col-md-10 col-sm-10 col-xs-8 nopadding nomargin">
+							<!-- <input type="text" id="ihave_input" name="posture_ihave" class="input_simbol font_bold text-right" ng-model="posture.ihave" ng-minlength="1" ng-maxlength="18" ng-change="validate_number(0,'ihave_input')" ng-keyup="input_format_calculator($event,'ihave_input')" ng-click="set_input('ihave_input')" required />
+							<span id="ihave_input_ng_error_required" ng-show="form_new_posture.posture_ihave.$error.required" class="text-error">Ingrese toda la información.</span>
+							<span id="ihave_input_ng_error_minval" ng-show="form_new_posture.posture_ihave.$error.minlength" class="text-error">Debes ofrecer un monto mayor a 0.01</span>
+							<span ng-show="form_new_posture.posture_ihave.$error.maxlength" class="text-error">Se ha alcanzado el n&uacute;mero m&aacute;ximo de d&iacute;gitos x(15)</span> -->
+							<input type="text" id="iwant_input" name="posture_iwant" class="input_simbol nomargin_top font_bold text-right" ng-model="posture.iwant" ng-minlength="1" ng-maxlength="18" ng-change="validate_number(0,'iwant_input')" ng-keyup="input_format_calculator($event,'iwant_input')" ng-click="set_input('iwant_input')" required />
+							<span id="iwant_input_ng_error_required" ng-show="form_new_posture.posture_iwant.$error.required" class="text-error">Ingrese toda la información.</span>
+							<span id="iwant_input_ng_error_minval" ng-show="form_new_posture.posture_iwant.$error.minlength" class="text-error">Debes ofrecer un monto mayor a 0.01</span>
+							<span ng-show="form_new_posture.posture_iwant.$error.maxlength" class="text-error">Se ha alcanzado el n&uacute;mero m&aacute;ximo de d&iacute;gitos (15)</span>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 container_new_posture_rate">
+						<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Tasa de cambio</label>
+						<div id="rate_coin_text" class="col-lg-4 col-md-4 col-sm-4 col-xs-4 nopadding">
+						<b>{{iwant_opt_s}}/{{ihave_opt_s}}</b>
+						</div>
+						<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 nopadding nomargin">
+							<input type="text" id="rate_input" name="posture_rate" class="input_simbol font_bold text-right" ng-model="posture.rate" ng-minlength="1" ng-maxlength="12" ng-change="validate_number(0,'rate_input');" ng-keyup="input_format_calculator($event,'rate_input')" ng-click="set_input('rate_input')" required />
+							<span id="rate_input_ng_error_required"  ng-show="form_new_posture.posture_rate.$error.required" class="text-error">Ingrese toda la información.</span>
+							<span id="rate_input_ng_error_minval" ng-show="form_new_posture.posture_rate.$error.minlength" class="text-error">La tasa de cambio debe ser mayor a 0.01</span>
+							<span ng-show="form_new_posture.posture_rate.$error.maxlength" class="text-error">Se ha alcanzado el n&uacute;mero m&aacute;ximo de d&iacute;gitos (10)</span>
+						</div>
+					</div>
+				</div>
+				<div class="row nomargin nopadding">
+					<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 container_new_posture_available_time">
+						<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Tiempo disponible</label>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							<!-- Condicion -->
+							<select class="input_simbol form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-change="unitChanged()" ng-model="posture.availableTime_condition">
+								<option ng-selected="posture.availableTime_condition == item.id" ng-repeat="item in availableTime_condition" ng-value="item.id">{{item.condition}}</option>
+						    </select>
+					    </div>
+					    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						    <!-- Fecha -->
+						    <div class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
+						    	<input class="form-control input_simbol" size="8" ng-model="posture.availableTime_date" bs-datepicker type="text" required disabled>
+						    </div>
+						</div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding container_availableTime_time">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+							Hasta las:
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+								<input class="form-control input_simbol" size="8" ng-model="posture.availableTime_time" bs-timepicker minuteStep="30" type="text">
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding container_posture_fractionate">
+							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
+							    <input type="checkbox" ng-model="posture.fraccionar.value" ng-true-value="1" ng-false-value="0">
+							    {{posture.fraccionar.title}}
+							</label>
+
+							<!-- <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left" ng-repeat="fraccionar in posture.fraccionar">
+						        <input type="checkbox" value="{{fraccionar.title}}" ng-model="fraccionar.selected"> {{fraccionar.title}} 
+						    </label> -->
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 container_new_posture_banks">
+						<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Bancos</label>
+							<table class="table table-responsive table_banks"> 
+	             				<tr>
+	             					<!-- Bancos en Bolivares -->
+	             					<td class="border_right_banks">
+		             					<table>
+										<tbody>
+										<tr>
+										<td style="width: 40px;">BsF</td>
+										<td style="width: 130px; min-width: 130px;">
+											<input id="banks_bs_selected" class="form-control input_simbol" ng-model="posture.banks_bs_selected" bs-options="bank as bank.nombre_banco for bank in posture.banks_bs_list" placeholder=" Banco" bs-typeahead type="text">
+										</td>
+										</tr>
+										<tr>
+										<td colspan="2">
+											<span id="posture_banks_bs" class="text-error hidden">Ingrese toda la información.</span>
+										</td>
+										</tr>
+										</tbody>
+										</table>
+									</td>
+	             					<!-- Bancos en USD -->
+	             					<td>
+		             					<table id="table_banks_usd">
+										<tbody>
+										<tr>
+										<td style="width: 40px;">USD</td>
+										<td style="width: 130px; min-width: 130px;">
+											 <input id="banks_usd_selected" class="form-control input_simbol" ng-model="posture.banks_usd_selected" bs-options="bank as bank.nombre_banco for bank in posture.banks_usd_list" placeholder="Banco" bs-typeahead type="text">
+										</td>
+										</tr>
+										<tr>
+										<td id="fila_banks_bs" colspan="2">
+											<span id="posture_banks_usd" class="text-error hidden">Ingrese toda la información.</span>
+										</td>
+										</tr>
+										</tbody>
+										</table>
+	             					</td>
+	             				</tr>
+	             				<tr>
+	             					<!-- Bancos en Bolivares -->
+	             					<td class="border_right_banks">
+									    <ul class="nav_tag_bank">
+									        <li ng-repeat="item in posture.banks_bs" id="item{{item.idusers_bancos_pais_monedas}}">
+									            <a class="tag_bank_a">{{item.nombre_banco}}</a>
+									            <a href="" ng-click="deleteBank($index,0)" class="delete_bank">x</a>
+									        </li>
+								    	</ul>
+	             					</td>
+	             					<!-- Bancos en USD -->
+	             					<td class="border_left_banks">
+									    <ul class="nav_tag_bank">
+									        <li ng-repeat="item in posture.banks_usd" id="item{{item.idusers_bancos_pais_monedas}}">
+									            <a class="tag_bank_a">{{item.nombre_banco}}</a>  <a href="" ng-click="deleteBank($index,1)" class="delete_bank">x</a>
+									        </li>
+								    	</ul>
+	             					</td>
+             					</tr>
+							</table>
+					</div>
+				</div>
+			<!-- <pre>{{!!form_new_posture.$error.required}}</pre> -->
+			<!-- <pre>monedas = {{monedas | json}}</pre> -->
+			<!-- <pre>user = {{posture | json}}</pre> -->
+
+				<div id="container_btn_new_posture" class="row nomargin_bottom nopadding container_btn_new_posture">
+					<input type="submit" id="btn_new_posture" class="btn btn-default btn_orange_simbol col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-4 col-md-4 col-sm-4" ng-click="submit()" value="Publicar postura"/>
+				</div>
+	  		</form>
+		</div>
+	</div>
+
+	<!-- Mis posturas -->
+	<div class="row nomargin nopadding index_posture_my_postures">
+		<div class="row nomargin nopadding container_my_postures_table_tittle">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<h3>Mis Posturas</h3>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<div class="col-lg-offset-5 col-md-offset-5 col-lg-7 col-md-7 container_search_my_talks">
+		            <form action="#" method="get">
+		                <div class="input-group">
+		                    <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
+		                    <input class="form-control seacrh_box" id="search_talks" name="" placeholder="Buscar" type="text" ng-model="buscador_mis_posturas">
+		                </div>
+		            </form>
+		        </div>
+			</div>
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 container_posture_my_talks">
+			<div class="panel panel-default table-responsive container_my_postures_table">
+				<div class="panel-body" ng-init="misPosturasList();">
+			        <table ng-init='configPagesTablePosturas()' class='table table-hover table-list-search table_simbol text-center' show-filter="true">
+			          <thead>
+			            <tr class="titles_my_postures_table">
+			              <th class="text-center">ID</th>
+			              <th class="text-center">Tasa de cambio</th>
+			              <th class="text-center">Quieres</th>
+			              <th class="text-center">Tienes</th>
+			              <th class="text-center">Usuario</th>
+			              <th class="text-center">Disponible</th>
+			              <th class="text-center"></th>
+			            </tr>
+			          </thead>
+			          <tbody>
+			            <tr ng-repeat='postura in mis_posturas | filter: buscador_mis_posturas | startFromGrid: post_current_page * post_page_size | limitTo: post_page_size' , ng-click='seleccionarUsuario(postura.idposturas)' class="fila_postura">
+			            	<!-- Id -->
+			              <td class="text-right">{{postura.idposturas}}</td>
+			              <!-- Tasa de cambio -->
+			              <td class="text-center">{{postura.tasacambio | number:2}} {{postura.tengo_moneda_simbolo}}</td>
+			              <!-- Quieres -->
+			              <td ng-if='postura.quiero_moneda_id == 1'>{{postura.tengo * postura.tasacambio | number:2}} {{postura.quiero_moneda_simbolo}}</td>
+			              <td ng-if='postura.quiero_moneda_id == 2'>{{postura.tengo / postura.tasacambio | number:2}} {{postura.quiero_moneda_simbolo}}</td>
+			              <!-- Tienes -->
+			              <td class="text-center" class="text-center">{{postura.tengo | number:2}} {{postura.tengo_moneda_simbolo}}</td>
+			              <!-- Usuario -->
+			              <td class="text-center">{{postura.user.username}}</td>
+			              <!-- Disponible -->
+			              <td class="text-center">{{postura.fechahasta | date:'dd/MM/yyyy'}}</td>
+			              <!-- Boton Ver -->
+			              <td class="noborder_right text-center"><a href="{{base_href}}/postures/{{postura.idposturas}}/matches">ver</a></td>
+			            </tr>
+			            <tr>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom noborder_right"></td>
+			            </tr>
+			          </tbody>
+			        </table>
+			        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding'>
+			          <div class="pull-right btn-group">
+			          	<button type='button' class='btn btn-default' ng-disabled='post_current_page == 0' ng-click='post_current_page = post_current_page - 1'>&lt;</button>
+						<button type='button' class='btn btn-default' ng-disabled='post_current_page == page.no - 1' ng-click='setPage(page.no,0)' ng-repeat='page in post_pages'>{{page.no}}</button>
+						<button type='button' class='btn btn-default' ng-disabled='post_current_page >= mis_posturas.length/post_page_size - 1' , ng-click='post_current_page = post_current_page + 1'>&gt;</button>
+			          </div>
+			        </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Mis negiciaciones -->
+	<div class="row nomargin nopadding index_posture_my_talks">
+		<div class="row nomargin nopadding container_my_talks_table_tittle">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<h3>Mis Negociaciones</h3>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<div class="col-lg-offset-5 col-md-offset-5 col-lg-7 col-md-7 container_search_my_postures">
+		            <form action="#" method="get">
+		                <div class="input-group">
+		                    <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
+		                    <input class="form-control seacrh_box" id="search_postures" name="q" placeholder="Buscar" type="text" ng-model="buscador_mis_negociaciones">
+		                </div>
+		            </form>
+		        </div>
+			</div>
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 container_posture_my_postures">
+			<div class="panel panel-default table-responsive container_my_talks_table">
+				<div class="panel-body" ng-init="misNegociacionesList();">
+			        <table ng-init='configPagesTableNegociaciones()' class='table table-hover table-list-search table_simbol' show-filter="true">
+			          <thead>
+			            <tr class="titles_my_negotiations">
+			              <th class="text-center">ID</th>
+			              <th class="text-center">Tasa de cambio</th>
+			              <th class="text-center">Recib&iacute;</th>
+			              <th class="text-center">Env&iacute;e</th>
+			              <!-- <th class="text-center">Usuario</th> -->
+			              <th class="text-center">Disponible hasta</th>
+			              <th class="text-center">Estado</th>
+			              <th class="text-center"></th>
+			            </tr>
+			          </thead>
+			          <tbody>
+			            <tr ng-repeat='negociacion in mis_negociaciones | filter: buscador_mis_negociaciones | startFromGrid: talks_current_page * talks_page_size | limitTo: talks_page_size' , ng-click='seleccionarUsuario(negociacion.id)'>
+			            	<!-- Id -->
+			              <td class="text-right">{{negociacion.idposturasMatch}}</td>
+			              
+			              <!-- Tasa de cambio -->
+			              <td class="text-center" ng-if="id == negociacion.users_idusers">{{negociacion.postura[0].tasacambio | number:2}} {{negociacion.postura[0].tengo_moneda_simbolo}}</td>
+
+			              <td class="text-center" ng-if="id == negociacion.iduser2">
+			              {{negociacion.postura_contraparte[0].tasacambio | number:2}} {{negociacion.postura_contraparte[0].tengo_moneda_simbolo}}</td>
+
+			              <!-- Quieres -->
+			              <td ng-if='id == negociacion.users_idusers && negociacion.postura[0].quiero_moneda_id == 1' class="text-center">{{negociacion.postura[0].tengo * negociacion.postura[0].tasacambio | number:2}} {{negociacion.postura[0].quiero_moneda_simbolo}}</td>
+			              <td ng-if='id == negociacion.users_idusers && negociacion.postura[0].quiero_moneda_id == 2' class="text-center">{{negociacion.postura[0].tengo / negociacion.postura[0].tasacambio | number:2}} {{negociacion.postura[0].quiero_moneda_simbolo}}</td>
+
+			              <td ng-if='id == negociacion.iduser2 && negociacion.postura_contraparte[0].quiero_moneda_id == 1' class="text-center">{{negociacion.postura_contraparte[0].tengo * negociacion.postura_contraparte[0].tasacambio | number:2}} {{negociacion.postura_contraparte[0].quiero_moneda_simbolo}}</td>
+			              <td ng-if='id == negociacion.iduser2 && negociacion.postura_contraparte[0].quiero_moneda_id == 2' class="text-center">{{negociacion.postura_contraparte[0].tengo / negociacion.postura_contraparte[0].tasacambio | number:2}} {{negociacion.postura_contraparte[0].quiero_moneda_simbolo}}</td>
+
+			              <!-- Tienes -->
+			              <td ng-if="id == negociacion.users_idusers" class="text-center">{{negociacion.postura[0].tengo | number:2}} {{negociacion.postura[0].tengo_moneda_simbolo}}</td>
+
+			              <td ng-if="id == negociacion.iduser2" class="text-center">{{negociacion.postura_contraparte[0].tengo | number:2}} {{negociacion.postura_contraparte[0].tengo_moneda_simbolo}}</td>
+
+			              <!-- Disponible -->
+			              <td ng-if="id == negociacion.users_idusers" class="text-center">{{negociacion.postura[0].fechahasta | date:'dd/MM/yyyy'}}</td>
+
+			              <td ng-if="id == negociacion.iduser2" class="text-center">{{negociacion.postura_contraparte[0].fechahasta | date:'dd/MM/yyyy'}}</td>
+			              
+			              <!-- Estatus -->
+			              <td class="text-center">{{negociacion.estatus}}</td>
+
+			              <!-- Boton Ver -->
+			              <td class="noborder_right text-center">
+			              	
+			              	<!-- ACEPTAR/RECHAZAR MATCH -->
+			              	<a ng-if="id == negociacion.users_idusers && negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 0"  href="{{base_href}}/postures/{{negociacion.postura[0].idposturas}}/match/{{negociacion.postura_contraparte[0].idposturas}}">ver</a>
+
+			              	<a ng-if="id == negociacion.iduser2 && negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 0" href="{{base_href}}/postures/{{negociacion.postura_contraparte[0].idposturas}}/match/{{negociacion.postura[0].idposturas}}">ver</a>
+
+			              	<!-- CHAT -->
+			              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 1" href="{{base_href}}/operacion/operacion/{{negociacion.idposturasMatch}}">ver</a>
+
+			              	<!-- CONCRETADA -->
+			              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion == 3 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 1" href="{{base_href}}/detalle_negociacion/{{negociacion.idposturasMatch}}">ver</a>
+
+			              	<!-- OTROS ESTADOS -->
+			              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion > 3" href="#">ver</a>
+
+			              </td>
+			            </tr>
+			            <tr>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom noborder_right"></td>
+			            </tr>
+			          </tbody>
+			        </table>
+			        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding'>
+			          <div class="pull-right btn-group">
+			          	<button type='button' class='btn btn-default' ng-disabled='talks_current_page == 0' ng-click='talks_current_page = talks_current_page - 1'>&lt;</button>
+						<button type='button' class='btn btn-default' ng-disabled='talks_current_page == page.no - 1' ng-click='setPage(page.no,1)' ng-repeat='page in talks_pages'>{{page.no}}</button>
+						<button type='button' class='btn btn-default' ng-disabled='talks_current_page >= mis_negociaciones.length/talks_page_size - 1' , ng-click='talks_current_page = talks_current_page + 1'>&gt;</button>
+			          </div>
+			        </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

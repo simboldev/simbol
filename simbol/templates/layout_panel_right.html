@@ -1,0 +1,79 @@
+<!--cronometro-->										
+<div ng-if="username != undefined ">
+	<div ng-if="actCrono != undefined ">
+		<!--<div style="padding-top: 24px;">-->
+			<div  class="col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-10 col-sm-10 col-xs-10 tag_chronos">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					Tiempo restante
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<img src="images/png/cronometro.png">
+					<span class="layer" id='count'></span>
+				</div>
+			</div>
+		<!--</div>-->
+	</div>
+</div>
+<!--tasa de cambio -->
+<div class="row container_rate_exchange">
+	<div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 nopadding container_statistics">
+		<div id="" class="col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-10 col-sm-10 col-xs-10 tag_statistics_tittle">
+			Tasa de Cambio
+			<br>
+			<span class="tag_statistics_tittle_date">{{indicadores.tasa.fecha}}</span> 
+		</div>
+		<div id="tag_statistics_body_rate_exchange" class="col-md-12 col-sm-12 col-xs-12 tag_statistics_body">
+			<div id="" class="col-md-12 tag_statistics_body_box_rate">
+				<p class="box_text_big" id="tag_statistics_text_rate_exchange">BsF {{indicadores.tasa.tasacambio | number:2}}/USD</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- apertura de valor de moneda -->
+<div class="row container_rate_today">
+	<div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 nopadding container_statistics">
+		<div id="statistic_tittle_rate_today" class="col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-10 col-sm-10 col-xs-10 tag_statistics_tittle">
+			Hoy abri&oacute; en 
+		</div>
+		<div id="tag_statistics_body_rate_today" class="col-md-12 col-sm-12 col-xs-12 tag_statistics_body">
+			<div id="" class="col-md-12 tag_statistics_body_box_rate">
+				<p class="box_text_big" id="tag_statistics_text_rate_today">BsF {{indicadores.tasa_apertura_del_dia | number:2}}/USD</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!--oferta y demanda -->
+<div class="row container_offer_demand">
+	<div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 nopadding container_statistics">
+		<div id="statistic_tittle_offer_demand" class="col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-10 col-sm-10 col-xs-10 tag_statistics_tittle">
+			Oferta y Demanda
+		</div>
+		<div id="tag_statistics_body_offer_demand" class="col-md-12 col-sm-12 col-xs-12 tag_statistics_body">
+			<div id="box_text_offer_demand" class="col-md-12 tag_statistics_body_box_offer_demand">
+				<div class="col-md-8 nopadding nomargin">Ofertas abiertas</div>
+				<div class="col-md-4 nopadding_right text-right"><b>{{indicadores.cantidad_ofertas_abiertas}}</b></div>
+				
+				<div class="col-md-8 nopadding nomargin">Demandas abiertas</div>
+				<div class="col-md-4 nopadding_right text-right"><b>{{indicadores.cantidad_demandas_abiertas}}</b></div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- mejor del día -->
+<div class="row container_sell_purchase">
+	<div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 nopadding container_statistics">
+		<div id="statistic_tittle_sell_purchase" class="col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-10 col-sm-10 col-xs-10 tag_statistics_tittle">
+			<div class="col-md-12 nopadding nomargin">Mejor del d&iacute;a</div>
+			<div class="col-md-12 nopadding nomargin font_weight_100 font_12px">(BsF/USD)</div>
+		</div>
+		<div id="tag_statistics_body_sell_purchase" class="col-md-12 col-sm-12 col-xs-12 tag_statistics_body">
+			<div id="box_text_offer_demand" class="col-md-12 tag_statistics_body_box_sell_purchase">
+				<div class="col-md-3 nopadding nomargin">Venta</div>
+				<div class="col-md-9 nopadding_right text-right"><b>{{indicadores.mejor_venta_del_dia | number:2}}</b></div>
+				
+				<div class="col-md-3 nopadding nomargin">Compra</div>
+				<div class="col-md-9 nopadding_right text-right"><b> {{indicadores.mejor_compra_del_dia | number:2}}</b></div>
+			</div>
+		</div>
+	</div>
+</div>

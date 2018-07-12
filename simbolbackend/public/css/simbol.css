@@ -1,0 +1,579 @@
+/*body dimension */
+.Symbol---P1 {
+  width: 1440px;
+  height: 1274px;
+}
+
+/*head */
+.Rectangle {
+  width: 1440px;
+  height: 90px;
+  background-color: #ffffff;
+  border: solid 1px #076eff;
+}
+
+/*logo corporativo */
+.logo_simbol {
+  width: 136px;
+  height: 44px;
+  object-fit: contain;
+  transform: rotate(-360deg);
+}
+
+/*content */
+.Rectangle-Copy-7 {
+  width: 127px;
+  /*height: 1184px;*/
+  height: 1233px;
+  background-image: linear-gradient(to bottom, #0069fe, #0052c7 97%);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.34);
+}
+
+/*columna central*/
+.Rectangle-3 {
+  /*width: 993px;*/
+  width: 900px;
+  height: 1233px;
+  background-color: #f8f8f8;
+  box-shadow: 4px 0 10px 0 rgba(0, 0, 0, 0.28);
+}
+
+.Rectangle-3-Copy {
+  /*width: 507px;*/
+  width: 387px;
+  /*height: 1216px;*/
+  height: 1233px;
+  background-color: #ededed;
+  box-shadow: 4px 0 10px 0 rgba(0, 0, 0, 0.28);
+}
+
+/* item menu*/
+.user {
+  width: 36px;
+  height: 47px;
+  object-fit: contain;
+  margin-left: 60px;
+  margin-top: 45px;
+  margin-right: 46px;
+  margin-bottom: 45px;
+}
+.plus {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  margin-left: 60px;
+  margin-top: 42px;
+  margin-right: 46px;
+  margin-bottom: 45px;
+}
+.bar-chart {
+  width: 44px;
+  height: 46px;
+  object-fit: contain;
+  margin-left: 60px;
+  margin-top: 42px;
+  margin-right: 46px;
+  margin-bottom: 45px;
+}
+
+.ring {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  margin-left: 60px;
+  margin-top: 42px;
+  margin-right: 46px;
+  margin-bottom: 45px;
+}
+
+.logout {
+  width: 44px;
+  height: 34px;
+  object-fit: contain;
+  margin-left: 60px;
+  margin-top: 42px;
+  margin-right: 46px;
+  margin-bottom: 45px;
+}
+
+/*franja divisora*/
+.Rectangle-Copy-71 {
+  width: 127px;
+  height: 2px;
+  margin-left: 15px;
+  background-color: #ffffff;
+}
+
+.Rectangle-Copy-8 {
+  width: 127px;
+  height: 2px;
+  margin-left: 15px;
+  background-color: #ffffff;
+}
+
+.Rectangle-Copy-9 {
+  width: 127px;
+  height: 2px;
+  margin-left: 15px;
+  background-color: #ffffff;
+}
+
+.Rectangle-Copy-13 {
+  width: 127px;
+  height: 2px;
+  margin-left: 15px;
+  background-color: #ffffff;
+}
+
+
+.Rectangle-Copy {
+  /*width: 815px;*/
+  width: 855px;
+  height: 433px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.18);
+}
+
+/*Botón para publicar postura */
+.Publicar-Postura {
+  width: 159px;
+  height: 26px;
+  font-family: SanFranciscoDisplay;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.Rectangle-Copy-btt {
+  width: 191px;
+  height: 47px;
+  border-radius: 5px;
+  background-image: linear-gradient(to bottom, #ff9500, #ff7800);
+  box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.45);
+}
+
+/*BUSCADOR*/
+.Rectangle-Copy-14 {
+  width: 221px;
+  height: 36px;
+  opacity: 0.9;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.18);
+}
+
+.Shape {
+  width: 15px;
+  height: 15px;
+  background-color: #8f8f8f;
+}
+
+/*LABEL MIS POSTURAS*/
+.Mis-Posturas {
+  width: 130px;
+  height: 28px;
+  font-family: SanFranciscoDisplay;
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+/* TABLA POSTURAS */
+.Rectangle-Copy-2 {
+  width: 815px;
+  height: 202px;
+  opacity: 0.9;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.18);
+}
+
+.Rectangle-Copy-5 {
+  width: 228px;
+  height: 51px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
+}
+
+/*panel derecho */
+.Tasa-de-Cambio-Copy-2 {
+  width: 158px;
+  height: 28px;
+  font-family: SanFranciscoDisplay;
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.-de-Septiembre-201-Copy {
+  width: 199px;
+  height: 16px;
+  font-family: SanFranciscoDisplay;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Rectangle-Copy-17 {
+  width: 263px;
+  height: 122px;
+  border-radius: 5px;
+  background-image: linear-gradient(to bottom, #0069fe, #0052c7 97%);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.34);
+}
+
+.Rectangle-Copy-15 {
+  width: 238px;
+  height: 77px;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+.USD-Copy {
+  width: 224px;
+  height: 38px;
+  font-family: SanFranciscoDisplay;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.7px;
+  text-align: center;
+  color: #0069fe;
+}
+
+.USD-Copy .text-style-1 {
+  font-weight: 300;
+}
+
+.Rectangle-Copy-19 {
+  width: 228px;
+  height: 51px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
+}
+
+.Hoy-abrio-en {
+  width: 126px;
+  height: 28px;
+  font-family: SanFranciscoDisplay;
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Rectangle-Copy-18 {
+  width: 263px;
+  height: 122px;
+  border-radius: 5px;
+  background-image: linear-gradient(to bottom, #b4ed50, #429321);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.34);
+}
+
+.Rectangle-Copy-20 {
+  width: 238px;
+  height: 77px;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+.USD {
+  width: 230px;
+  height: 38px;
+  font-family: SanFranciscoDisplay;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.7px;
+  text-align: center;
+  color: #75bb36;
+}
+
+.USD .text-style-1 {
+  font-weight: 300;
+}
+
+.Rectangle-Copy-10 {
+  width: 221px;
+  height: 51px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
+}
+
+.Oferta-y-Demanda {
+  width: 181px;
+  height: 28px;
+  font-family: SanFranciscoDisplay;
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #ff9500;
+}
+
+.Rectangle-Copy-6 {
+  width: 263px;
+  height: 228px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.22);
+}
+
+.Ofertas-abiertas {
+  width: 137px;
+  height: 24px;
+  font-family: SanFranciscoDisplay;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.layer {
+  width: 64px;
+  height: 36px;
+  font-family: SanFranciscoDisplay;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Demandas-abiertas {
+  width: 166px;
+  height: 24px;
+  font-family: SanFranciscoDisplay;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Rectangle-Copy-12 {
+  width: 221px;
+  height: 51px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
+}
+
+.Mejor-del-Dia {
+  width: 130px;
+  height: 28px;
+  font-family: SanFranciscoDisplay;
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #0069fe;
+}
+
+.Rectangle-Copy-11 {
+  width: 263px;
+  height: 228px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.22);
+}
+
+.Venta {
+  width: 57px;
+  height: 28px;
+  font-family: SanFranciscoDisplay;
+  font-size: 23px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.USDB {
+  width: 219px;
+  height: 36px;
+  font-family: SanFranciscoDisplay;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Compra {
+  width: 78px;
+  height: 28px;
+  font-family: SanFranciscoDisplay;
+  font-size: 23px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+/*formulario postura */
+.Quiero {
+  width: 57px;
+  height: 24px;
+  font-family: SanFranciscoDisplay;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+.Rectangle-2 {
+  width: 100px;
+  height: 2px;
+  background-color: #006bff;
+}
+
+.Tengo {
+  width: 52px;
+  height: 24px;
+  font-family: SanFranciscoDisplay;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+.Rectangle-2-Copy {
+  width: 150px;
+  height: 2px;
+  background-color: #006bff;
+}
+
+.Tasa-de-Cambio {
+  width: 134px;
+  height: 24px;
+  font-family: SanFranciscoDisplay;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Bs-F-1600000 {
+  width: 190px;
+  height: 36px;
+  font-family: SanFranciscoDisplay;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Bs-F-21500 {
+  width: 155px;
+  height: 36px;
+  font-family: SanFranciscoDisplay;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Rectangle-2-Copy-2 {
+  width: 150px;
+  height: 2px;
+  background-color: #006bff;
+}
+
+.Tiempo-disponible {
+  width: 141px;
+  height: 21px;
+  font-family: SanFranciscoDisplay;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Bancos {
+  width: 58px;
+  height: 21px;
+  font-family: SanFranciscoDisplay;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Hasta-el {
+  width: 69px;
+  height: 24px;
+  font-family: SanFranciscoDisplay;
+  font-size: 20px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.layerb {
+  width: 98px;
+  height: 24px;
+  font-family: SanFranciscoDisplay;
+  font-size: 20px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Bolivares {
+  width: 59px;
+  height: 18px;
+  font-family: SanFranciscoDisplay;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.USDC {
+  width: 28px;
+  height: 18px;
+  font-family: SanFranciscoDisplay;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #909090;
+}
+
+.Rectangle-2-Copy-4 {
+  width: 100px;
+  height: 2px;
+  background-color: #006bff;
+}
+
+.Rectangle-2-Copy-3 {
+  width: 100px;
+  height: 2px;
+  background-color: #006bff;
+}
+
+.Rectangle-4 {
+  width: 100px;
+  height: 27px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 4px 0 rgba(166, 166, 166, 0.5);
+}

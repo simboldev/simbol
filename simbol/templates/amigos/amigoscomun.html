@@ -1,0 +1,136 @@
+<div ng-controller="MatchesCtrl" class="col-lg-14 col-md-14 col-sm-14 col-xs-14 nopadding nomargin container_index_posture" ng-init="init_match();init_matches();carga_datos_usuarios();">
+	
+	<div class="row nomargin nopadding index_posture_new_posture_tittle">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
+			<label class="font_weight_100">
+				<h3>
+					Haz que tus amigos confirmen la confiabilidad de <b>{{objUser.username | uppercase}}</b>
+				</h3>
+			</label>
+		</div>
+	</div>
+
+	<div class="row nomargin nopadding index_posture_my_postures">
+		<div class="row nomargin nopadding container_my_postures_table_tittle">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-14">
+				<h3>Amigos en Com&uacute;n</h3>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-14">
+				<div class="col-lg-offset-5 col-md-offset-5 col-lg-7 col-md-7 container_search_my_talks">
+		            <form action="#" method="get">
+		                <div class="input-group">
+		                    <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
+		                    <input class="form-control seacrh_box" id="search_talks" name="" placeholder="Buscar" type="text" ng-model="buscador_mis_amigos">
+		                </div>
+		            </form>
+		        </div>
+			</div>
+		</div>
+		<div class="col-lg-14 col-md-14 col-sm-14 col-xs-14 container_posture_my_talks">
+			<div class="panel panel-default table-responsive container_my_postures_table">
+				<div class="panel-body" ><!--ng-init="misPosturasList();"-->
+
+			        <table  class='table table-hover table-list-search table_simbol text-center' show-filter="true" >
+			          <thead>
+			            <tr>
+			              <th class="text-center">Username</th>
+			              <th class="text-center">Negociaciones Concretadas</th>
+			              <th class="text-center">Negociaciones no Concretadas</th>
+			              <th class="text-center">&Uacute;ltima Operaci&oacute;n</th>
+			              <th class="text-center">Volumen</th>
+			              <th class="text-center">Mi Ranking</th>
+			              <th class="text-center"></th>
+			            </tr>
+			          </thead>
+			          <tbody>
+			            <tr  class="fila_postura" ng-repeat='ac in amigoscomun | filter: buscador_mis_amigos | startFromGrid: post_current_page * post_page_size | limitTo: post_page_size' ng-click='seleccionarUsuario(postura.idposturas)'>
+			            	<!-- Username -->
+			              <td class="text-right">{{ac.username}}</td>
+			              <!-- Negociaciones Concretadas -->
+			              <td class="text-center">{{ac.negConcretadas}}</td>
+			              <!-- Negociaciones no Concretadas -->
+			              <td class="text-center">{{ac.negNoConcretadas}}</td>
+			              <!-- &Uacute;ltima Operaci&oacute;n -->
+			              <td class="text-center" >{{ac.ultimaOperacion}}</td>
+			              <!-- Volumen -->
+			              <td class="text-center">{{ac.volume}}</td>
+			              <!-- Mi Ranking -->
+			              <td class="text-center" >
+			              	<div ng-bind-html='rank'></div>
+			              </td>
+			              <!--{{ac.rank}}-->
+			              <!-- Boton check -->
+			              <td class="noborder_right text-center">
+  								<label>
+  									<input type="checkbox" name="" ng-model="selected" ng-checked="exist(ac)" ng-click="toggleSelection(ac)" >
+  								</label>
+  								<!--ng-click="itemsCheck(ac.iduser)" id="ac.iduser"-->
+			              </td>
+			            </tr>
+			            <tr>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom noborder_right"></td>
+			            </tr>
+			          </tbody>
+			        </table>
+			        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding'>
+			          <div class="pull-left btn-group">
+			          	<button type='button' class='btn btn-default' ng-disabled='post_current_page == 0' ng-click='post_current_page = post_current_page - 1'>&lt;</button>
+						<button type='button' class='btn btn-default' ng-disabled='post_current_page == page.no - 1' ng-click='setPage(page.no,0)' ng-repeat='page in post_pages'>{{page.no}}</button>
+						<button type='button' class='btn btn-default' ng-disabled='post_current_page >= amigoscomun/post_page_size - 1' , ng-click='post_current_page = post_current_page + 1'>&gt;</button>
+			          </div>
+			        </div>
+			          <div class=" col-md-1 col-sm-1 col-xs-14 pull-right nopadding">
+						<input type="checkbox" name="" ng-model="selectAll" ng-click="checkAll()" > ALL
+					  </div>	
+					  <!--<button type="button" class="btn btn-default  col-md-1 col-sm-1 col-xs-14 pull-right nopadding"  ng-model="selectAll" ng-click="checkAll()" name="">
+									All
+						</button>-->	
+			    
+			        <br>
+			        <div class="pull-center btn-group">
+						<div class="alert alert-danger" ng-if="mensajeConf==1" >
+  							<strong>
+  								¡En estos momentos no se ha podido enviar la solicitud, intente mas tarde!
+  							</strong> 
+						</div>			       
+			        </div>
+				</div>
+			</div>
+			<div ng-if="botonHab == 1">
+				<div class='boton-calificar'> 
+					<button class='btn btn-secondary btn_orange_simbol pull-right font_weight_bold col-lg-4 col-md-4 col-sm-4 col-xs-12' ng-click='conf_confiabilidad()'> 
+						<span class='lett-login'>Confirmar Confiabilidad</span> 
+					</button> 
+				</div>
+			</div>
+			<div ng-if="botonHab == 0">
+				<div class='boton-calificar'> 
+					<button class='btn btn-secondary btn_dark_gray_simbol font_weight_bold col-md-4 col-sm-4 col-xs-12  pull-right nopadding' ng-click='conf_confiabilidad()' disabled='disabled' > 
+						<span class='lett-login'>Confirmar Confiabilidad</span> 
+					</button> 
+				</div>
+			</div>
+			 <!--<div ng-bind-html="boton_confiabilidad"  ></div>-->
+			
+		</div>
+		<!--modal de culminacion de solicitud de confiabilidad-->
+		<div class="modal fade" id="modalTempConfiabilidad" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<div class="modal-body" >
+						<p class="text-center">
+							<b>¡Su solicitud de confiabilidad se ha enviado exitosamente!
+						</p>
+					</div>
+				</div>
+			</div>
+		 </div>
+		<!--modal de culminacion de solicitud de confiabilidad-->		
+	</div>
+</div>

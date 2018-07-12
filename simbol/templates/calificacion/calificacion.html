@@ -1,0 +1,111 @@
+
+<div ng-if="username != undefined ">
+	<div>
+		<h2>Calificar a la Cotraparte</h2>
+	</div>
+	<div  class="row  index_posture_new_posture" class="container" style="border-radius: 5px;box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.18);" ng-controller="PostureCtrl" ng-init="consPosturasMatch();activarBut();">
+		<form role="form" name="envCalif">
+			<div class="col-md-11 col-sm-11 col-xs-11 nopadding container_posture_new_posture" >
+				<br>
+				<div ng-if=" msg1 != '' ">
+					<div id="msg1">{{msg1}}</div>
+				</div>
+				<div ng-if=" msg2 ! = '' ">
+					<div id="msg2">{{msg2}}</div>
+				</div>
+				<div style="text-align: center;margin-top: 20px;">Calificar a <b>{{usernameContraP}}</b></div>
+				
+				<p class="clasificacion">
+					<input id="star1" name="estrellas" value="1" type="radio" class="starRadio" ng-click="regStar(1)" >
+					<label for="star1" class="starLabel" >&#9733;</label>
+					
+					<input id="star2" name="estrellas" value="2" type="radio" class="starRadio" ng-click="regStar(2)" >
+					<label for="star2" class="starLabel" >&#9733;</label>
+
+					<input id="star3" name="estrellas" value="3" type="radio" class="starRadio" ng-click="regStar(3)" >
+					<label for="star3" class="starLabel" >&#9733;</label>
+
+					<input id="star4" name="estrellas" value="4" type="radio" class="starRadio" ng-click="regStar(4)" >
+					<label for="star4" class="starLabel" >&#9733;</label>
+
+					<input id="star5" name="estrellas" value="5" type="radio" class="starRadio" ng-click="regStar(5)" >
+					<label for="star5" class="starLabel" >&#9733;</label>
+				</p>
+
+				<div style="text-align: center;">Dejar un comentario</div>
+				<div style="text-align: center;">
+					<textarea style="margin-left:30px;" class="form-control" rows="5" id="comment" ng-model="comment" ng-change="activarBut();" ng-blur="activarBut();"></textarea>
+				</div>
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
+			</div>
+			
+			<div class="boton-calificar" ng-if="act==0">
+				<button class='butt-login-inactivo btn-login col-md-2 col-sm-2 col-xs-12 nopadding' >
+					<span class='lett-login'  >Calificar</span>
+				</button>
+			</div>
+			<div class="boton-calificar" ng-if="act==1">
+				<button class='btn_orange_simbol btn-login col-md-2 col-sm-2 col-xs-12 nopadding' ng-click="regCalificacion();" ng-disabled>
+					<span class='lett-login'>Calificar</span>
+				</button>
+			</div>
+
+			<!--MODAL PARA CULMINAR OPERACION-->
+			<div class="modal fade" id="modalCalif" data-backdrop="static" data-keyboard="false"  role="dialog">
+			    <div class="modal-dialog" title="">
+					<div class="modal-content doublemyinput" >
+						<div class="modal-header onlyheaderModal" >
+							<h4 class="modal-title text-center">Tu operaci&oacute;n a finalizado con &eacute;xito</h4>
+						</div>
+						<div class="modal-body" >
+							<p style="text-align: center;">
+								&iquest;Quieres agregar a este usuario a tu circulo de confianza&#63;
+								<br>
+								<button type="button" class="btn-agregar-circonf" ng-click="regCircConf();">Agregar</button>
+								<br>
+								<span class="text-error">{{infoAmigo}}</span>
+								<br>
+								&iexcl;Felicitaciones por tu primera <br> transacci&oacute;n exitosa&#33;<br>
+								
+								Ahora puedes comenzar a recomendar otros usaurios<br><br>
+
+								&iexcl;Comienza ya&#33;<br>
+								S&oacute;lo necesitas su correo electr&oacute;nico<br><br>
+
+								<input type="text" name="recomendado" id="recomendado" placeholder="" ng-model="recomendado" class="inp-recomendado" />
+								<button class='Rectangle-Operacion-s'  >
+									<span class='Operacion-Satisfacto'>Recomendar</span>
+								</button>
+							</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="calificacionExitosa();" >Aceptar</button>
+					 	</div>
+					</div>
+				</div>
+			 </div>
+			 <!--MODAL PARA CULMINAR OPERACION--> 
+			 <!--Modal para informar que se guardó la calificación-->
+			<div class="modal fade" data-backdrop="static" data-keyboard="false" id="myModaInfCalif" role="dialog">
+			    <div class="modal-dialog" title="">
+					<div class="modal-content doublemyinput" >
+						<div class="modal-header onlyheaderModal" >
+							<h4 class="modal-title text-center"></h4>
+						</div>
+						<div class="modal-body" >
+							<p>
+								&iexcl;&iexcl;Estimado usuario su calificaci&oacute;n ha sido registrada de forma exitosa&#33;&#33;
+							</p>
+						</div>
+						 <div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="calificacionExitosa();" >Aceptar</button>
+						</div>
+					</div>
+				</div>
+			 </div>
+			<!--Modal para informar que se guardó la calificación-->
+		</form>
+		
+	</div>
+</div>

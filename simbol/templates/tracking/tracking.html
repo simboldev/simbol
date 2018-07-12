@@ -1,0 +1,315 @@
+<!--ng-init="preMyFunction();"-->
+<div id="track" ng-app="app" >
+	<form role="form" name="envChat" enctype="multipart/form-data" method="POST">
+		<div class="container" style="margin-left: 20px;" ng-controller="ChatCtrl"  ng-init="initIdPosturaMatch();">
+	    	<input type="text" id="iduser" name="iduser" value="id" ng-model="iduser" style="display: none;">
+	    	<!--<input type="hidden" id="iduserContraparte" name="iduserContraparte" value="2" ng-model="iduserContraparte">-->
+	    	<input type="text" id="username" name="username" value="username" ng-model="username" style="display: none;">
+	    	<input type="text" id="idposturasMatch" name="idposturasMatch" ng-value="id_posturas_match" ng-model="idposturasMatch" style="display: none;">
+
+	    	<input type="text" id="paramPost" name="paramPost" ng-value="paramPost" ng-model="paramPost" style="display: none;">
+		 <table style="margin-left: 70px;" border="0" >
+		 	<tr>
+		 		<td colspan="5" style="padding-top: 30px;">
+		 			<div ng-bind-html="trackImage"></div>
+		 		</td>
+		 	</tr>
+		 	<tr>
+			
+			 		<td style="font-size: 11px;">
+						 <div ng-bind-html="fase1"  ></div>
+			 		</td>
+	
+			 		<td style="font-size: 11px;text-align: center;">
+						 <div ng-bind-html="fase2" ></div>
+			 		</td>
+			 		<td style="font-size: 11px;text-align: right;">
+			 			<div ng-bind-html="fase3" ></div>
+			 		</td>
+
+			 		<td style="font-size: 11px;text-align: right;">
+						 <div ng-bind-html="fase4" ></div>
+			 		</td>
+			 	
+		 	</tr>
+		 	<tr>
+		 		<td colspan="5" style="text-align: right;padding-top: 40px;">	
+		 			<div ng-bind-html="contrato"></div>
+		 		</td>
+		 	</tr>
+		 </table>
+		 <div style="margin-left: 80px;margin-top: 15px;" >
+		 	
+		 	<div ng-bind-html="botonCan" style="float: left;"></div>
+			<div ng-bind-html="botonOpeSat" style="float: left;"></div>	
+
+		</div>
+		 <!--Modal para el check de ya transferi-->
+		 <div class="modal fade" id="myModal" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<!-- <div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="deseleccionarTransferi()">&times;</button>
+						<h4 class="modal-title text-center">?Est&aacute;? seguro confirmar?</h4>
+					</div> -->
+					<div class="modal-body" >
+						<p class="text-center">
+							<b>Ya Transfer&iacute;</b>, al confirmar no podr&aacute; desactivar la opci&oacute;n.
+						</p>
+					</div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-transf" ng-click="submit($parent,envChat);" >Aceptar</button>
+						<button type="button" class="btn btn-default" class="close" data-dismiss="modal" ng-click="deseleccionarTransferi()">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		 </div>
+		 <!--Modal para el check de ya transferi-->
+		 <!--Modal para el check de ya me transfirieron-->
+		<div class="modal fade" id="myModal2" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<!-- <div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="deseleccionarMeTransfirieron()">&times;</button>
+						<h4 class="modal-title text-center">Est&aacute; seguro confirmar?</h4>
+					</div> -->
+					<div class="modal-body" >
+						<p class="text-center">
+							<b>Ya me Transfirieron</b>, al confirmar no podr&aacute; desactivar la opci&oacute;n.
+						</p>
+					</div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="submit($parent,envChat);" >Aceptar</button>
+						<button type="button" class="btn btn-default" class="close" data-dismiss="modal" ng-click="deseleccionarMeTransfirieron()">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		 </div>
+		 <!--Modal para el check de ya me transfirieron-->
+		  <!--Modal -->
+		<div class="modal fade" id="myModal3" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<!-- <div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="deseleccionarConformeTransfiere()">&times;</button>
+						<h4 class="modal-title text-center">?Est&aacute; seguro confirmar</h4>
+					</div> -->
+					<div class="modal-body" >
+						<p class="text-center">
+							<b>Ya me Transfirieron</b>, si confirma no podr&aacute; desactivar la opci&oacute;n.
+						</p>
+					</div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="submit($parent,envChat);" >Aceptar</button>
+						<button type="button" class="btn btn-default" class="close" data-dismiss="modal" ng-click="deseleccionarConformeTransfiere()">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		 </div>
+
+		 <div class="modal fade" id="myModal4" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<!-- <div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="deseleccionarConformeMeTransfirieron()">&times;</button>
+						<h4 class="modal-title text-center">Est&aacute; seguro confirmar?</h4>
+					</div> -->
+					<div class="modal-body" >
+						<p class="text-center">
+							<b>Ya me Transfirieron</b>, si confirma no podr&aacute; desactivar la opci&oacute;n.
+						</p>
+					</div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="submit($parent,envChat);" >Aceptar</button>
+						<button type="button" class="btn btn-default" class="close" data-dismiss="modal" ng-click="deseleccionarConformeMeTransfirieron()">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		 </div>
+		<!--Modal para el check de ya me transfirieron-->
+		<!--Modal para las calificaciones-->
+		<div class="modal fade" id="myModal5" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
+						<h4 class="modal-title text-center"></h4>
+					</div>
+					<div class="modal-body" >
+						<p class="text-center">
+							¿Desea confirmar la operaci&oacute;n ?
+						</p>
+					</div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="calificarInteface();" >Aceptar</button>
+						<button type="button" class="btn btn-default" class="close" data-dismiss="modal" >Cancelar</button>
+					</div>
+				</div>
+			</div>
+		 </div>
+		<!--Modal para las calificaciones-->
+
+		<!--Modal para las cancelar operacion-->
+		<div class="modal fade" id="myModal6" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
+						<h4 class="modal-title text-center"></h4>
+					</div>
+					<div class="modal-body" >
+						<p class="text-center">
+							¿Est&aacute; seguro de cancelar la operaci&oacute;n ?
+							<br>
+							¡¡Si cancelas la operaci&oacute;n sin justificaci&oacute;n puede que te califiquen de forma negativa!!
+						</p>
+					</div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="cancelarOperacion();" >Aceptar</button>
+						<button type="button" class="btn btn-default" class="close" data-dismiss="modal" >Cancelar</button>
+					</div>
+				</div>
+			</div>
+		 </div>
+		<!--Modal para las cancelar operacion-->
+
+		<!--Modal para las denunciar operacion-->
+		<div class="modal fade" id="myModal7" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
+						<h4 class="modal-title text-center">Denunciar Operaci&oacute;n</h4>
+					</div>
+					<div class="modal-body" >
+						<p class="text-left">
+							¿Haz tenido problema con tu operaci&oacute;n? Por favor indicanos la causa de tu denuncia: 
+							<br>
+							<div class="checkbox">
+								<label><input type="checkbox" name="nocumpletiempotransf" id="nocumpletiempotransf"  >
+									<!--value="No ha cumplido con los tiempos de la Transferencia."-->
+									No ha cumplido con los tiempos de la Transferencia.
+								</label>
+							</div>
+							<div class="checkbox">
+								<label><input type="checkbox" name="transfmontodif" id="transfmontodif"  >
+									<!-- value="Transfirio un monto diferente al acordado." -->
+									Transfiri&oacute; un monto diferente al acordado.
+								</label>
+							</div>
+							<div class="checkbox">
+								<label><input type="checkbox" name="transfnorecibida" id="transfnorecibida"  >
+									<!-- value="No recibi la transferencia." -->
+									No recib&iacute; la transferencia.
+								</label>
+							</div>
+							<div class="checkbox">
+								<label><input type="checkbox" name="nocumplecondpreest" id="nocumplecondpreest"  >
+									<!-- value="No cumplio con las condiciones pre-establecidas." -->
+									No cumpli&oacute; con las condiciones pre-establecidas.
+								</label>
+							</div>
+							<br>
+							Cualquier informaci&oacute;n es importante, d&eacute;janos un comentario y/o evidencia de lo ocurrido.
+							<br>
+							<div class="form-group">
+								<textarea class="form-control" name="detalle" id="detalle" ></textarea>
+							</div>
+							<input type="file" name="evidencia" id="evidencia" multiple="multiple">
+							<!--<button class="btn_orange_simbol btn-login col-md-4 col-sm-2 col-xs-12 nopadding" onclick="document.getElementById('evidencia').click();"  type="button">
+                             <span class="glyphicon glyphicon-paperclip" aria-hidden="true" style="margin-left: -5px;"> Adjuntar Archivo</span>
+                        	</button>-->
+                        	
+						</p>
+					</div>
+					<br>
+					 <div class="modal-footer">
+						<button type="button" class="btn_orange_simbol btn-login col-md-2 col-sm-2 col-xs-12 pull-right nopadding" data-dismiss="modal"  data-toggle='modal' data-target='#confirmaDenuncia'
+						 >Denunciar</button>
+					</div>
+				</div>
+			</div>
+		 </div>	
+		<!--Modal para las denunciar operacion-->
+
+		<!--Modal de confirmacion de denuncia de la operacion-->
+			<div class="modal fade" id="confirmaDenuncia" role="dialog">
+				<div class="modal-dialog" title="">
+					<div class="modal-content doublemyinput" >
+						<div class="modal-header onlyheaderModal" >
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
+							<h4 class="modal-title text-center">Confirmaci&oacute;n de Denuncia</h4>
+						</div>
+						<div class="modal-body" >
+							<p class="text-left">
+								¿Est&aacute;s seguro que deseas procesar la denuncia?
+							</p>
+							<br>
+							<p class="text-left">
+								Si la denuncia no es justificada, existe un riesgo en que Simbol bloquee tu usuario de forma permanente.
+							</p>
+							<input type="text" name="id" id="id" ng-model="id" style="display: none;">
+							<input type="text" name="idUserContraparte" id="idUserContraparte" ng-model="idUserContraparte" style="display: none;">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn_orange_simbol btn-login col-md-2 col-sm-2 col-xs-12 pull-right nopadding" class="close" data-dismiss="modal" >Cancelar</button>
+							<button type="button" class="btn_orange_simbol btn-login col-md-2 col-sm-2 col-xs-12 pull-right nopadding" data-dismiss="modal"  
+							onclick="denunciarOperacion(
+							document.getElementById('id').value,
+							document.getElementById('idUserContraparte').value,
+							document.getElementById('detalle').value,
+							document.getElementById('evidencia')
+							);">
+								Aceptar
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!--Modal de confirmacion de denuncia de la operacion-->
+
+		<!-- Modal que notifica que la denuncia esta siendo procesada -->
+		<div class="modal fade" id="procesaDenuncia" role="dialog">
+				<div class="modal-dialog" title="">
+					<div class="modal-content doublemyinput" >
+						<div class="modal-header onlyheaderModal" >
+							<h4 class="modal-title text-center">Denunciar Operaci&oacute;n</h4>
+						</div>
+						<div class="modal-body" >
+							<p class="text-left">
+								¡Tu denuncia est&aacute; siendo procesada, te estaremos informando sobre su avance!
+							</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn_orange_simbol btn-login col-md-2 col-sm-2 col-xs-12 pull-right nopadding" class="close" data-dismiss="modal" ng-click="redirecNewPostura()" >Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- Modal que notifica que la denuncia esta siendo procesada -->
+
+		<!-- Modal que notifica que la denuncia no se pudo procesar -->
+			<div class="modal fade" id="denunciaNoProcess" role="dialog">
+				<div class="modal-dialog" title="">
+					<div class="modal-content doublemyinput" >
+						<div class="modal-header onlyheaderModal" >
+							<h4 class="modal-title text-center">Aviso</h4>
+						</div>
+						<div class="modal-body" >
+							<p class="text-left">
+								¡¡Su denuncia no se ha podido procesar en este momento, por favor intente m&aacute;s tarde!!
+							</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn_orange_simbol btn-login col-md-2 col-sm-2 col-xs-12 pull-right nopadding" class="close" data-dismiss="modal" ng-click="redirecNewPostura()" >Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>		
+		<!-- Modal que notifica que la denuncia no se pudo procesar -->
+		
+	</div>
+	</form>
+</div>
+
+<!---->

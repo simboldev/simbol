@@ -1,0 +1,142 @@
+<!-- Match con postura -->
+<div ng-controller="MatchesCtrl" ng-init="init_match()" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding nomargin container_posture_match">
+	<div id="posture_match_posture" class="row nomargin nopadding">
+		<div class="row nomargin nopadding container_posture_match_detail">
+			<!-- Primera fila Titulo y subtitulo-->
+			<div class="row nomargin nopadding tittle_gral text-center">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<h2>Detalles de la operaci&oacute;n</h2>
+					<!-- <pre>{{posture_user | json}}</pre> -->
+				</div>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<h3 class="font_weight_100">Operaci&oacute;n</h3>
+				</div>
+			</div>
+			<!-- Segunda fila detalles tasa de cambio y montos-->
+			<div class="row nopadding row_detalle_operacion_montos">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin_tb_20">
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center border_right_gray_simbol">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Tasa de cambio</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">{{posture_user.tasacambio | number:2}} {{iwant_opt_s}}/{{ihave_opt_s}}</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center border_right_gray_simbol">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Recibiras</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">
+						{{posture_user.quiero | number:2}} {{posture_user.quiero_moneda_simbolo}}
+						<!-- <span ng-if='posture_user.quiero_moneda_id == 1'>
+							{{posture_user.tengo * posture_user.tasacambio | number:2}} {{posture_user.quiero_moneda_simbolo}}
+						</span>
+						<span ng-if='posture_user.quiero_moneda_id == 2'>
+							{{posture_user.tengo / posture_user.tasacambio | number:2}} {{posture_user.quiero_moneda_simbolo}}
+						</span> -->
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">A Transferir</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">{{posture_user.tengo | number:2}} {{posture_user.tengo_moneda_simbolo}}</div>
+					</div>
+				</div>
+			</div>
+			<!-- Tercera fila volumen-->
+			<div class="row nopadding row_detalle_operacion">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin_tb_20 text-center">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<h3 class="font_weight_100">Perfil de {{postura_contraparte.user.username | uppercase}}</h3>
+					</div>
+					<!-- <div class="col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Volumen</label></div>
+					<div class="col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">100USD - 200USD</div> -->
+				</div>
+			</div>
+			<!-- Cuarta fila detalles estadisticas-->
+			<div class="row nopadding row_detalle_operacion_estadisticas">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin_tb_20">
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center border_right_gray_simbol">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Operaciones ejecutadas</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">{{postura_contraparte.user.operaciones.ejecutadas }}</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center border_right_gray_simbol">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Primera negociaci&oacute;n</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">{{postura_contraparte.text_primera_negociacion}}</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">&Uacute;ltima operaci&oacute;n</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">{{postura_contraparte.text_ultima_negociacion}}</div>
+					</div>
+				</div>
+			</div>
+			<!-- Quinta fila bancos y amigos en comun -->
+			<div class="row nopadding row_detalle_operacion_ba">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<table>
+						<tr >
+							<th style="text-align: center;" class="bancos_detalle_operacion_ba column_ba">
+							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center font_weight_100">Bancos</label></th>
+							<th style="text-align: center;" class="amigos_detalle_operacion_ba column_ba">
+								<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center font_weight_100" ><!--ng-if="amigos_en_comun.length > 0 "-->
+									<a ng-href="#" ng-click="redireccion_amigoscomun(id,amigos_en_comun);">
+										Amigos en com&uacute;n
+									</a>
+								</label>
+							</th>
+						</tr>
+						<tr >
+							<!-- BANCOS -->
+							<td class="column_ba text-center bancos_detalle_operacion_ba">
+								<table class="table table-responsive table_banks"> 
+				     				<tr>
+				     					<!-- Bancos en Bolivares -->
+				     					<td class="border_right_banks" style="text-align: center; width: auto;">
+				         					BsF
+										</td>
+				     					<!-- Bancos en USD -->
+				     					<td style="text-align: center; width: auto;">USD
+				     					</td>
+				     				</tr>
+				     				<tr>
+				     					<!-- Bancos en Bolivares -->
+				     					<td class="border_right_banks">
+										    <ul class="nav_tag_bank">
+										        <li ng-repeat="item in postura_contraparte.bancos" ng-if="item.idmonedas == 1 " id="item{{item.idusers_bancos_pais_monedas}}" class="tag_bank_li">
+										            <a class="tag_bank_a">{{item.nombre_banco}}</a>
+										        </li>
+									    	</ul>
+				     					</td>
+				     					<!-- Bancos en USD -->
+				     					<td class="border_left_banks">
+										    <ul class="nav_tag_bank">
+										        <li ng-repeat="item in postura_contraparte.bancos" ng-if="item.idmonedas == 2 " id="item{{item.idusers_bancos_pais_monedas}}" class="tag_bank_li">
+										            <a class="tag_bank_a">{{item.nombre_banco}}</a>
+										        </li>
+									    	</ul>
+				     					</td>
+				 					</tr>
+								</table>
+							</td>
+							<!-- AMIGOS -->
+							<td class="column_ba text-center amigos_detalle_operacion_ba">
+								<table class="table table-responsive table_amigos"> 
+				     				<tr>
+				     					<td class="">
+										    <ul class="nav_tag_bank" ng-if="amigos_en_comun.length > 0 ">
+										        <li ng-repeat="item in amigos_en_comun" id="item{{item.id}}" class="tag_bank_li">
+										            <a class="tag_bank_a">{{item.username}}</a>
+										        </li>
+									    	</ul>
+				     					</td>
+				 					</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row nopadding nomargin row_btns_list_match">
+			<div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<button id="btn_aceptar_{{posture_match.idposturas}}" type="button" class="btn btn-secondary btn_orange_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="aceptar_posture(id,id_postura_contraparte,postura_contraparte.user.id)">Aceptar</button>
+				<!-- {{id}}{{id_postura_contraparte}}{{postura_contraparte.user.id}} -->
+				<button id="btn_rechazar_{{posture_match.idposturas}}" type="button" class="btn btn-secondary btn_dark_gray_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="rechazar_posture(id,id_postura_contraparte,0)">Rechazar</button>
+			</div>
+		</div>
+	</div>
+</div>

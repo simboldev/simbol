@@ -1,0 +1,52 @@
+<div   ng-controller="LoginCtrl" ng-init="cargaPrimaria();" class="col-md-12 col-sm-12 col-xs-12 nopadding nomargin container_index_posture">
+	<form role="form" name="recPass">
+		<div class="row nomargin nopadding index_rec_pass">
+			<div class="col-md-14 col-sm-14 col-xs-14 nopadding ">
+				<div class="rec_pass">
+					<h3 style="text-align: center;">Recuperar Contraseña</h3>
+					<label>Ingrese nueva Contraseña: </label>
+					<input type="password" name="passwordR" id="passwordR" placeholder="Contraseña" class="inp-user" ng-model="passwordR" required="true" ng-keypress="valNumCarac();"  ng-blur="igualdadPass();"/>
+					&nbsp;&nbsp;
+					<b class="msgVal">{{valnumcarPass}}</b>
+					<br>
+					<label style="margin-left: 70px;">Repita Contraseña: </label>
+					<input type="password" name="passwordRR" id="passwordRR" placeholder="Contraseña" class="inp-user" ng-model="passwordRR" required="true"  ng-keypress="valNumCarac();" ng-blur="igualdadPass();" />
+					&nbsp;&nbsp;
+					<b class="msgVal">{{valnumcarRePass}}</b>
+						<div>{{passIg}}</div>
+						<br>
+						<div style="margin-left: 248px;">
+							<div ng-if="botonR == 0">
+						  		<button class='butt-login-inactivo' id="btn-login"  disabled="true">
+						  			<span class='lett-login' >Recuperar</span>
+						  		</button>
+						  	</div>
+						  	<div ng-if="botonR == 1">
+						  		<button class='butt-login-inactivo' id="btn-login"  disabled="true">
+						  			<span class='lett-login' >Recuperar</span>
+						  		</button>
+						  	</div>
+						  	<div ng-if="botonR == 2">
+						  		<button class='butt-login' id="btn-login" ng-click="modifPass();" >
+						  			<span class='lett-login' >Recuperar</span>
+						  		</button>
+						  	</div>
+						  	<div ng-if="botonR == 3">
+						  		<button class='butt-login-inactivo' id="btn-login"  disabled="true">
+						  			<span class='lett-login' >Recuperar</span>
+						  		</button>
+						  	</div>
+							<div ng-if="botonR == 4">
+						  		<button class='butt-login-inactivo' id="btn-login"  disabled="true">
+						  			<span class='lett-login' >Recuperar</span>
+						  		</button>
+						  	</div>
+						</div>
+						<div>
+							{{mensajeVal}}
+						</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

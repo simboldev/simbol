@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-controller="appController">
+<head>
+	<title>{{tittle_page}}</title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+	
+	<link href="images/png/favicon1.ico" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="./css/simbol.css">
+	<link rel="stylesheet" href="./bower_components/angular-motion/dist/angular-motion.min.css"></link>
+    <link rel="stylesheet" href="./bower_components/angular-notify/dist/angular-notify.css"></link>
+    
+
+	<script type="text/javascript" src="./bower_components/angular/angular.js"></script>
+    <!--NOTIFICACIONES-->
+    <!--<script type="text/javascript" src="./bower_components/angular-growl-notifications/dist/angular-growl-notifications.js"></script>-->
+    <script type="text/javascript" src="./bower_components/angular-notify/dist/angular-notify.js"></script>
+    <!--NOTIFICACIONES-->
+	<script type="text/javascript" src="./bower_components/angular-route/angular-route.min.js"></script>
+	<script type="text/javascript" src="./bower_components/angular-resource/angular-resource.js"></script>
+
+	<script src="./bower_components/angular-strap/dist/angular-strap.min.js"></script>
+	<script src="./bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+
+	<script src="./bower_components/angular-flash-alert/dist/angular-flash.min.js"></script>
+
+    <!--NOTIFICACIONES-->
+    <link rel="stylesheet" href="./bower_components/angular-notify/dist/angular-notify.css"></link>
+    <script src="./bower_components/angular-cookies/angular-cookies.js"></script>
+	
+	<script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- CONTROLLERS -->
+	<script type="text/javascript" src="./scripts/app.js"></script>
+	<script type="text/javascript" src="./scripts/postures_controllers.js"></script>
+	<script type="text/javascript" src="./scripts/matches_controllers.js"></script>
+	<script type="text/javascript" src="./scripts/match_controllers.js"></script>
+	<script type="text/javascript" src="./scripts/login_controllers.js"></script>
+</head>
+	<body ng-init="index_init()">
+        <input type="hidden" name="url_server" id="url_server" ng-value="url_server" />
+	    <!--cabecera-->
+	    <div ng-if="username != undefined ">
+	        <div ng-include src="'templates/head.html'" class="container_header row nomargin nopadding" ></div>
+	    </div>
+	    <div ng-if="username == undefined">
+	        <div ng-include src="'templates/head_login.html'" class="container_header row nomargin nopadding" ></div>
+	    </div>
+	    <!--cabecera-->
+	    
+		<div class="row nomargin_right 	container_body_simbol">
+			<div class="container-fluid nomargin nopadding container-gral">
+				<div ng-if="username != undefined ">
+					<!--menu-->
+					<div ng-include src="'templates/layout_menu_izquierdo.html'" class="container_menu_left col-lg-1 col-md-1 col-sm-1 col-xs-12 nopadding_right"></div>
+					<!--menu-->
+                    <!--cuerpo-->
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 nomargin container_panel_central">
+                        <div ng-view class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+                    </div>
+                    <!--cuerpo-->
+				</div>
+                <div ng-if="username == undefined ">
+                    <!--cuerpo index -->
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 nomargin container_panel_central">
+                        <div ng-include src="'templates/inicio/inicio.html'" class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-10 col-md-10 col-sm-10 col-xs-12"></div>
+                    </div>
+                    <!--cuerpo index -->
+                </div>
+				<!--panel derecho-->
+				<div ng-include src="'templates/layout_panel_right.html'" class="col-lg-3 col-md-3 col-sm-3 col-xs-12 nomargin container_panel_right"></div>
+				<!--panel derecho-->
+			</div>
+		</div>
+        <!--modal-->
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="myModaICanOper" role="dialog">
+                <div class="modal-dialog" title="">
+                    <div class="modal-content doublemyinput" >
+                        <div class="modal-header onlyheaderModal" >
+                            <h4 class="modal-title text-center"></h4>
+                        </div>
+                        <div class="modal-body" >
+                            <p>
+                                Estimado usuario su operaci&oacute;n  ha sido cancelada por inactividad, por favor gestione una nueva operaci&oacute;n!!
+                            </p>
+                        </div>
+                         <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="redirect();" >Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <!--modal-->
+
+	</body>
+</html>
+
+
+<script>
+    $(function()
+    {
+        $(".nav li").on("click", function()
+        {
+            $(".nav li").removeClass("active");
+            $(this).addClass("active");
+        });
+    });
+</script>
+
+<script>
+	// ============ FUNCTIONS ============
+
+    // ============  CRONOMETRO============
+    var minutesTop = 89;
+    var minuteRest;
+    function countdown(minutes) {
+        console.log("valor de minutos enviado es "+minutes)
+            //cronometro
+
+            // Guardamos el valor inicial en la base de datos del navegador
+            //localStorage.setItem("minutes",minutes);
+            minuteRest = minutes;
+            minutes = minutesTop - minutes;
+
+            console.log(minutes)
+            var seconds = 60;
+            var mins = minutes;
+            if(mins >= 0 && mins <= 90){
+                function tick() {
+                    //This script expects an element with an ID = "counter". You can change that to what ever you want. 
+                    
+                    var current_minutes = mins;
+                    seconds--;
+
+                    $("#count").html(current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds))
+                   
+                    if( seconds > 0 ) {
+                        setTimeout(tick, 1000);
+                    } else {
+                        if(mins >= 0){
+                            //countdown(mins-1); 
+                            minutesTop = minutesTop-1;
+                            console.log("valor a mandar en minutos "+mins -1)
+                            countdown(minuteRest);          
+                        }
+                    }
+                }
+                tick();
+            }else{
+                
+                var estatusOperaciones_idestatusOperacion = 4;
+                var posturasMatches_idposturasMatch = document.getElementById("posturasMatch_idposturasMatch").value; 
+                /*var url ='http://52.170.252.66:8080/posturas/cambiar_estatus_operacion/'+posturasMatches_idposturasMatch+'/'+estatusOperaciones_idestatusOperacion;*/
+                //var url ='http://localhost:8000/posturas/cambiar_estatus_operacion/'+
+                var url =document.getElementById("url_server").value+
+                    posturasMatches_idposturasMatch+'/'+estatusOperaciones_idestatusOperacion;
+                $.ajax({
+                      data:'',
+                      url:url,
+                      method:'PUT',
+                      cache:false,
+                      processData:false,
+                      contentType: false,
+                      success: function (data) {
+                           console.log('se cancelo postura '+data['data']['data']);
+                     }
+                })
+                .done(function(data) {
+                  console.log("todo bien");
+                  document.getElementById("textouser").value=""; 
+                  //window.parent.caches.delete("call");
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("se completó, haya error o no");
+                    document.getElementById("textouser").value=""; 
+                });
+                
+                console.log('modal');
+                $('#myModaICanOper').modal('show');
+            }
+    }
+
+    // ============ UPLOAD FILE============
+    function subir(){
+        console.log("valores "+document.getElementById("username").value);
+        var iduser = document.getElementById("iduser").value;
+        var username = document.getElementById("username").value;  
+        var textouser = document.getElementById("textouser").value; 
+        var inputFile = document.getElementById("adjuntouser");
+        var posturasMatches_idposturasMatch = document.getElementById("posturasMatch_idposturasMatch").value; 
+        var file = inputFile.files[0];
+        console.log(file.size);
+        var extensiones =file.name.substring(file.name.lastIndexOf('.'));
+
+        var formData = new FormData();
+        formData.append('iduser',iduser);
+        formData.append('username',username);
+        
+        
+        formData.append('posturasMatches_idposturasMatch',posturasMatches_idposturasMatch);
+        var url =document.getElementById("url_server").value+'/chat';
+		//var url ='http://52.170.252.66:8080/chat';
+
+
+        if(file.size <= 700000){
+            console.log('permitido');
+            if( extensiones=='.jpg' || 
+            extensiones=='.JPG' || 
+            extensiones=='.jpeg' || 
+            extensiones=='.JPEG' || 
+            extensiones=='.png' || 
+            extensiones=='.PNG' || 
+            extensiones=='.pdf' || 
+            extensiones=='.PDF'){
+                console.log(extensiones);
+                console.log('permitido extension');
+                formData.append('textouser',textouser);
+                formData.append('adjuntouser',file);
+            }else{
+                    console.log(extensiones);
+                    console.log('no permitido extension');
+                    formData.append('textouser','¡ Extensión no perimitida, extenciones soportadas png,jpg y pdf !');
+                    formData.append('adjuntouser','');
+            }
+
+        }else{
+            console.log('no permitido');
+            formData.append('textouser','¡ El archivo sobrepasa el peso permitodo, intente con un archivo que pese menos o igual a 700 Kb !');
+            formData.append('adjuntouser','');
+        }
+ 
+        $.ajax({
+            data:formData,
+            url:url,
+            method:'POST',
+            cache:false,
+            processData:false,
+            contentType: false,
+           success: function (data) {
+                
+                //location.reload(true);
+                //$("mensaje").load(); 
+                //window.parent.caches.delete();
+            }
+        })
+        .done(function(data) {
+            console.log("todo bien");
+            document.getElementById("textouser").value=""; 
+            //window.parent.caches.delete("call");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("se completó, haya error o no");
+            document.getElementById("textouser").value=""; 
+        });
+    }
+
+
+    function denunciarOperacion(
+    id,
+    idUserContraparte,
+    /*nocumpletiempotransf,
+    transfmontodif,
+    transfnorecibida,
+    nocumplecondpreest,*/
+    detalle,
+    evidencia
+    ){
+
+        console.log("que cagada "+document.getElementById("url_server").value);
+        console.log('usuariosssss id sesion: '+id);
+        console.log('usuariosss id contraparte '+idUserContraparte);
+        /*console.log('nocumpletiempotransf '+nocumpletiempotransf);
+        console.log('transfmontodif '+transfmontodif);
+        console.log('transfnorecibida '+transfnorecibida);
+        console.log('nocumplecondpreest '+nocumplecondpreest);*/
+        console.log('detalle '+detalle);
+        console.log('evidencia '+evidencia);
+        console.log('paramPost es '+document.getElementById("paramPost").value);
+
+        var nocumpletiempotransf ='';
+        var transfmontodif = '';
+        var transfnorecibida = '';
+        var nocumplecondpreest = '';
+        var paramPost = document.getElementById("paramPost").value;
+
+        if(document.getElementById('nocumpletiempotransf').checked == true){
+            nocumpletiempotransf = "No ha cumplido con los tiempos de la Transferencia.";
+        }
+        if(document.getElementById('transfmontodif').checked == true){
+            transfmontodif = "Transfirio un monto diferente al acordado.";
+        }
+        if(document.getElementById('transfnorecibida').checked == true){
+            transfnorecibida = "No recibi la transferencia.";
+        }
+        if(document.getElementById('nocumplecondpreest').checked == true){
+            nocumplecondpreest = "No cumplio con las condiciones pre-establecidas.";
+        }
+
+
+        var url =document.getElementById("url_server").value+'/denuncias';
+        var archivos = evidencia.files;
+        var iteraciones = archivos.length;
+        console.log('long de archivos '+iteraciones);
+
+        var formData = new FormData();
+        formData.append('idvictima',id);
+        formData.append('idvictimario',idUserContraparte);
+        formData.append('nocumpletiempotransf',nocumpletiempotransf);
+        formData.append('transfmontodif',transfmontodif);
+        formData.append('transfnorecibida',transfnorecibida);
+        formData.append('nocumplecondpreest',nocumplecondpreest);
+        formData.append('detalle',detalle);
+        formData.append('paramPost',paramPost);
+        
+        if(iteraciones == 0 ){
+            console.log("sin adjuntos");
+            $.ajax({
+                data:formData,
+                url:url,
+                method:'POST',
+                cors: true,
+                cache:false,
+                processData:false,
+                contentType: false,
+                success: function (data) {
+                    console.log("data index "+data);
+                    if(data != ''){
+                        $('#procesaDenuncia').modal('show');
+                    }else{
+                        console.log("hubo un error al guardar la denuncia");
+                        $('#denunciaNoProcess').modal('show');
+                    }
+                                                    
+                }
+            })
+            .done(function(data) {
+                console.log("todo bien");
+                //document.getElementById("textouser").value=""; 
+                //window.parent.caches.delete("call");
+            })
+            .fail(function() {
+                console.log("error guardando evidencias");
+            });
+        }else{
+
+            for(var i = 0;i < iteraciones; i++){
+                var file = evidencia.files[i];
+                var extensiones =archivos[i].name.substring(archivos[i].name.lastIndexOf('.'));
+                console.log("extension "+extensiones);
+                console.log("+++++++i "+i);
+                console.log("file "+file);
+
+                if( extensiones=='.jpg'  || extensiones=='.JPG'  || extensiones=='.jpeg' || extensiones=='.JPEG' || extensiones=='.png'  || extensiones=='.PNG'  || extensiones=='.pdf'  || extensiones=='.PDF' ){
+                                
+                    formData.append('evidencias',file); 
+
+                    console.log("formData "+formData);
+
+                    $.ajax({
+                        data:formData,
+                        url:url,
+                        method:'POST',
+                        cors: true,
+                        cache:false,
+                        processData:false,
+                        contentType: false,
+                        success: function (data) {
+                            console.log("data index "+data);
+                            if(data != ''){
+                                $('#procesaDenuncia').modal('show');
+                            }else{
+                                console.log("hubo un error al guardar la denuncia");
+                                $('#denunciaNoProcess').modal('show');
+                            }
+                            
+                        }
+                    })
+                    .done(function(data) {
+                        console.log("todo bien");
+                        //document.getElementById("textouser").value=""; 
+                        //window.parent.caches.delete("call");
+                    })
+                    .fail(function() {
+                        console.log("error guardando evidencias");
+                    });
+
+                }
+            }
+        }   
+    }
+
+</script>

@@ -1,0 +1,22 @@
+{
+  "name": "simbolbackend",
+  "description": "",
+  "main": "",
+  "authors": [
+    "robert <rmartinez@mobmedianet.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-motion": "^0.4.4",
+    "angular-strap": "^2.3.12"
+  }
+}

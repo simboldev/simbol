@@ -1,0 +1,67 @@
+<div class="container" class="col-md-12 col-sm-12 col-xs-12 nopadding" >
+	<nav class="navbar navbar-light bg-faded navbar-fixed-top nav_header">
+	  <div class="col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-2 col-sm-2 col-xs-10 nopadding">
+		  <a class="navbar-brand" href="#">
+		    <img src="images/png/logo-simbol.png" alt="" class="img_logo_header_link"></img>
+		  </a>
+	  </div>
+
+	  <div ng-if="web_safari == false" class="col-md-9 col-sm-10 col-xs-12 pull-right" style="padding-top: 14px; padding-left: 0;" ng-controller="appController" ng-init="cargaPrimaria();">
+	  	<form role="form" name="aut" class="col-md-12 col-sm-12 col-xs-12 nomargin nopadding">
+		  	<a class="enl-recpass col-md-offset-2 col-md-3 col-sm-2 col-xs-12 text-right" href="#" data-toggle='modal' data-target='#modalRecovPass' >	
+		  		&#191;Olvidó su Contraseña?
+		  	</a>
+		  	<div class="col-md-6 col-sm-5 col-xs-12 nomargin nopadding">
+			  	<input type="text" name="user" id="user" placeholder="Usuario" class="inp-user col-md-4 col-sm-4 col-xs-12" ng-model="user" required="true" ng-keypress="activaBoton();"  ng-mouseover="activaBoton();"/>
+			  	
+			  	<input type="password" name="password" id="password" placeholder="Contraseña" class="inp-user col-md-4 col-sm-4 col-xs-12" ng-model="password" required="true" ng-keypress="activaBoton();" ng-keyup="activaBoton();" ng-mouseover="activaBoton();"/>
+<!--ng-minlength="7"-->
+		  		<button ng-if="boton == 0" class='butt-login-inactivo btn-login col-md-3 col-sm-4 col-xs-12 nopadding' id="btn-login" ng-click="autenticar();" readonly="readonly" ng-mouseover="activaBoton();">
+
+			  	<input type="password" name="password" id="password" placeholder="Contraseña" class="inp-user col-md-4 col-sm-4 col-xs-12" ng-model="password" required="true" ng-keypress="activaBoton();" ng-blur="desenfoqueBoton();" ng-minlength="7" ng-mouseover="desenfoqueBoton();"/>
+
+		  		<button ng-if="boton == 0" class='butt-login-inactivo btn-login col-md-3 col-sm-4 col-xs-12 nopadding' id="btn-login" ng-click="autenticar();" disabled="true" ng-mouseover="desenfoqueBoton();">
+
+		  			<span class='lett-login' >Iniciar Sesión</span>
+		  		</button>
+		  		<button ng-if="boton == 1" class='butt-login-inactivo btn-login col-md-3 col-sm-4 col-xs-12 nopadding' id="btn-login" ng-click="autenticar();" readonly="readonly" ng-mouseover="activaBoton();">
+		  			<span class='lett-login' >Iniciar Sesión</span>
+		  		</button>
+		  		<button ng-if="boton == 2" class='btn_orange_simbol btn-login col-md-3 col-sm-4 col-xs-12 nopadding' id="btn-login"  ng-click="login(user,password);"  ng-mouseover="activaBoton();">
+		  			<span class='lett-login' >Iniciar Sesión</span>
+		  		</button>
+		  		<button ng-if="boton == 3" class='butt-login-inactivo btn-login col-md-3 col-sm-4 col-xs-12 nopadding' id="btn-login" ng-click="autenticar();" readonly="readonly" ng-mouseover="activaBoton();">
+		  			<span class='lett-login' >Iniciar Sesión</span>
+		  		</button>
+		  		<button ng-if="boton == 4" class='butt-login-inactivo btn-login col-md-3 col-sm-4 col-xs-12 nopadding' id="btn-login" ng-click="autenticar();" readonly="readonly" ng-mouseover="activaBoton();">
+		  			<span class='lett-login' >Iniciar Sesión</span>
+		  		</button>
+		  	</div>
+		</form>
+	  </div>
+	</nav>
+	<!--Modal para la recuperación de contraseña-->
+	<div ng-if="web_safari == false" ng-controller="LoginCtrl" class="modal fade" id="modalRecovPass" role="dialog">
+		    <div class="modal-dialog" title="">
+					<div class="modal-content doublemyinput" >
+						<div class="modal-header onlyheaderModal" >
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="deseleccionarMeTransfirieron()">&times;</button>
+							<h4 class="modal-title text-center">Recuperar Contraseña</h4>
+						</div>
+						<div class="modal-body" >
+							<p>Nota: ¡¡ Al ingresar tu nombre de usuario y dar clic en Recuperar, debes revisar tu correo para avanzar con la recuperación de contraseña !!</p>
+							<label>Usuario</label>
+							<input type="text" name="userR" id="userR" placeholder="Usuario" class="inp-user" ng-model="userR" required="true" />
+						</div>
+						<div style="text-align: center;">{{mensaje}}</div>
+						<!--data-dismiss="modal"-->
+						 <div class="modal-footer">
+							<button type="button" class="btn btn-primary"  ng-click="recuperarPassword();" >Recuperar</button>
+							<button type="button" class="btn btn-default" class="close" data-dismiss="modal" ng-click="deseleccionarMeTransfirieron()">Cerrar</button>
+						</div>
+					</div>
+			</div>
+		</div>
+<!--Modal para la recuperación de contraseña-->
+</div>
+

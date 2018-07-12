@@ -1,0 +1,158 @@
+<!--ng-init="preMyFunction();"-->
+<div id="track" ng-app="app" >
+	<form role="form" name="envChat" >
+		<div class="container" style="margin-left: 20px;" ng-controller="ChatCtrl"  ng-init="initIdPosturaMatch();">
+	    	<input type="hidden" id="iduser" name="iduser" value="id" ng-model="iduser">
+	    	<!--<input type="hidden" id="iduserContraparte" name="iduserContraparte" value="2" ng-model="iduserContraparte">-->
+	    	<input type="hidden" id="username" name="username" value="username" ng-model="username">
+	    	<input type="hidden" id="idposturasMatch" name="idposturasMatch" value="1" ng-model="idposturasMatch">
+		 <table style="margin-left: 90px;" border="0">
+		 	<tr>
+		 		<td colspan="4" style="padding-top: 30px;">
+		 			<div ng-bind-html="trackImage"></div>
+		 		</td>
+		 	</tr>
+		 	<tr>
+				
+			 		<td style="font-size: 11px;">
+						 <div ng-bind-html="fase1"  ></div>
+			 		</td>
+
+			 		<td style="font-size: 11px;">
+						 <div ng-bind-html="fase2" style="font-size: 11px;" ></div>
+			 		</td>
+			 		<td style="font-size: 11px;">
+			 			<div ng-bind-html="fase3" style="font-size: 11px;" ></div>
+			 		</td>
+			 		<td style="font-size: 11px;">
+						 <div ng-bind-html="fase4" style="font-size: 11px;" ></div>
+			 		</td>
+			 	
+		 	</tr>
+		 	<tr>
+		 		<td colspan="5" style="text-align: right;padding-top: 40px;">	
+		 			<div ng-bind-html="contrato"></div>
+		 		</td>
+		 	</tr>
+		 </table>
+		 <div style="margin-left: 80px;margin-top: 15px;" >
+		 	
+		 	<div ng-bind-html="botonCan" style="float: left;"></div>
+			<div ng-bind-html="botonOpeSat" style="float: left;"></div>	
+
+		</div>
+		 <!--Modal para el check de ya transferi-->
+		 <div class="modal fade" id="myModal" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="deseleccionarTransferi()">&times;</button>
+						<h4 class="modal-title text-center">¿Está seguro confirmar?</h4>
+					</div>
+					<div class="modal-body" >
+						<p>
+							Ya Transferi
+							<br>
+							Si confirma no podrá desactivar la opción.
+						</p>
+					</div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-transf" ng-click="submit($parent,envChat);" >Aceptar</button>
+						<button type="button" class="btn btn-default" class="close" data-dismiss="modal" ng-click="deseleccionarTransferi()">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		 </div>
+		 <!--Modal para el check de ya transferi-->
+		 <!--Modal para el check de ya me transfirieron-->
+		<div class="modal fade" id="myModal2" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="deseleccionarMeTransfirieron()">&times;</button>
+						<h4 class="modal-title text-center">¿Está seguro confirmar?</h4>
+					</div>
+					<div class="modal-body" >
+						<p>
+							Ya me Transfirieron
+							<br>
+							Si confirma no podrá desactivar la opción.
+						</p>
+					</div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="submit($parent,envChat);" >Aceptar</button>
+						<button type="button" class="btn btn-default" class="close" data-dismiss="modal" ng-click="deseleccionarMeTransfirieron()">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		 </div>
+		 <!--Modal para el check de ya me transfirieron-->
+		  <!--Modal -->
+		<div class="modal fade" id="myModal3" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="deseleccionarConformeTransfiere()">&times;</button>
+						<h4 class="modal-title text-center">¿Está seguro confirmar?</h4>
+					</div>
+					<div class="modal-body" >
+						<p>
+							Ya me Transfirieron
+							<br>
+							Si confirma no podrá desactivar la opción.
+						</p>
+					</div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="submit($parent,envChat);" >Aceptar</button>
+						<button type="button" class="btn btn-default" class="close" data-dismiss="modal" ng-click="deseleccionarConformeTransfiere()">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		 </div>
+
+		 <div class="modal fade" id="myModal4" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="deseleccionarConformeMeTransfirieron()">&times;</button>
+						<h4 class="modal-title text-center">¿Está seguro confirmar?</h4>
+					</div>
+					<div class="modal-body" >
+						<p>
+							Ya me Transfirieron
+							<br>
+							Si confirma no podrá desactivar la opción.
+						</p>
+					</div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="submit($parent,envChat);" >Aceptar</button>
+						<button type="button" class="btn btn-default" class="close" data-dismiss="modal" ng-click="deseleccionarConformeMeTransfirieron()">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		 </div>
+		<!--Modal para las calificaciones-->
+		<div class="modal fade" id="myModal5" role="dialog">
+		    <div class="modal-dialog" title="">
+				<div class="modal-content doublemyinput" >
+					<div class="modal-header onlyheaderModal" >
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
+						<h4 class="modal-title text-center"></h4>
+					</div>
+					<div class="modal-body" >
+						<p>
+							¿Está seguro confirmar la operación?
+						</p>
+					</div>
+					 <div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="calificarInteface();" >Aceptar</button>
+						<button type="button" class="btn btn-default" class="close" data-dismiss="modal" >Cancelar</button>
+					</div>
+				</div>
+			</div>
+		 </div>
+		<!--Modal para las calificaciones-->
+		 <!--Modal para el check de ya me transfirieron-->
+	</div>
+	</form>
+</div>

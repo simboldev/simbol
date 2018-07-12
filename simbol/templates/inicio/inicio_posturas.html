@@ -1,0 +1,27 @@
+<!-- Listado ultimas negociaciones en el sistema -->
+<div ng-controller="PostureCtrl" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding nomargin container_index_posture" ng-init="conPosturasInit();">
+	<div class="row nomargin nopadding index_posture_new_posture_tittle">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<h2>&Uacute;ltimas postura</h2>
+		</div>
+	</div>
+	<div class="row nomargin nopadding index_posture_new_posture">
+		<table class="table table-responsive table_init text-center">
+			<tr>
+				<!-- <td></td> -->
+				<td class="font_bold">Tasa de Cambio</td>
+				<td class="font_bold">Quieres</td>
+				<td class="font_bold">Tienes</td>
+				<td class="font_bold">Disponible</td>
+			</tr>
+			<tr ng-repeat="x in postu">
+				<!-- <td class="text-right">{{x.idposturas}}</td> -->
+				<td>{{x.tasacambio | number:2}} {{iwant_opt_s}}/{{ihave_opt_s}}</td>
+				<td ng-if='x.quiero_moneda_id == 1'>{{x.tengo * x.tasacambio | number:2}} {{x.quiero_moneda_simbolo}}</td>
+				<td ng-if='x.quiero_moneda_id == 2'>{{x.tengo / x.tasacambio | number:2}} {{x.quiero_moneda_simbolo}}</td>
+				<td>{{x.tengo | number:2}} {{x.tengo_moneda_simbolo}}</td>
+				<td>{{x.fechahasta | date : "MM/dd/yyyy"}}</td>
+			</tr>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,40 @@
+<nav class="navbar navbar-default sidebar noborder bg_color_blue_simbol nav_menu_left" role="navigation">
+    <div class="container-fluid container_nav_izq" ng-init="consNot();">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>      
+        </div>
+        <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+          <ul class="nav navbar-nav ul_nav_izq">
+            <li class="active"><a href="#">Ver perfil<span class="pull-right showopacity font_16px"><img src="images/png/user.png" width="25" class="img_item_menu" id="img_item_menu_profile"></span></a></li>
+            
+            <li class=""><a href="{{base_href}}/postures/new">Agregar postura<span class="pull-right showopacity font_16px"><img src="images/png/plus.png" width="25" class="img_item_menu"></span></a></li>
+            
+            <li class=""><a href="#">Ver dashboard<span class="pull-right showopacity font_16px"><img src="images/png/bar-chart.png" width="25" class="img_item_menu"></span></a></li>
+<!--             <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estad&iacute;ststicas <span class="caret"></span><span class="pull-right hidden-xs showopacity font_16px"><img src="images/png/bar-chart.png" width="25" class=""></span></span></a>
+              <ul class="dropdown-menu forAnimate" role="menu">
+                <li><a href="#">Crear</a></li>
+                <li><a href="#">Modificar</a></li>
+                <li><a href="#">Reportar</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Informes</a></li>
+              </ul>
+            </li> -->
+
+            <!--<li><a href="{{base_href}}/operacion/operacion/15">Ver notificaciones<span class="pull-right showopacity font_16px"><img src="images/png/ring.png" width="25" class="img_item_menu"></span></a></li>-->        
+
+      			<li ng-if="not == 0"><a href="{{base_href}}/notificaciones/notificaciones">Ver notificaciones<span class="pull-right showopacity font_16px"><img src="images/png/ring.png" width="25" class="img_item_menu"></span></a></li>     
+             
+            <li ng-if="not != 0"><a href="{{base_href}}/notificaciones/notificaciones" id="not">Ver notificaciones<span class="pull-right showopacity font_16px"><img src="images/png/ringNotif.png" width="25" class="img_item_menu"><p class="notif">{{not}}</p></span></a></li> 
+      			<li class="noborder_bottom"><a href="#" ng-click='logout()'>Cerrar sesi&oacute;n<span class="pull-right showopacity font_16px"><img src="images/png/logout.png" width="25" class="img_item_menu"></span></a></li>
+          </ul>
+        </div>
+    </div>
+</nav>

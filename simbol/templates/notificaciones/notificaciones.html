@@ -1,0 +1,107 @@
+<div ng-if="username != undefined ">
+	<div >
+		<h2>Notificaciones</h2>
+	</div>
+<div class="row nomargin nopadding index_posture_my_postures" class="container" ng-controller="ChatCtrl" ng-init="update_all_not();consultaNot();">
+  <div ng-if="notificaciones != '' ">
+    <div class="row nomargin nopadding container_my_postures_table_tittle">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-14">
+            <h3></h3>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-14">
+            <div class="col-lg-offset-5 col-md-offset-5 col-lg-7 col-md-7 container_search_my_talks">
+              <form action="#" method="get">
+                <div class="input-group">
+                  <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
+                  <input class="form-control seacrh_box" id="search_talks" name="" placeholder="Buscar" type="text" ng-model="buscador_notificaciones">
+                </div>
+              </form>
+            </div>
+          </div>
+      </div>
+      <div class="col-lg-14 col-md-14 col-sm-14 col-xs-14 container_posture_my_talks">
+          <div class="panel panel-default table-responsive container_my_postures_table">
+                <div class="panel-body" >
+                    <table  class='table table-hover table-list-search table_simbol text-center' show-filter="true" >
+                        <thead>
+                            <tr>
+                                  <th class="text-center">N°</th>
+                                  <th class="text-center">Titulo</th>
+                                  <th class="text-center">Mensaje</th>
+                                  <th class="text-center">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr  class="fila_postura" ng-repeat='x in notificaciones | filter: buscador_notificaciones | startFromGrid: post_current_page * post_page_size | limitTo: post_page_size' ng-click='seleccionarUsuario(postura.idposturas)'>
+                               
+                                <td class="text-right" ng-if='x.identificador'>{{x.num}}</td>
+
+                                <td class="text-right" ng-if='x.identificador'>
+
+                                    <a ng-if='x.identificador == 1' ng-href="{{base_href}}/operacion/operacion/{{x.idPostMatch}}" style="text-decoration:none;" class="titleNot">
+                                          {{x.titulo}}
+                                     </a>
+                                     <a ng-if='x.identificador == 3' ng-href="{{base_href}}/postures/{{x.data[0].postura_contraparte_id}}/match/{{x.data[0].posturas_idposturas}}" style="text-decoration:none;" class="titleNot">
+                                          {{x.titulo}}
+                                     </a>
+                                    <a ng-if='x.identificador == 4' ng-href="{{base_href}}/operacion/operacion/{{x.postura_match_id}}" style="text-decoration:none;" class="titleNot">
+                                          {{x.titulo}}
+                                    </a>
+                                    <a ng-if='x.identificador == 5'  style="text-decoration:none;" class="titleNot">
+                                          {{x.titulo}}
+                                    </a>
+
+
+                                </td>
+                                <td class="text-right" ng-if='x.identificador'>
+
+                                    <a ng-if='x.identificador == 1' ng-href="{{base_href}}/operacion/operacion/{{x.idPostMatch}}" style="text-decoration:none;" class="bodyNot">
+                                          {{x.cuerpo}}
+                                    </a>
+                                    <a ng-if='x.identificador == 3' ng-href="{{base_href}}/postures/{{x.data[0].postura_contraparte_id}}/match/{{x.data[0].posturas_idposturas}}" style="text-decoration:none;" class="bodyNot">
+                                          {{x.cuerpo}}
+                                     </a>
+                                     <a ng-if='x.identificador == 4' ng-href="{{base_href}}/operacion/operacion/{{x.postura_match_id}}" style="text-decoration:none;" class="bodyNot">
+                                          {{x.cuerpo}}
+                                    </a>
+                                    <a ng-if='x.identificador == 5'  style="text-decoration:none;" class="bodyNot">
+                                          {{x.cuerpo}}
+                                    </a>
+
+                                </td>
+                                <td class="text-right" ng-if='x.identificador'>
+
+                                    <a ng-if='x.identificador == 1' ng-href="{{base_href}}/operacion/operacion/{{x.idPostMatch}}" style="text-decoration:none;" class="nopadding etiqNot">
+                                          {{x.created_at}}
+                                    </a>
+                                    <a ng-if='x.identificador == 3' ng-href="{{base_href}}/postures/{{x.data[0].postura_contraparte_id}}/match/{{x.data[0].posturas_idposturas}}" style="text-decoration:none;" class="nopadding etiqNot">
+                                          {{x.created_at}}
+                                     </a>
+                                     <a ng-if='x.identificador == 4' ng-href="{{base_href}}/operacion/operacion/{{x.postura_match_id}}" style="text-decoration:none;" class="nopadding etiqNot">
+                                          {{x.created_at}}
+                                    </a>
+                                    <a ng-if='x.identificador == 5'  style="text-decoration:none;" class="nopadding etiqNot">
+                                          {{x.created_at}}
+                                    </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>  
+                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding'>
+                      <div class="pull-left btn-group">
+                          <button type='button' class='btn btn-default' ng-disabled='post_current_page == 0' ng-click='post_current_page = post_current_page - 1'>&lt;</button>
+                          <button type='button' class='btn btn-default' ng-disabled='post_current_page == page.no - 1' ng-click='setPage(page.no,0)' ng-repeat='page in post_pages'>{{page.no}}</button>
+                          <button type='button' class='btn btn-default' ng-disabled='post_current_page >= notificaciones/post_page_size - 1' , ng-click='post_current_page = post_current_page + 1'>&gt;</button>
+                      </div>
+                    </div>
+
+                </div>
+          </div>
+      </div>
+    </div>
+    <div ng-if="notificaciones == '' ">
+        ¡Usted no tiene notificaciones por el momento!
+    </div>
+  </div>
+</div>

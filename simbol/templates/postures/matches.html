@@ -1,0 +1,171 @@
+<!-- Matches con postura -->
+<div ng-controller="MatchesCtrl" ng-init="init_matches()" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding nomargin container_posture_match">
+	<div id="posture_match_posture" class="row nomargin nopadding">
+		<div class="row nomargin nopadding tittle_gral">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<h2>Mi postura</h2>
+				<!-- <pre>{{posture_user | json}}</pre> -->
+			</div>
+		</div>
+
+		<div class="row nomargin nopadding container_my_posture_match">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<div class="row nopadding margin_tb_20">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center border_right_gray_simbol nopadding">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Quiero</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">
+						{{posture_user.quiero | number:2}} {{posture_user.quiero_moneda_simbolo}}
+						<!-- <span ng-if='posture_user.quiero_moneda_id == 1'>
+							{{posture_user.tengo * posture_user.tasacambio | number:2}} {{posture_user.quiero_moneda_simbolo}}
+						</span>
+						<span ng-if='posture_user.quiero_moneda_id == 2'>
+							{{posture_user.tengo / posture_user.tasacambio | number:2}} {{posture_user.quiero_moneda_simbolo}}
+						</span> -->
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center nopadding">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Tengo</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">{{posture_user.tengo | number:2}} {{posture_user.tengo_moneda_simbolo}}</div>
+					</div>
+				</div>
+				<div class="row nopadding margin_tb_20">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center border_right_gray_simbol nopadding">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Tasa de cambio</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">{{posture_user.tasacambio | number:2}} {{iwant_opt_s}}/{{ihave_opt_s}}</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center nopadding">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding"><label class="font_weight_100">Hasta el</label></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding font_weight_bold">
+						{{posture_user.fechahasta | date:'dd/MM/yyyy'}}</div>
+					</div>
+				</div>
+				<div class="row nopadding margin_tb_20" ng-if="posture_user.fraccionar == 1">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding text-center"><label class="font_weight_100">Fraccionada</label></div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center font_weight_100 margin_tb_20 text_bancos_post_mantch">Bancos</label>
+				<table class="table table-responsive table_banks"> 
+     				<tr>
+     					<!-- Bancos en Bolivares -->
+     					<td class="border_right_banks" style="text-align: center; width: auto;">
+         					BsF
+						</td>
+     					<!-- Bancos en USD -->
+     					<td style="text-align: center; width: auto;">USD
+     					</td>
+     				</tr>
+     				<tr>
+     					<!-- Bancos en Bolivares -->
+     					<td class="border_right_banks">
+						    <ul class="nav_tag_bank">
+						        <li ng-repeat="item in posture_user.bancos" ng-if="item.idmonedas == 1 " id="item{{item.idusers_bancos_pais_monedas}}" class="tag_bank_li">
+						            <a class="tag_bank_a">{{item.nombre_banco}}</a>
+						            <!-- <a href="#" ng-click="deleteBank($index,0)" class="delete_bank">x</a> -->
+						        </li>
+					    	</ul>
+     					</td>
+     					<!-- Bancos en USD -->
+     					<td class="border_left_banks">
+						    <ul class="nav_tag_bank">
+						        <li ng-repeat="item in posture_user.bancos" ng-if="item.idmonedas == 2 " id="item{{item.idusers_bancos_pais_monedas}}" class="tag_bank_li">
+						            <a class="tag_bank_a">{{item.nombre_banco}}</a>
+						            <!-- <a href="#" ng-click="deleteBank($index,0)" class="delete_bank">x</a> -->
+						        </li>
+					    	</ul>
+     					</td>
+ 					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- Boton eliminar postura -->
+		<div class="row nopadding nomargin">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<button type="button" class="btn btn-secondary btn_dark_gray_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="delete_posture(posture_user.idposturas)">Eliminar postura</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="postures_match_list" class="row nomargin nopadding">
+		<div class="row nomargin nopadding tittle_gral">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<h2>Match con mi postura</h2>
+			</div>
+		</div>
+		<!-- Listado -->
+		<div class="row nomargin nopadding"  ng-if="postures_match.length == 0">
+			<div class="row nomargin nopadding">
+				<div id="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center no_posture_match">
+					<p>{{username | uppercase}} a&uacute;n no hay posturas que coincidan con la tuya, te notificaremos en lo que hagas match.</p>
+				</div>
+			</div>
+		</div>
+		<div class="row nomargin nopadding container_list_posturas_match" ng-if="postures_match.length > 0">
+			<div ng-repeat="posture_match in postures_match" class="row nomargin nopadding">
+				<div id="card_posture_match_{{posture_match.idposturas}}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 card_list_posturas_match">
+			    		<div class="row nopadding nomargin_left nomargin_right margin_tb_20">
+			    			<span>Usuario: </span>
+			    			<u><a class="font_weight_bold color_gray_simbol" href="#">{{posture_match.user.username | uppercase}}</a></u>
+			    		</div>
+			    		<div class="row nopadding nomargin">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+								<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center font_weight_100 text_bancos_post_mantch">Bancos</label>
+								<table class="table table-responsive table_banks"> 
+				     				<tr>
+				     					<!-- Bancos en Bolivares -->
+				     					<td class="border_right_banks" style="text-align: center; width: auto;">
+				         					BsF
+										</td>
+				     					<!-- Bancos en USD -->
+				     					<td style="text-align: center; width: auto;">USD
+				     					</td>
+				     				</tr>
+				     				<tr>
+				     					<!-- Bancos en Bolivares -->
+				     					<td class="border_right_banks">
+										    <ul class="nav_tag_bank">
+										        <li ng-repeat="item in posture_match.bancos" ng-if="item.idmonedas == 1 " id="item{{item.idusers_bancos_pais_monedas}}" class="tag_bank_li">
+										            <a class="tag_bank_a">{{item.nombre_banco}}</a>
+										            <!-- <a href="#" ng-click="deleteBank($index,0)" class="delete_bank">x</a> -->
+										        </li>
+									    	</ul>
+				     					</td>
+				     					<!-- Bancos en USD -->
+				     					<td class="border_left_banks">
+										    <ul class="nav_tag_bank">
+										        <li ng-repeat="item in posture_match.bancos" ng-if="item.idmonedas == 2 " id="item{{item.idusers_bancos_pais_monedas}}" class="tag_bank_li">
+										            <a class="tag_bank_a">{{item.nombre_banco}}</a>
+										            <!-- <a href="#" ng-click="deleteBank($index,0)" class="delete_bank">x</a> -->
+										        </li>
+									    	</ul>
+				     					</td>
+				 					</tr>
+								</table>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+				    			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 border_right_gray_simbol nopadding">
+				    				<label class="font_weight_100">Cantidad</label>
+				    				<br>
+				    				<label class="">{{posture_match.tengo | number:2}} {{posture_match.tengo_moneda_simbolo}}</label>
+				    			</div>
+				    			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 nopadding">
+				    				<label class="font_weight_100">Tasa de cambio</label>
+				    				<label class="">{{posture_match.tasacambio | number:2}} {{iwant_opt_s}}/{{ihave_opt_s}}</label>
+				    			</div>
+							</div>
+			    		</div>
+			    		<div class="row nopadding nomargin row_btns_list_match">
+			    			<div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			    				<button id="btn_mas_{{posture_match.idposturas}}" type="button" class="btn btn-secondary btn_blue_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="ver_postura_match(id,posture_match.idposturas)">M&aacute;s</button>
+			    				<button id="btn_aceptar_{{posture_match.idposturas}}" type="button" class="btn btn-secondary btn_green_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="aceptar_posture(id,posture_match.idposturas,posture_match.user.id)">Aceptar</button>
+			    				<button id="btn_rechazar_{{posture_match.idposturas}}" type="button" class="btn btn-secondary btn_dark_gray_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="rechazar_posture(id,posture_match.idposturas,0)">Rechazar</button>
+			    			</div>
+			    		</div>
+			    		<hr id="hr_card_list_posturas_match">
+			    	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
