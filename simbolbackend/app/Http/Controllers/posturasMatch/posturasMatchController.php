@@ -367,6 +367,7 @@ class posturasMatchController extends Controller
             {
                 $posturasMatch = posturasMatches::where('posturas_idposturas','=',$idpostura)->orWhere('posturas_idposturas','=',$idpostura_contraparte)->where('postura_contraparte_id','=',$idpostura)->orWhere('postura_contraparte_id','=',$idpostura_contraparte)->get();
                 $this->code = "OK";
+                
                 if(count($posturasMatch) > 0)
                 {
                     $this->data = $posturasMatch;

@@ -58,4 +58,9 @@ class User extends Authenticatable
         return $this->belongsToMany(users_bancos_pais_monedas::class);
     }
 
+    public function negociacion()
+    {
+        return $this->belongsToMany(negociacion::class);
+    }
+
 }

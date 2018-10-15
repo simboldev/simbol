@@ -2,7 +2,7 @@
 	<div >
 		<h2>Gesti&oacute;n de la Operaci&oacute;n</h2>
 	</div>
-	<div  class="row  index_posture_new_posture" class="container"  ng-controller="ChatCtrl" ng-init="refTrack();estatusOperacion();">
+	<div  class="row  index_posture_new_posture" class="container"  ng-controller="ChatCtrl" ng-init="refTrack();estatusOperacion();consEstatusNeg();">
 		
 		<div class="row nomargin nopadding index_posture_new_posture_tittle" class="col-md-12 col-sm-12 col-xs-12">
 			<!--style="margin-top: 60px;margin-left: 130px;"-->
@@ -67,17 +67,40 @@
 				</div>	
 			</div>
 		</div>
-
+	<br>
 		<div class="Table" style="margin-top: -10px;">
 			<div class="row nomargin nopadding" >
-				<div class="Cell" >
-					<?php include('../chat/chat.html'); ?>
+
+				<div class="Cell" ng-if="estatusNeg == 0 && userNeg=='' ">
+					<!--SE COMENTA PARA DESAPARECER EL CHAT-->
+					<?php //include('../chat/chat.html'); ?>
+
+					<?php include('../negociacion/negociacion.html'); ?>
 				</div>	
+				<div class="Cell" ng-if="estatusNeg == 1 && userNeg == id ">
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+						<br>
+					La contraparte está revisando la información de la transferencia. le informaremos cuando ya la haya confirmado
+					</div>
+				</div>
+				<div class="Cell" ng-if="estatusNeg == 1 && userNeg != id ">
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+						<br>
+					La transferencia fue realizada, puede descargar el comprobante y confirmar la recepción de los fondos
+					<br>
+					<button type="button" class="btn btn-secondary btn_orange_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="guardarNegociacion();">
+								Descargar Comprobante
+							</button>
+
+					<button type="button" class="btn btn-secondary btn_orange_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="guardarNegociacion();">
+								Confirmar Transferencia
+							</button>
+					</div>
+				</div>
 									
 			</div>
-		</div>
-
-		<div class="Table" style="margin-top: -20px;">
 			<div class="row nomargin nopadding" >
 				<div class="Cell" >
 					<!--area tracking -->
@@ -85,6 +108,10 @@
 				</div>
 			</div>
 		</div>
+
+		<!--<div class="Table" style="margin-top: -20px;">
+			
+		</div>-->
 
 	</div>
 

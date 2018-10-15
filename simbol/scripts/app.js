@@ -688,6 +688,78 @@
 	    $scope.post_current_page = 0;
 	    $scope.post_page_size = 100;
 	    $scope.post_pages = [];
+
+	    $scope.selectBanco = {
+	    	negBanco:null,
+	    }
+
+	    $scope.selectNacionalidad = {
+	    	negNacionalidad: null,
+	    }
+
+
+	    $scope.guardarNegociacion = function(){
+
+				console.log("abadat"+$scope.aba);
+		    	$http({method: 'GET',url: $scope.url_server+'/negociacion/saveNegociacion/'+
+		    		$scope.selectBanco.negBanco+'/'+
+		    		$scope.aba+'/'+
+		    		$scope.nrocuenta+'/'+
+		    		$scope.email+'/'+
+		    		$scope.selectNacionalidad.negNacionalidad+'/'+
+		    		$scope.nroidentificacion+'/'+
+		    		$scope.paramPost+'/'+
+		    		$scope.id
+		    	})
+		    	.then(function (data){
+		    		console.log("data guardada "+data['data']['data']['estatusNeg']);
+		    		if(data['data']['data']['estatusNeg'] == 1){
+		    			console.log('vamos para alla '+$location.url("/operacion/operacion/"+$scope.paramPost));
+		    			//$location.url("/operacion/operacion/"+$scope.paramPost);
+		    			location.reload(true);;
+
+
+		    		}else if(data['data']['data']['estatusNeg'] == 2){
+		    			$location.url("/operacion/operacion/"+$scope.paramPost);
+		    		}
+		    		$scope.consEstatusNeg();
+		    	}
+				,function (xhr, ajaxOptions, thrownError){ 
+					console.log("POSTCONT:: Error guardando negociacion: \n Error: "+xhr.status+" "+thrownError);
+				});
+
+	    }
+
+
+	    $scope.consEstatusNeg = function(){
+	    	//console.log("si va "+$scope.selectBanco.negBanco+'--'+$scope.abadat+"--"+$scope.nrocuenta+"--"+$scope.email+"--"+$scope.selectNacionalidad.negNacionalidad+"--"+$scope.nroidentificacion);
+	    	
+        	$http({method: 'GET',url: $scope.url_server+'/negociacion/consultNeg/'+$scope.paramPost})
+	    	.then(function (data){
+	    		console.log('buenooo  '+data['data']['data']['estatusNeg']);
+	    		$scope.estatusNeg = data['data']['data']['estatusNeg'];
+	    		$scope.userNeg = data['data']['data']['iduser'];
+	    	},
+	    	function(error){
+        		console.log("POSTCONT:: Error en la consulta de estatus de  negociacion: "+error)
+      		});
+
+
+	    }
+
+	    $scope.cargaSelectBanco = function(){
+	    	console.log("el parametro es "+$scope.paramPost)
+	    	$http({method: 'GET',url: $scope.url_server+'/bancos/consBancoPostura/'+$scope.paramPost})
+	    	.then(function (data){
+	    		//console.log('okokok '+data['data']['data'][0].nombre);
+	    		//for(var i in data['data'])
+	    		$scope.selectBancos = data['data']['data'];
+	    	},
+	    	function(error){
+        		console.log("POSTCONT:: Error obteniendo data bancos: "+error)
+      		});
+
+	    }
      
       	$scope.setPage = function(index, type_table) {
 	        switch(type_table)

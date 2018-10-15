@@ -24,7 +24,7 @@ Route::get('amigos/amigos_en_comun_tabla/{iduser_1}/{iduser_2}', 'amigo\amigoCon
 Route::resource('amigos','amigo\amigoController');
 
 Route::resource('bancos','banco\bancoController');
-
+Route::get('bancos/consBancoPostura/{idPosturaMatch}', 'banco\bancoController@consBancoPostura')->name('bancos.consBancoPostura');
 
 Route::get('calificaciones/califXidPmatch/{idp}', 'calificaciones\calificacionesController@califXidPmatch')->name('calificaciones.califXidPmatch');
 Route::put('calificaciones/savePostAndCalif/{id_posturas_match}/{id_calificaciones}',
@@ -38,6 +38,10 @@ Route::resource('confiabilidad','confiabilidad\confiabilidadController');
 Route::resource('denuncias','denuncia\denunciaController');
 
 Route::resource('estatusPosturas','estatusPostura\estatusPosturaController');
+
+Route::resource('negociacion','negociacion\negociacionController');
+Route::get('negociacion/consultNeg/{idPosturaMatch}', 'negociacion\negociacionController@consultNeg')->name('negociacion.consultNeg');
+Route::get('negociacion/saveNegociacion/{idbancoNeg}/{abaNeg}/{nrocuentaNeg}/{emailNeg}/{nacionalidadNeg}/{nroidentificacionNeg}/{idposturamatchNeg}/{iduser}', 'negociacion\negociacionController@saveNegociacion')->name('negociacion.saveNegociacion');
 
 Route::resource('monedas','moneda\monedaController');
 

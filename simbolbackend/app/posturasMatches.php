@@ -77,4 +77,10 @@ class posturasMatches extends Model
     {
         return $this->hasOne(statusOperacion::class);
     }
+
+    public function negociacion()
+    {
+        return $this->belongsToMany(negociacion::class);
+    }
+    
 }

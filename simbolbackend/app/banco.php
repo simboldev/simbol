@@ -1,4 +1,4 @@
-<!-- <?php -->
+<?php 
 
 namespace App;
 
@@ -16,6 +16,11 @@ class banco extends Model
 	public function banco_pais_monedas()
 	{
 		return $this->belongsToMany(banco_pais_monedas::class);
+	}
+
+	public function negociacion()
+	{
+		return $this->belongsToMany(negociacion::class);
 	}
     
 }
