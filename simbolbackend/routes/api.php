@@ -40,7 +40,7 @@ Route::resource('denuncias','denuncia\denunciaController');
 Route::resource('estatusPosturas','estatusPostura\estatusPosturaController');
 
 Route::resource('negociacion','negociacion\negociacionController');
-Route::get('negociacion/consultNeg/{idPosturaMatch}', 'negociacion\negociacionController@consultNeg')->name('negociacion.consultNeg');
+Route::get('negociacion/consultNeg/{idPosturaMatch}/{iduser}', 'negociacion\negociacionController@consultNeg')->name('negociacion.consultNeg');
 Route::get('negociacion/saveNegociacion/{idbancoNeg}/{abaNeg}/{nrocuentaNeg}/{emailNeg}/{nacionalidadNeg}/{nroidentificacionNeg}/{idposturamatchNeg}/{iduser}', 'negociacion\negociacionController@saveNegociacion')->name('negociacion.saveNegociacion');
 
 Route::resource('monedas','moneda\monedaController');

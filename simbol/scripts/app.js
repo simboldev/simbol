@@ -339,7 +339,7 @@
       		});
 
 			$location.url("/postures/new");
-			setTimeout(function(){ location.reload(); }, 500);
+			setTimeout(function(){ location.reload(); }, 5000);
 		}
 
 
@@ -715,6 +715,7 @@
 		    		console.log("data guardada "+data['data']['data']['estatusNeg']);
 		    		if(data['data']['data']['estatusNeg'] == 1){
 		    			console.log('vamos para alla '+$location.url("/operacion/operacion/"+$scope.paramPost));
+		    			console.log("tipo de valor es "+typeof($scope.paramPost));
 		    			//$location.url("/operacion/operacion/"+$scope.paramPost);
 		    			location.reload(true);;
 
@@ -734,11 +735,12 @@
 	    $scope.consEstatusNeg = function(){
 	    	//console.log("si va "+$scope.selectBanco.negBanco+'--'+$scope.abadat+"--"+$scope.nrocuenta+"--"+$scope.email+"--"+$scope.selectNacionalidad.negNacionalidad+"--"+$scope.nroidentificacion);
 	    	
-        	$http({method: 'GET',url: $scope.url_server+'/negociacion/consultNeg/'+$scope.paramPost})
+        	$http({method: 'GET',url: $scope.url_server+'/negociacion/consultNeg/'+$scope.paramPost+'/'+$scope.id})
 	    	.then(function (data){
 	    		console.log('buenooo  '+data['data']['data']['estatusNeg']);
 	    		$scope.estatusNeg = data['data']['data']['estatusNeg'];
 	    		$scope.userNeg = data['data']['data']['iduser'];
+	    		$scope.moneda = data['data']['data']['moneda'];
 	    	},
 	    	function(error){
         		console.log("POSTCONT:: Error en la consulta de estatus de  negociacion: "+error)
@@ -1546,7 +1548,7 @@
 		$scope.redirecNewPostura = function(){
 			$scope.actCrono=$cookieStore.remove("actCrono");
 			$location.url("/postures/new");
-			setTimeout(function(){ location.reload(); }, 500);
+			setTimeout(function(){ location.reload(); }, 5000);
 		}
 
 		

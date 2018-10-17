@@ -5,6 +5,7 @@ namespace App\Http\Controllers\negociacion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\negociacion;
+use App\postura;
 
 class negociacionController extends Controller
 {
@@ -51,23 +52,35 @@ class negociacionController extends Controller
         //
     }
 
-    public function consultNeg($idPosturaMatch){
+    public function consultNeg($idPosturaMatch,$iduser){
 
         $code       = "OK";
         $message    = "";
         $data       = [];
         
+        $datUserMon = postura::select('posturas.quiero_moneda_id')
+                        ->join('posturas_matches','posturas_matches.posturas_idposturas','posturas.idposturas')
+                        ->where('posturas.iduser',$iduser)
+                        ->where('posturas_matches.idposturasMatch',$idPosturaMatch)
+                        ->first();
+
+        if(count($datUserMon) == 0){
+            $qmoneda = '';
+        }else{
+            $qmoneda = $datUserMon->quiero_moneda_id;
+        }
+
         $existNeg = negociacion::select('estatusnegociacion','iduser')
                         ->where('idposturamatch',$idPosturaMatch)
                         ->first();
      
         if($existNeg == null){
-            $data = ['estatusNeg'=>0,'iduser'=>''];
+            $data = ['estatusNeg'=>0,'iduser'=>'','moneda'=>$qmoneda];
         }else if(count($existNeg) == 1){
-            $data = ['estatusNeg'=>$existNeg->estatusnegociacion,'iduser'=>$existNeg->iduser];
+            $data = ['estatusNeg'=>$existNeg->estatusnegociacion,'iduser'=>$existNeg->iduser,'moneda'=>$qmoneda];
         }
 
-     
+
         return response()->json([
             'code'      => $code,
             'msg'   => $message,

@@ -71,20 +71,56 @@
 		<div class="Table" style="margin-top: -10px;">
 			<div class="row nomargin nopadding" >
 
-				<div class="Cell" ng-if="estatusNeg == 0 && userNeg=='' ">
+				<div class="Cell" ng-if="estatusNeg == 0 && userNeg=='' && moneda ==2">
 					<!--SE COMENTA PARA DESAPARECER EL CHAT-->
 					<?php //include('../chat/chat.html'); ?>
 
 					<?php include('../negociacion/negociacion.html'); ?>
 				</div>	
-				<div class="Cell" ng-if="estatusNeg == 1 && userNeg == id ">
+				<div class="Cell" ng-if="estatusNeg == 0 && userNeg == '' && moneda == '' ">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
 					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
 						<br>
-					La contraparte está revisando la información de la transferencia. le informaremos cuando ya la haya confirmado
+						La contraparte está realizando la transferencia en Bs,<br> por favor espere a que la misma sea ejecutada.
 					</div>
 				</div>
-				<div class="Cell" ng-if="estatusNeg == 1 && userNeg != id ">
+
+				<div class="Cell" ng-if="estatusNeg == 1 && userNeg == id && moneda ==2">
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+						<br>
+						<h2>Datos de la Transferencia</h2>
+						<br>
+						<table class="table-responsive">
+							<tbody>
+								<tr>
+									<th>Banco:</th>
+									<th></th>
+								</tr>
+								<tr>
+									<th>Número de Cuenta:</th>
+									<th></th>
+								</tr>
+								<tr>
+									<th>Correo Electrónico:</th>
+									<th></th>
+								</tr>
+								<tr>
+									<th>Número de Identificación:</th>
+									<th></th>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<input type = "file" file-model = "myFile"   />
+						
+						<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" >
+							Transferencia Realizada
+						</button>
+					</div>
+				</div>
+
+				<div class="Cell" ng-if="estatusNeg == 1 && userNeg != id && moneda ==2">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
 					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
 						<br>
