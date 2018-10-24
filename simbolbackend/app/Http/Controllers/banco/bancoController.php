@@ -20,32 +20,19 @@ class bancoController extends Controller
     {
         //
 
-    }
-
-    public function consBancoPostura($idPosturaMatch){
-        
         $code       = "OK";
         $message    = "Success";
 
-        $data       =   banco::select(
-                            'bancos.idbancos',
-                            'bancos.nombre'
-                        )
-                        ->join('bancos_pais_monedas','bancos_pais_monedas.idbanco','bancos.idbancos')
-                        ->join('posturas','posturas.quiero_moneda_id','bancos_pais_monedas.idmoneda')
-                        ->join('posturas_matches','posturas_matches.posturas_idposturas','posturas.idposturas')
-                        ->where('posturas_matches.idposturasMatch',$idPosturaMatch)
-                        ->get();
-
+        $data       =   banco::get();
+       
         return response()->json([
             'code'=> $code,
             'message' => $message,
             'data'=> $data
         ],
         200);
-        
-
     }
+
 
 
     /**

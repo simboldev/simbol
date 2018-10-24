@@ -1,8 +1,82 @@
 <!-- Nueva postura -->
 <div ng-controller="PostureCtrl" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding nomargin container_index_posture">
+
+
 	<!-- Publicar postura -->
 	<div class="flash-m hidden" flash-message="5000">HOLA</div>
 	<!-- <div flash-message="10000">FLASH</div> -->
+<div ng-if="tipousuario_idtipousuario == 5">
+	
+	<div class="row nomargin nopadding index_posture_my_postures">
+		<div class="row nomargin nopadding container_my_postures_table_tittle">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<h3>Monitor de Negociaciones</h3>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<div class="col-lg-offset-5 col-md-offset-5 col-lg-7 col-md-7 container_search_my_talks">
+		            <form action="#" method="get">
+		                <div class="input-group">
+		                    <input class="form-control seacrh_box" id="search_talks" name="" placeholder="Buscar" type="text" ng-model="buscador_mis_neglist">
+		                </div>
+		            </form>
+		        </div>
+			</div>
+		</div>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 container_posture_my_talks">
+			<div class="panel panel-default table-responsive container_my_postures_table">
+				<div class="panel-body" ng-init="negList();">
+			        <table ng-init='configPagesTableNeg()' class='table table-hover table-list-search table_simbol text-center' show-filter="true">
+			          <thead>
+			            <tr class="titles_my_postures_table">
+			              <th class="text-center">Id Negociación</th>
+			              <th class="text-center">Estatus</th>
+			              <th class="text-center">Fecha</th>
+			              <th class="text-center">Tasa</th>
+			              <th class="text-center">$</th>
+			              <th class="text-center">Bs</th>
+			              <th class="text-center">--</th>
+			            </tr>
+			          </thead>
+			          <tbody>
+			            <tr ng-repeat='neg in listNeg | filter: buscador_mis_neglist | startFromGrid: post_current_page * post_page_size | limitTo: post_page_size' , class="fila_postura">
+			              <td class="text-right">{{neg.idneg}}</td>
+			              <td class="text-center" >{{neg.estatus}}</td>
+			              <td class="text-center">{{neg.fecha}}</td>
+			              <td class="text-center">{{neg.tasa}}</td>
+			              <td class="text-center" >{{neg.divisa1}}</td>
+			              <td class="text-center">{{neg.divisa2}}</td>
+			              <td class="text-center">
+			              	<button class="btn-white btn btn-sm"  ng-click="irNegociacion(neg.idneg);">
+                                 Ver 
+                            </button>
+			              </td>
+			            </tr>
+			            <tr>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom"></td>
+			            	<td class="noborder_bottom noborder_right"></td>
+			            </tr>
+			          </tbody>
+			        </table>
+			        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding'>
+			          <div class="pull-right btn-group">
+			          	<button type='button' class='btn btn-default' ng-disabled='post_current_page == 0' ng-click='post_current_page = post_current_page - 1'>&lt;</button>
+						<button type='button' class='btn btn-default' ng-disabled='post_current_page == page.no - 1' ng-click='setPage(page.no,0)' ng-repeat='page in post_pages'>{{page.no}}</button>
+						<button type='button' class='btn btn-default' ng-disabled='post_current_page >= mis_posturas.length/post_page_size - 1' , ng-click='post_current_page = post_current_page + 1'>&gt;</button>
+			          </div>
+			        </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+</div>
+
+<div ng-if="tipousuario_idtipousuario != 5">
 	<div class="row nomargin nopadding index_posture_new_posture_tittle">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<h2>Nueva postura</h2>
@@ -334,4 +408,6 @@
 			</div>
 		</div>
 	</div>
+</div>			
+	
 </div>

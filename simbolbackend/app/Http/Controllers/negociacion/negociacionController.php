@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\negociacion;
 
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\negociacion;
 use App\postura;
+use App\posturasMatches;
 
 class negociacionController extends Controller
 {
@@ -16,7 +18,32 @@ class negociacionController extends Controller
      */
     public function index()
     {
-        //
+        $code       = "OK";
+        $message    = "";
+        $data       = [];
+
+        $dataNegociacion = posturasMatches::select(
+            'posturas_matches.idposturasMatch as idneg',
+            DB::raw("IF(posturas_matches.estatusOperaciones_idestatusOperacion = '4','procesado','en proceso') as estatus"),
+            'posturas_matches.created_at as fecha',
+            'posturas.tasacambio as tasa',
+            'posturas.quiero as divisa1',
+            'posturas.tengo as divisa2'
+        )
+        ->join('posturas','posturas.idposturas','posturas_matches.posturas_idposturas')
+        ->join('negociacions','negociacions.idposturamatch','posturas_matches.idposturasMatch')
+        ->whereIn('negociacions.estatusnegociacion',[3,4])
+        ->whereNotIn('posturas_matches.estatusOperaciones_idestatusOperacion',[0])
+        ->get();
+
+        $data = $dataNegociacion;
+
+        return response()->json([
+            'code'      => $code,
+            'msg'   => $message,
+            'data'      => $data
+        ],200);
+        
     }
 
     /**
@@ -49,8 +76,36 @@ class negociacionController extends Controller
      */
     public function show($id)
     {
-        //
+        $code       = "OK";
+        $message    = "";
+        $data       = [];
+
+        $negociacion = negociacion::select(
+            'negociacions.id as idneg',
+            'negociacions.idbanco',
+            'negociacions.aba',
+            'negociacions.nrocuenta',
+            'negociacions.email',
+            'negociacions.nroidentificacion',
+            'negociacions.comprobante',
+            'negociacions.estatusnegociacion',
+            'negociacions.iduser',
+            'bancos.nombre as nombrebanco'   
+        )
+        ->join('bancos','bancos.idbancos','negociacions.idbanco')
+        ->where('negociacions.idposturamatch',$id)
+        ->get();
+        
+        $data = $negociacion;
+
+        return response()->json([
+            'code'      => $code,
+            'msg'   => $message,
+            'data'      => $data
+        ],200);
+
     }
+
 
     public function consultNeg($idPosturaMatch,$iduser){
 
@@ -70,14 +125,48 @@ class negociacionController extends Controller
             $qmoneda = $datUserMon->quiero_moneda_id;
         }
 
-        $existNeg = negociacion::select('estatusnegociacion','iduser')
-                        ->where('idposturamatch',$idPosturaMatch)
-                        ->first();
-     
+        $existNeg = negociacion::select(
+                        'negociacions.id',
+                        'negociacions.estatusnegociacion',
+                        'negociacions.iduser',
+                        'bancos.nombre as banco',
+                        'negociacions.nrocuenta',
+                        'negociacions.email',
+                        'negociacions.nroidentificacion'
+        )
+        ->join('bancos','bancos.idbancos','negociacions.idbanco')
+        ->where('idposturamatch',$idPosturaMatch)
+        ->where('iduser',$iduser)
+        ->first();
+        
+
+
         if($existNeg == null){
-            $data = ['estatusNeg'=>0,'iduser'=>'','moneda'=>$qmoneda];
+            $data = ['estatusNeg'=>0,'iduser'=>'no','moneda'=>''];
         }else if(count($existNeg) == 1){
-            $data = ['estatusNeg'=>$existNeg->estatusnegociacion,'iduser'=>$existNeg->iduser,'moneda'=>$qmoneda];
+            $data = [
+                        'idNeg' => $existNeg->id,
+                        'estatusNeg'=> $existNeg->estatusnegociacion,
+                        'iduser'=> $existNeg->iduser,
+                        'moneda'=> $qmoneda,
+                        'banco' => $existNeg->banco,
+                        'nrocuenta' => $existNeg->nrocuenta,
+                        'email' =>  $existNeg->email,
+                        'nroidentificacion' => $existNeg->nroidentificacion
+
+            ];
+        }else if(count($existNeg) == 2){
+            $data = [
+                        'idNeg' => $existNeg->id,
+                        'estatusNeg'=> $existNeg->estatusnegociacion,
+                        'iduser'=> $existNeg->iduser,
+                        'moneda'=> $qmoneda,
+                        'banco' => $existNeg->banco,
+                        'nrocuenta' => $existNeg->nrocuenta,
+                        'email' =>  $existNeg->email,
+                        'nroidentificacion' => $existNeg->nroidentificacion
+
+            ];
         }
 
 
@@ -107,7 +196,7 @@ class negociacionController extends Controller
             $negociacion->aba = $abaNeg;
             $negociacion->nrocuenta = $nrocuentaNeg;
             $negociacion->email = $emailNeg;
-            $negociacion->nroidentificacion = $nroidentificacionNeg;
+            $negociacion->nroidentificacion = $identificacion;
             $negociacion->idposturamatch = $idposturamatchNeg;
             $negociacion->estatusnegociacion = 1;
             $negociacion->iduser = $iduser;
@@ -120,7 +209,7 @@ class negociacionController extends Controller
             $negociacion->aba = $abaNeg;
             $negociacion->nrocuenta = $nrocuentaNeg;
             $negociacion->email = $emailNeg;
-            $negociacion->nroidentificacion = $nroidentificacionNeg;
+            $negociacion->nroidentificacion = $identificacion;
             $negociacion->idposturamatch = $idposturamatchNeg;
             $negociacion->estatusnegociacion = 2;
             $negociacion->iduser = $iduser;
@@ -129,7 +218,18 @@ class negociacionController extends Controller
         } 
 
         if($negociacion->save()){
+            
+            $lastNeg = negociacion::select('id')
+                ->where('idposturamatch',$idposturamatchNeg)
+                ->where('iduser','!=',$iduser)
+                ->get()
+                ->last();
+
+            $modEstatus = negociacion::where('id',$lastNeg->id)
+                ->update(['estatusnegociacion'=>2]);
+
             $message = "El registro se ha guardado con exito";
+            
         }else{
             $message = "El registro no se ha podido guardar con exito";
         }
@@ -140,6 +240,44 @@ class negociacionController extends Controller
             'data'      => $data
         ],200);
 
+    }
+
+    public function saveComprobante(Request $request){
+
+            $code       = "OK";
+            $message    = "";
+            $data       = [];
+
+            $idNegociacion = $request->idNeg;
+
+            if($request->hasFile('comprobante')){
+                $comprobante = $request->file('comprobante')->store('evidenciasNegociacion');
+            }
+
+            if($query = negociacion::where('id',$idNegociacion)
+                ->update([
+                    'comprobante' => $comprobante,
+                    'estatusnegociacion' => 3
+                ]) 
+            ) {
+
+                $code       = "OK";
+                $message    = "El comprobante se subió de forma exitosa";
+                $data = 1;
+
+            }else{
+                $code       = "NOTOK";
+                $message    = "Ocurrio un problema al intentar guardar el archivo";
+                $data = 0;
+            }  
+            
+
+            return response()->json([
+            'code'      => $code,
+            'msg'   => $message,
+            'data'      => $data
+            ],200);
+        
     }
 
     /**

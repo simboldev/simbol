@@ -63,7 +63,7 @@
     }
 
     //Método que cronometra la consulta de notificaciones periodicamente inhabilitado por los momentos
-  	$interval(function() {$scope.consNot();},2000);
+  	$interval(function() {$scope.consNot();},4000);
 
     //Método para actualizar el estatus de la notificación a leida
     $scope.readNotify = function(idnotificaciones){
@@ -339,7 +339,7 @@
       		});
 
 			$location.url("/postures/new");
-			setTimeout(function(){ location.reload(); }, 5000);
+			setTimeout(function(){ location.reload(); }, 500);
 		}
 
 
@@ -698,6 +698,50 @@
 	    }
 
 
+	    /*METODO PARA VISUALIZAR NEGOCIACIONES*/
+    $scope.verNegociacion = function(){
+        console.log('postura Match match'+$scope.paramPost);
+
+
+        $http({method: 'GET',url: $scope.url_server+'/negociacion/'+$scope.paramPost})
+          .then(function (data){
+             for(var i in data['data']['data']){
+                console.log("iter is "+data['data']['data'][i].comprobante);
+                
+                  if(data['data']['data'][i].comprobante == null){
+                      $scope.banconegBS = data['data']['data'][i].banco;
+                      $scope.nrocuetanegBS = data['data']['data'][i].nrocuenta;
+                      $scope.emailnegBS = data['data']['data'][i].email;
+                      $scope.nroidentificacionnegBS = data['data']['data'][i].nroidentificacion;
+                      $scope.comprobantenegBS = data['data']['data'][i].comprobante;
+                      $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
+                      $scope.iduserBS = data['data']['data'][i].iduser;
+                      $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
+
+                  }else{
+
+                      $scope.banconegDL = data['data']['data'][i].banco;
+                      $scope.nrocuetanegDL = data['data']['data'][i].nrocuenta;
+                      $scope.emailnegDL = data['data']['data'][i].email;
+                      $scope.nroidentificacionnegDL = data['data']['data'][i].nroidentificacion;
+                      $scope.comprobantenegDL = data['data']['data'][i].comprobante;
+                      $scope.estatusnegDL = data['data']['data'][i].estatusnegociacion;
+                      $scope.iduserDL = data['data']['data'][i].iduser;
+                      $scope.nombrebancoDL = data['data']['data'][i].nombrebanco;
+
+                  }
+             }
+
+             console.log("dime "+$scope.nombrebancoBS);
+             
+          },
+          function(error){
+              console.log("POSTCONT:: Error en la consulta de estatus de  negociacion: "+error)
+          });
+
+        
+    }
+
 	    $scope.guardarNegociacion = function(){
 
 				console.log("abadat"+$scope.aba);
@@ -716,9 +760,7 @@
 		    		if(data['data']['data']['estatusNeg'] == 1){
 		    			console.log('vamos para alla '+$location.url("/operacion/operacion/"+$scope.paramPost));
 		    			console.log("tipo de valor es "+typeof($scope.paramPost));
-		    			//$location.url("/operacion/operacion/"+$scope.paramPost);
-		    			location.reload(true);;
-
+		    			$location.url("/operacion/operacion/"+$scope.paramPost);
 
 		    		}else if(data['data']['data']['estatusNeg'] == 2){
 		    			$location.url("/operacion/operacion/"+$scope.paramPost);
@@ -737,10 +779,16 @@
 	    	
         	$http({method: 'GET',url: $scope.url_server+'/negociacion/consultNeg/'+$scope.paramPost+'/'+$scope.id})
 	    	.then(function (data){
-	    		console.log('buenooo  '+data['data']['data']['estatusNeg']);
+	    		console.log('buenooo  '+data['data']['data']['estatusNeg']+'--'+data['data']['data']['iduser']+'--'+data['data']['data']['moneda']);
+	    		
+	    		$scope.idNeg	=	data['data']['data']['idNeg'];
 	    		$scope.estatusNeg = data['data']['data']['estatusNeg'];
 	    		$scope.userNeg = data['data']['data']['iduser'];
 	    		$scope.moneda = data['data']['data']['moneda'];
+	    		$scope.banco = data['data']['data']['banco'];
+	    		$scope.nrocuenta = data['data']['data']['nrocuenta'];
+	    		$scope.email = data['data']['data']['email'];
+	    		$scope.nroidentificacion = data['data']['data']['nroidentificacion'];
 	    	},
 	    	function(error){
         		console.log("POSTCONT:: Error en la consulta de estatus de  negociacion: "+error)
@@ -751,7 +799,7 @@
 
 	    $scope.cargaSelectBanco = function(){
 	    	console.log("el parametro es "+$scope.paramPost)
-	    	$http({method: 'GET',url: $scope.url_server+'/bancos/consBancoPostura/'+$scope.paramPost})
+	    	$http({method: 'GET',url: $scope.url_server+'/bancos'})
 	    	.then(function (data){
 	    		//console.log('okokok '+data['data']['data'][0].nombre);
 	    		//for(var i in data['data'])
@@ -780,7 +828,7 @@
 
       	//Mètodo que verifica el estatus de la operaciòn cada 2 segundos
 	  	$scope.estatusOperacion = function(){
-	  		$interval(function() {$scope.conStatusOper();},5000);
+	  		$interval(function() {$scope.conStatusOper();},500);
 	  	}
 
       	//consulta el estatus del match de la postura
@@ -908,7 +956,7 @@
 				$interval(function() {  
 					if($routeParams.id_posturas_match && $scope.id){
 						$scope.myFunction();
-						$scope.mosConv($routeParams.id_posturas_match,$scope.id);
+						//$scope.mosConv($routeParams.id_posturas_match,$scope.id);
 					}
 				},4000);
 			}
@@ -942,7 +990,7 @@
 					console.log("c es 0");
 					$scope.tr = 0;
 					$scope.trackImage=$sce.trustAsHtml("<img src='./images/png/tracking0On.PNG' />");
-					$scope.fase1 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf1' name='tranf1' data-toggle='modal' ng-model='tranf1' data-target='#myModal' />");
+					$scope.fase1 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf1' name='tranf1' data-toggle='modal' ng-model='tranf1' data-target='#myModal' disabled='disabled' />");
 					$scope.fase2 = $sce.trustAsHtml("Conf. Transf. <input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal2' disabled='disabled'/>");
 					$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal' disabled='disabled' />");
 					$scope.fase4 = $sce.trustAsHtml("Conf. Transf. <input type='radio' aria-label='...' id='tranf4' name='tranf4' data-toggle='modal' ng-model='tranf4' data-target='#myModal2' disabled='disabled'/>");
@@ -1548,7 +1596,7 @@
 		$scope.redirecNewPostura = function(){
 			$scope.actCrono=$cookieStore.remove("actCrono");
 			$location.url("/postures/new");
-			setTimeout(function(){ location.reload(); }, 5000);
+			setTimeout(function(){ location.reload(); }, 500);
 		}
 
 		

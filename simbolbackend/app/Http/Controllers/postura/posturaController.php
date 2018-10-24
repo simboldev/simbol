@@ -101,10 +101,10 @@ class posturaController extends Controller
                 //notificacion via email
                 // $email = User::select('email')->where('id','=',$postura->iduser)->get();
 
-                /*DESCOMENTAR LUEGO
+                /*DESCOMENTAR LUEGO*/
                 $email = env('APP_SIMBOL_MAIL');
                 Mail::to($email)
-                    ->send(new nuevaPostura($postura));*/
+                    ->send(new nuevaPostura($postura));
 
                 $code       = "OK";
                 $message    = "";

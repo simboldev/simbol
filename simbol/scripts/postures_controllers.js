@@ -455,6 +455,27 @@ mainApp
       $scope.post_page_size = 5;
       $scope.post_pages = [];
       $scope.mis_posturas = []; //[{}]
+      $scope.listNeg = [];
+      $scope.rip = '';
+
+    $scope.irNegociacion = function($idposturamatch){
+        $location.url("/operacion/operacion/"+$idposturamatch);
+    }      
+
+
+    /*METODO PARA TRAER LAS NEGOCIACIONES EN PROCESO JUNTO CON LAS POSTURAS QUE HICIERON MATCH*/
+    $scope.negList = function(){
+
+          $http({method: 'GET',url: $scope.url_server+'/negociacion'})
+          .then(function (data){
+              console.log('buenooo neg '+data['data']['data'][0]['divisa1']);
+              $scope.listNeg = data['data']['data'];
+          },
+          function(error){
+              console.log("POSTCONT:: Error en la consulta de estatus de  negociacion: "+error)
+          });
+    }
+
 
     //Método para traer las posturas en interfaz de inicio
     $scope.misPosturasList = function(){
@@ -478,6 +499,34 @@ mainApp
             console.log("POSTCONT:: misPosturasList Error al crear postura: \n Error: "+xhr.status+" "+thrownError);
       });
     }
+
+
+    $scope.configPagesTableNeg = function() {
+        $scope.post_pages.length = 0;
+        var ini = $scope.post_current_page - 4;
+        var fin = $scope.post_current_page + 5;
+        if (ini < 1) {
+          ini = 1;
+          if (Math.ceil($scope.listNeg.length / $scope.post_page_size) > 10)
+            fin = 10;
+          else
+            fin = Math.ceil($scope.listNeg.length / $scope.post_page_size);
+        } else {
+          if (ini >= Math.ceil($scope.listNeg.length / $scope.post_page_size) - 10) {
+            ini = Math.ceil($scope.listNeg.length / $scope.post_page_size) - 10;
+            fin = Math.ceil($scope.listNeg.length / $scope.post_page_size);
+          }
+        }
+        if (ini < 1) ini = 1;
+        for (var i = ini; i <= fin; i++) {
+          $scope.post_pages.push({
+            no: i
+          });
+        }
+
+        if ($scope.post_current_page >= $scope.post_pages.length)
+          $scope.post_current_page = 0;//$scope.post_pages.length - 1;
+    };
 
     $scope.configPagesTablePosturas = function() {
         $scope.post_pages.length = 0;
