@@ -103,6 +103,7 @@
 							<span id="ihave_input_ng_error_required" ng-show="form_new_posture.posture_ihave.$error.required" class="text-error">Ingrese toda la información.</span>
 							<span id="ihave_input_ng_error_minval" ng-show="form_new_posture.posture_ihave.$error.minlength" class="text-error">Debes ofrecer un monto mayor a 0.01</span>
 							<span ng-show="form_new_posture.posture_ihave.$error.maxlength" class="text-error">Se ha alcanzado el n&uacute;mero m&aacute;ximo de d&iacute;gitos x(15)</span> -->
+							
 							<input type="text" id="iwant_input" name="posture_iwant" class="input_simbol nomargin_top font_bold text-right" ng-model="posture.iwant" ng-minlength="1" ng-maxlength="18" ng-change="validate_number(0,'iwant_input')" ng-keyup="input_format_calculator($event,'iwant_input')" ng-click="set_input('iwant_input')" required />
 							<span id="iwant_input_ng_error_required" ng-show="form_new_posture.posture_iwant.$error.required" class="text-error">Ingrese toda la información.</span>
 							<span id="iwant_input_ng_error_minval" ng-show="form_new_posture.posture_iwant.$error.minlength" class="text-error">Debes ofrecer un monto mayor a 0.01</span>
