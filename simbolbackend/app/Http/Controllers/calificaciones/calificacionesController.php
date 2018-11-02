@@ -72,6 +72,7 @@ class calificacionesController extends Controller
             if($notificacion->save()){
                 $not_has_user->users_id = $data->idusuariocalificado;
                 $not_has_user->notificaciones_idnotificaciones=$notificacion->id;
+                $not_has_user->postura_match_id = $calificaciones->idPosturasMatch; 
 
                 if($not_has_user->save()){
                     $dat = $data->puntos;

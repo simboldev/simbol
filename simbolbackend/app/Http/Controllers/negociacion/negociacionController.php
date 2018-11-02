@@ -125,6 +125,11 @@ class negociacionController extends Controller
             $qmoneda = $datUserMon->quiero_moneda_id;
         }
 
+        $comprobante = negociacion::select('comprobante')
+                        ->where('idposturamatch',$idPosturaMatch)
+                        ->where('iduser','!=',$iduser)
+                        ->first();
+
         $existNeg = negociacion::select(
                         'negociacions.id',
                         'negociacions.estatusnegociacion',
@@ -132,7 +137,8 @@ class negociacionController extends Controller
                         'bancos.nombre as banco',
                         'negociacions.nrocuenta',
                         'negociacions.email',
-                        'negociacions.nroidentificacion'
+                        'negociacions.nroidentificacion',
+                        'negociacions.comprobante'
         )
         ->join('bancos','bancos.idbancos','negociacions.idbanco')
         ->where('idposturamatch',$idPosturaMatch)
@@ -144,6 +150,33 @@ class negociacionController extends Controller
         if($existNeg == null){
             $data = ['estatusNeg'=>0,'iduser'=>'no','moneda'=>''];
         }else if(count($existNeg) == 1){
+            if(!$comprobante){
+                $data = [
+                        'idNeg' => $existNeg->id,
+                        'estatusNeg'=> $existNeg->estatusnegociacion,
+                        'iduser'=> $existNeg->iduser,
+                        'moneda'=> $qmoneda,
+                        'banco' => $existNeg->banco,
+                        'nrocuenta' => $existNeg->nrocuenta,
+                        'email' =>  $existNeg->email,
+                        'nroidentificacion' => $existNeg->nroidentificacion,
+                        'comprobante'   => ''
+                ];
+            }else{
+                    $data = [
+                        'idNeg' => $existNeg->id,
+                        'estatusNeg'=> $existNeg->estatusnegociacion,
+                        'iduser'=> $existNeg->iduser,
+                        'moneda'=> $qmoneda,
+                        'banco' => $existNeg->banco,
+                        'nrocuenta' => $existNeg->nrocuenta,
+                        'email' =>  $existNeg->email,
+                        'nroidentificacion' => $existNeg->nroidentificacion,
+                        'comprobante'   => $comprobante->comprobante
+                    ];
+            }
+            
+        }/*else if(count($existNeg) == 2){
             $data = [
                         'idNeg' => $existNeg->id,
                         'estatusNeg'=> $existNeg->estatusnegociacion,
@@ -152,22 +185,10 @@ class negociacionController extends Controller
                         'banco' => $existNeg->banco,
                         'nrocuenta' => $existNeg->nrocuenta,
                         'email' =>  $existNeg->email,
-                        'nroidentificacion' => $existNeg->nroidentificacion
-
+                        'nroidentificacion' => $existNeg->nroidentificacion,
+                        'comprobante'   => $comprobante->comprobante
             ];
-        }else if(count($existNeg) == 2){
-            $data = [
-                        'idNeg' => $existNeg->id,
-                        'estatusNeg'=> $existNeg->estatusnegociacion,
-                        'iduser'=> $existNeg->iduser,
-                        'moneda'=> $qmoneda,
-                        'banco' => $existNeg->banco,
-                        'nrocuenta' => $existNeg->nrocuenta,
-                        'email' =>  $existNeg->email,
-                        'nroidentificacion' => $existNeg->nroidentificacion
-
-            ];
-        }
+        }*/
 
 
         return response()->json([
@@ -280,6 +301,163 @@ class negociacionController extends Controller
         
     }
 
+    public function saveComprobanteContraparte(Request $request){
+            $code       = "OK";
+            $message    = "";
+            $data       = [];
+
+            $idNegociacion = $request->idNeg;
+            $idUser = $request->idUser;
+
+            if($request->hasFile('comprobante')){
+                $comprobante = $request->file('comprobante')->store('evidenciasNegociacion');
+            }
+
+            if($query = negociacion::where('id',$idNegociacion)->where('iduser',$idUser)
+                ->update([
+                    'comprobante' => $comprobante,
+                    'estatusnegociacion' => 5
+                ]) 
+            ) {
+
+                $code       = "OK";
+                $message    = "El comprobante se subió de forma exitosa";
+                $data = 1;
+
+            }else{
+                $code       = "NOTOK";
+                $message    = "Ocurrio un problema al intentar guardar el archivo";
+                $data = 0;
+            }  
+
+            return response()->json([
+            'code'      => $code,
+            'msg'   => $message,
+            'data'      => $data
+            ],200);
+
+    }
+
+    public function confirmacion1($iduser,$idposturamatch){
+            
+            $code       = "OK";
+            $message    = "";
+            $data       = [];
+
+            if(
+                    negociacion::where('idposturamatch',$idposturamatch)
+                            ->where('iduser',$iduser)
+                            ->update(['estatusnegociacion' => 3])
+            ){
+                $code       = "OK";
+                $message    = "El estatus se ha actualizado de forma exitosa";
+                $data = 1;
+            }else{
+
+                $code       = "NOTOK";
+                $message    = "Ocurrio un problema al intentar actualizar el registro";
+                $data = 0;
+            
+            }  
+
+            return response()->json([
+            'code'      => $code,
+            'msg'   => $message,
+            'data'      => $data
+            ],200);
+
+    }
+
+    public function confirmacion2($iduser,$idposturamatch){
+            
+            $code       = "OK";
+            $message    = "";
+            $data       = [];
+
+            if(
+                    negociacion::where('idposturamatch',$idposturamatch)
+                            ->where('iduser',$iduser)
+                            ->update(['estatusnegociacion' => 4])
+            ){
+                $code       = "OK";
+                $message    = "El estatus se ha actualizado de forma exitosa";
+                $data = 1;
+            }else{
+
+                $code       = "NOTOK";
+                $message    = "Ocurrio un problema al intentar actualizar el registro";
+                $data = 0;
+            
+            }  
+
+            return response()->json([
+            'code'      => $code,
+            'msg'   => $message,
+            'data'      => $data
+            ],200);
+
+    }
+
+    public function confirmacion3($iduser,$idposturamatch){
+            
+            $code       = "OK";
+            $message    = "";
+            $data       = [];
+
+            if(
+                    negociacion::where('idposturamatch',$idposturamatch)
+                            ->where('iduser',$iduser)
+                            ->update(['estatusnegociacion' => 5])
+            ){
+                $code       = "OK";
+                $message    = "El estatus se ha actualizado de forma exitosa";
+                $data = 1;
+            }else{
+
+                $code       = "NOTOK";
+                $message    = "Ocurrio un problema al intentar actualizar el registro";
+                $data = 0;
+            
+            }  
+
+            return response()->json([
+            'code'      => $code,
+            'msg'   => $message,
+            'data'      => $data
+            ],200);
+
+    }
+
+
+    public function confirmacion4($iduser,$idposturamatch){
+            
+            $code       = "OK";
+            $message    = "";
+            $data       = [];
+
+            if(
+                    negociacion::where('idposturamatch',$idposturamatch)
+                            ->update(['estatusnegociacion' => 6])
+            ){
+                $code       = "OK";
+                $message    = "El estatus se ha actualizado de forma exitosa";
+                $data = 1;
+            }else{
+
+                $code       = "NOTOK";
+                $message    = "Ocurrio un problema al intentar actualizar el registro";
+                $data = 0;
+            
+            }  
+
+            return response()->json([
+            'code'      => $code,
+            'msg'   => $message,
+            'data'      => $data
+            ],200);
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -313,4 +491,5 @@ class negociacionController extends Controller
     {
         //
     }
+        
 }

@@ -43,7 +43,12 @@ Route::resource('negociacion','negociacion\negociacionController');
 Route::get('negociacion/consultNeg/{idPosturaMatch}/{iduser}', 'negociacion\negociacionController@consultNeg')->name('negociacion.consultNeg');
 Route::get('negociacion/saveNegociacion/{idbancoNeg}/{abaNeg}/{nrocuentaNeg}/{emailNeg}/{nacionalidadNeg}/{nroidentificacionNeg}/{idposturamatchNeg}/{iduser}', 'negociacion\negociacionController@saveNegociacion')->name('negociacion.saveNegociacion');
 Route::post('negociacion/saveComprobante', 'negociacion\negociacionController@saveComprobante')->name('negociacion.saveComprobante');
+Route::post('negociacion/saveComprobanteContraparte', 'negociacion\negociacionController@saveComprobanteContraparte')->name('negociacion.saveComprobanteContraparte');
 
+Route::get('negociacion/confirmacion1/{iduser}/{idPosturaMatch}', 'negociacion\negociacionController@confirmacion1')->name('negociacion.confirmacion1');
+Route::get('negociacion/confirmacion2/{iduser}/{idPosturaMatch}', 'negociacion\negociacionController@confirmacion2')->name('negociacion.confirmacion2');
+Route::get('negociacion/confirmacion3/{iduser}/{idPosturaMatch}', 'negociacion\negociacionController@confirmacion3')->name('negociacion.confirmacion3');
+Route::get('negociacion/confirmacion4/{iduser}/{idPosturaMatch}', 'negociacion\negociacionController@confirmacion4')->name('negociacion.confirmacion4');
 
 
 Route::resource('monedas','moneda\monedaController');

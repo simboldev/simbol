@@ -7,8 +7,7 @@
 		<div class="row nomargin nopadding index_posture_new_posture_tittle" class="col-md-12 col-sm-12 col-xs-12">
 			<!--style="margin-top: 60px;margin-left: 130px;"-->
 		<!--SI EL ROL ES ADMINISTRADOR-->
-		<div ng-if="tipousuario_idtipousuario == 5" ng-coontroller="PostureCtrl" 
-		ng-init="verNegociacion()" >
+		<div ng-if="tipousuario_idtipousuario == 5" ng-init="verNegociacion()" >
 			<div class="row nomargin nopadding" >
 				<div class="Cell block-center" >
 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="border-style:solid;height: 350px;">
@@ -34,14 +33,36 @@
 								<b>{{nroidentificacionnegBS}}</b>
 							</p>
 							<br>
-							<p ng-if="estatusnegDL != 2 ">
-								<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
-							</p>
-							<p ng-if="estatusnegDL == 3 ">
-								<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+
+							
+							<div ng-if="estatusnegDL == 3 && estatusnegBS == 2">
+								<p>
+									<a href="{{ linkDL }}" target="_blank">
+										<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
+									</a>
+								</p>
+
+								<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf();">
 									Confirmar Transferencia
 								</button>
-							</p>
+							</div>
+
+							<div ng-if="estatusnegDL == 3 && estatusnegBS == 5">
+								<p>
+									<a href="{{ linkDL }}" target="_blank">
+										<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
+									</a>
+								</p>
+
+							</div>
+
+							<div ng-if="estatusnegDL == 5 && estatusnegBS == 5">
+								<p>
+									<a href="{{ linkDL }}" target="_blank">
+										<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
+									</a>
+								</p>
+							</div>
 
 					</div>
 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 " style="border-style:solid;height: 350px;">
@@ -66,15 +87,41 @@
 								<b>{{nroidentificacionnegDL}}</b>
 							</p>
 							<br>
+							
+							
+							<div ng-if="estatusnegDL == 3 && estatusnegBS == 3">
+								<p>
+									 <a href="">
+									 	<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
+									 </a>
+								</p>
 
-							<p ng-if="estatusnegBS != 2 ">
-								<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
-							</p>
-							<p ng-if="estatusnegBS == 3 ">
 								<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
 									Confirmar Transferencia
 								</button>
-							</p>
+							</div>
+
+							<div ng-if="estatusnegDL == 3 && estatusnegBS == 5">
+								<p>
+									<a href="{{ linkBS }}" target="_blank">
+										<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
+									</a>
+								</p>
+
+								<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf2();">
+									Confirmar Transferencia
+								</button>
+							</div>
+
+
+							<div ng-if="estatusnegDL == 5 && estatusnegBS == 5">
+								<p>
+									<a href="{{ linkBS }}" target="_blank">
+										<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
+									</a>
+								</p>
+							</div>
+
 					</div>
 				</div>
 			</div>
@@ -146,10 +193,7 @@
 		
 	<br>
 		
-	
-
-		
-		<div class="Table" style="margin-top: -10px;">
+		<div class="Table" style="margin-top: -10px;" >
 			<div class="row nomargin nopadding" >
 
 				<div class="Cell" ng-if="estatusNeg == 0 && userNeg=='no' &&  moneda == ''">
@@ -159,7 +203,15 @@
 					<?php include('../negociacion/negociacion.html'); ?>
 				</div>	
 				
-				<div class="Cell" ng-if="estatusNeg == 1 || estatusNeg == 2 && moneda == '' && userNeg==id">
+				<div class="Cell" ng-if="estatusNeg == 1  && moneda == '' && userNeg==id">
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+						<br>
+						La contraparte está realizando la transferencia en Bs,<br> por favor espere a que la misma sea ejecutada.
+					</div>
+				</div>
+
+				<div class="Cell" ng-if="estatusNeg == 2  && moneda == '' && userNeg==id">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
 					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
 						<br>
@@ -178,19 +230,19 @@
 							<input type="hidden"  value="{{ idNeg }}" id="idNeg" name="idNeg">
 							<tbody>
 								<tr>
-									<th>Banco: </th>
+									<th>Banco:&nbsp;&nbsp; </th>
 									<th>{{ banco }}</th>
 								</tr>
 								<tr>
-									<th>Número de Cuenta: </th>
+									<th>Número de Cuenta:&nbsp;&nbsp; </th>
 									<th>{{ nrocuenta }}</th>
 								</tr>
 								<tr>
-									<th>Correo Electrónico: </th>
+									<th>Correo Electrónico:&nbsp;&nbsp; </th>
 									<th>{{ email }}</th>
 								</tr>
 								<tr>
-									<th>Nro Identificación: </th>
+									<th>Nro Identificación:&nbsp;&nbsp; </th>
 									<th>{{ nroidentificacion }}</th>
 								</tr>
 							</tbody>
@@ -213,57 +265,116 @@
 						La contraparte está revisando la información de la transferencia,<br> le informaremos cuando ya la haya confirmado.
 					</div>
 				</div>
-
-				<!--<div class="Cell" ng-if="estatusNeg == 1 && userNeg == id && moneda ==2">
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
-					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+				<div class="Cell" ng-if="estatusNeg == 3 && userNeg == id && moneda == '' ">
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
 						<br>
+						La transferencia fue realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
+						
+						<br><br><br>
+					
+							<a href="{{ comprobante }}" target="_blank">
+								<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+										Descargar Comprobante
+								</button>
+							</a>
+						<br><br>
+						
+							<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf2();">
+									Confirmar Transferencia
+							</button>
+						
+
+					</div>
+				</div>
+				
+				<div class="Cell" ng-if="estatusNeg == 4 && userNeg == id && moneda == '' ">
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
+						<br>
+
 						<h2>Datos de la Transferencia</h2>
 						<br>
 						<table class="table-responsive">
+							<input type="hidden"  value="{{ idNeg }}" id="idNeg" name="idNeg">
+							<input type="hidden"  value="{{ id }}" id="idUser" name="idUser">
 							<tbody>
 								<tr>
-									<th>Banco:</th>
-									<th></th>
+									<th>Banco:&nbsp;&nbsp;</th>
+									<th>{{ banco }}</th>
 								</tr>
 								<tr>
-									<th>Número de Cuenta:</th>
-									<th></th>
+									<th>Número de Cuenta:&nbsp;&nbsp; </th>
+									<th>{{ nrocuenta }}</th>
 								</tr>
 								<tr>
-									<th>Correo Electrónico:</th>
-									<th></th>
+									<th>Correo Electrónico:&nbsp;&nbsp; </th>
+									<th>{{ email }}</th>
 								</tr>
 								<tr>
-									<th>Número de Identificación:</th>
-									<th></th>
+									<th>Nro Identificación:&nbsp;&nbsp; </th>
+									<th>{{ nroidentificacion }}</th>
 								</tr>
 							</tbody>
 						</table>
 						<br>
-						<input type = "file" file-model = "myFile"   />
+						<input type = "file" name = "myFile"  id="myFile" />
 						
-						<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" >
+						<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" onclick="evidenciaNegContraparte(
+							document.getElementById('idUser').value,
+							document.getElementById('idNeg').value,
+							document.getElementById('myFile'));">
 							Transferencia Realizada
 						</button>
+
 					</div>
 				</div>
-
-				<div class="Cell" ng-if="estatusNeg == 1 && userNeg != id && moneda ==2">
+				<div class="Cell" ng-if="estatusNeg == 5 && userNeg == id && moneda == '' ">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
 					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
 						<br>
-					La transferencia fue realizada, puede descargar el comprobante y confirmar la recepción de los fondos
-					<br>
-					<button type="button" class="btn btn-secondary btn_orange_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="guardarNegociacion();">
-								Descargar Comprobante
-							</button>
-
-					<button type="button" class="btn btn-secondary btn_orange_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="guardarNegociacion();">
-								Confirmar Transferencia
-							</button>
+						La contraparte está revisando la información de la transferencia,<br> le informaremos cuando ya la haya confirmado.
 					</div>
-				</div>-->
+				</div>
+
+				<div class="Cell" ng-if="estatusNeg == 5 && userNeg == id && moneda == 2 ">
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
+						<br>
+						La transferencia fue realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
+						
+						<br><br><br>
+					
+							<a href="{{ comprobante }}" target="_blank">
+								<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+										Descargar Comprobante
+								</button>
+							</a>
+						<br><br>
+						
+							<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf3();">
+									Confirmar Transferencia
+							</button>
+						
+
+					</div>
+				</div>
+				
+				<div class="Cell" ng-if="estatusNeg == 6 && userNeg == id && moneda == 2 ">
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+						<br>
+						¡Felicitaciones¡ ya su cambio de divisas fue realizado, por favor confirme y no olvide calificar a su contraparte
+					</div>
+				</div>	
+
+				<div class="Cell" ng-if="estatusNeg == 6 && userNeg == id && moneda == '' ">
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+						<br>
+						¡Felicitaciones¡ ya su cambio de divisas fue realizado, por favor confirme y no olvide calificar a su contraparte
+					</div>
+				</div>
 									
 			</div>
 			

@@ -209,6 +209,7 @@ class notificacionController extends Controller
                         {
                           // Si la notificacion ha sido leida, codigo para enviar directo al chat
                           $not[$i]->identificador=4;
+
                         }
 
                         $not[$i]->data=$idPostMatch;
@@ -244,7 +245,7 @@ class notificacionController extends Controller
             }  
 
             $data = $not;
-        
+
         }else{
             $code = "NOTOK";
             $message = "Parámetro requerido (id) debe ser un valor numérico";

@@ -309,6 +309,53 @@
     }
 
 
+    function evidenciaNegContraparte(idUser,idNeg,comprobante){
+        console.log("valores negociaciono "+idNeg+'--------'+comprobante);
+        var url =document.getElementById("url_server").value+'/negociacion/saveComprobanteContraparte';
+        var file = comprobante.files[0];
+
+        var extensiones =file.name.substring(file.name.lastIndexOf('.'));
+
+        var formData = new FormData();
+        formData.append('idNeg',idNeg);
+        formData.append('idUser',idUser);
+
+        console.log("url comprobante"+url);
+        if( extensiones=='.jpg' || 
+            extensiones=='.JPG' || 
+            extensiones=='.jpeg' || 
+            extensiones=='.JPEG' || 
+            extensiones=='.png' || 
+            extensiones=='.PNG' || 
+            extensiones=='.pdf' || 
+            extensiones=='.PDF'){
+
+                formData.append('comprobante',file);
+
+        }else{
+
+                /*formData.append('textouser','¡ Extensión no perimitida, extenciones soportadas png,jpg y pdf !');
+                formData.append('adjuntouser','');*/
+        }
+
+        $.ajax({
+            data:formData,
+            url:url,
+            method:'POST',
+            cache:false,
+            processData:false,
+            contentType: false,
+           success: function (data) {
+                if(data['data'] == 1){
+                    consEstatusNeg();
+                }else{
+
+                }
+           }
+        })
+
+    }
+
     function denunciarOperacion(
     id,
     idUserContraparte,
