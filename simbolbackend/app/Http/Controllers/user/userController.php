@@ -205,7 +205,9 @@ class userController extends Controller
             'estatususuario',
             'tipousuario_idtipousuario',
             'verification_token',
-            'online'
+            'online',
+            'created_at',
+            'updated_at'
         )
         ->where('username','=',$username)
         ->where('password','=',$password)
@@ -213,9 +215,11 @@ class userController extends Controller
 
         
         if(count($user)!=0){
-            $user[0]->online=$control;
-            $user[0]->save();
-
+            if($user[0]->created_at != $user[0]->updated_at){
+                $user[0]->online=$control;
+                $user[0]->save();
+            }
+        
             if(isset($user[0]->username)){
                     // comentado por Carlos
                     /*Mail::to($user[0]->email)
@@ -299,6 +303,35 @@ class userController extends Controller
             'data'  => $user
         ],200);        
     }
+
+    //metodo cambiar password
+    public function cambPass($passs,$user){
+        //dd($passs.'----'.$user);
+        $code       = "OK";
+        $message    = "";
+
+        if(
+        $user = User::where('username',$user)
+            ->update(['password'=>$passs])
+        ){
+
+            return response()->json([
+            'code'  => 'OK',
+            'msg'   => 'Success'
+            ],200);  
+
+        }else{
+
+            return response()->json([
+            'code'  => 'NOT OK',
+            'msg'   => 'Error'
+            ],200); 
+
+        }
+
+
+    }
+
 
     //metodo para notificación o email para la contraparte en el proceso de tracking
     public function notCP($id_user,$idd){

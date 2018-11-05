@@ -93,6 +93,7 @@ Route::get('users/{v_username}/password/{v_password}/control/{v_control}', 'user
 Route::get('users/{id}/notCP/{id_s}', 'user\userController@notCP')->name('users.notCP');
 Route::get('users/{id}/banks/{id_bank}', 'user\userController@banks')->name('users.banks');
 Route::get('users/{id}/negociaciones', 'user\userController@negociaciones')->name('users.negociaciones');
+Route::get('users/cambPass/{pass}/{user}', 'user\userController@cambPass')->name('users.cambPass');
 
 
 
