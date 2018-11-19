@@ -70,7 +70,8 @@ class trackingController extends Controller
              
             $respPostMatch = $this->savePosturasMatch($data->id,$request->idp);
             if($respPostMatch == true){
-                $respNotif=$this->saveNotify($data->iduser,$data->iduser2,$request->idp);
+                $respNotif=$this->saveNotify($data->iduser2,$data->iduser,$request->idp);
+                //$respNotif=$this->saveNotify($data->iduser2,$data->iduser,$request->idp);
                 if($respNotif == true){
                     $resp=true;
                 }else{
@@ -215,7 +216,7 @@ class trackingController extends Controller
                       ->update(['conformetransfiere'=>1,'opsatisf2'=>1])){
                       $code       = "OK";
                       $message    = "Success";
-                      $respNotif=$this->saveNotify($data[0]->iduser2,$data[0]->iduser,$idp);
+                      $respNotif=$this->saveNotify($data[0]->iduser,$data[0]->iduser2,$idp);
                   }else{
                       $code       = "NOTOK";
                       $message    = "Ocurrio un problema al intentar actualizar la informació de tracking";
@@ -225,7 +226,7 @@ class trackingController extends Controller
                       ->update(['metransfirieron'=>1])){
                       $code       = "OK";
                       $message    = "Success";
-                      $respNotif=$this->saveNotify($data[0]->iduser2,$data[0]->iduser,$idp);
+                      $respNotif=$this->saveNotify($data[0]->iduser,$data[0]->iduser2,$idp);
                   }else{
                       $code       = "NOTOK";
                       $message    = "Ocurrio un problema al intentar actualizar la informació de tracking";
@@ -235,7 +236,7 @@ class trackingController extends Controller
                       ->update(['conformetransferido'=>1])){
                       $code       = "OK";
                       $message    = "Success";
-                      $respNotif=$this->saveNotify($data[0]->iduser,$data[0]->iduser2,$idp);
+                      $respNotif=$this->saveNotify($data[0]->iduser2,$data[0]->iduser,$idp);
                   }else{
                       $code       = "NOTOK";
                       $message    = "Ocurrio un problema al intentar actualizar la informació de tracking";

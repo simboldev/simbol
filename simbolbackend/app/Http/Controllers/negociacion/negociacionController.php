@@ -34,6 +34,7 @@ class negociacionController extends Controller
         ->join('negociacions','negociacions.idposturamatch','posturas_matches.idposturasMatch')
         ->whereIn('negociacions.estatusnegociacion',[3,4])
         ->whereNotIn('posturas_matches.estatusOperaciones_idestatusOperacion',[0])
+        ->orderBy('posturas_matches.idposturasMatch','DESC')
         ->get();
 
         $data = $dataNegociacion;
@@ -246,8 +247,10 @@ class negociacionController extends Controller
                 ->get()
                 ->last();
 
-            $modEstatus = negociacion::where('id',$lastNeg->id)
-                ->update(['estatusnegociacion'=>2]);
+            if(count($lastNeg) != 0){
+                $modEstatus = negociacion::where('id',$lastNeg->id)
+                    ->update(['estatusnegociacion'=>2]);
+            }
 
             $message = "El registro se ha guardado con exito";
             
