@@ -42,7 +42,7 @@
 									</a>
 								</p>
 
-								<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf();">
+								<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf();" >
 									Confirmar Transferencia
 								</button>
 							</div>
@@ -108,7 +108,7 @@
 									</a>
 								</p>
 
-								<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf2();">
+								<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf2();" >
 									Confirmar Transferencia
 								</button>
 							</div>
@@ -248,11 +248,11 @@
 							</tbody>
 						</table>
 						<br>
-						<input type = "file" name = "myFile"  id="myFile" />
+						<input type = "file" name = "myFile"  id="myFile" onmouseover="comprobarExistArchivo();" />
 						
 						<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" onclick="evidenciaNeg(
 							document.getElementById('idNeg').value,
-							document.getElementById('myFile'));">
+							document.getElementById('myFile'));" style="visibility:hidden;" id="buttonTransf">
 							Transferencia Realizada
 						</button>
 
@@ -280,7 +280,7 @@
 							</a>
 						<br><br>
 						
-							<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf2();">
+							<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf2();" >
 									Confirmar Transferencia
 							</button>
 						
@@ -318,12 +318,12 @@
 							</tbody>
 						</table>
 						<br>
-						<input type = "file" name = "myFile"  id="myFile" />
+						<input type = "file" name = "myFile2"  id="myFile2" onmouseover="comprobarExistArchivo2();"/>
 						
 						<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" onclick="evidenciaNegContraparte(
 							document.getElementById('idUser').value,
 							document.getElementById('idNeg').value,
-							document.getElementById('myFile'));">
+							document.getElementById('myFile2'));" style="visibility:hidden;" id="buttonTransf2">
 							Transferencia Realizada
 						</button>
 

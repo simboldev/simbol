@@ -299,13 +299,32 @@
             contentType: false,
            success: function (data) {
                 if(data['data'] == 1){
-                    consEstatusNeg();
+                    
+                    //consEstatusNeg();
+                    reloadd();
                 }else{
 
                 }
            }
         })
+    
+    }
 
+    function comprobarExistArchivo2(){
+        if ($('#myFile2').val()) { 
+            $("#buttonTransf2").css("visibility","visible");
+        }else{
+            $("#buttonTransf2").css("visibility","hidden");
+        }
+    }
+
+
+    function comprobarExistArchivo(){
+        if ($('#myFile').val()) { 
+            $("#buttonTransf").css("visibility","visible");
+        }else{
+            $("#buttonTransf").css("visibility","hidden");
+        }
     }
 
 
@@ -347,13 +366,20 @@
             contentType: false,
            success: function (data) {
                 if(data['data'] == 1){
-                    consEstatusNeg();
+                    //consEstatusNeg();
+                    reloadd();
                 }else{
 
                 }
            }
         })
+        
+    }
 
+    function reloadd(){
+
+        setTimeout(function(){ location.reload(); }, 7000);
+        
     }
 
     function denunciarOperacion(

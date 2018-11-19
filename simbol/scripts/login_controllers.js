@@ -143,5 +143,44 @@ mainApp
 			}
 	}
 
+	//metodo para cambiar el password por primera vez
+
+	$scope.cambiarPassword = function(){
+		//alert($scope.password.legth+'----'+$scope.passwordCH+'-----'+$("#userCP").val() );
+		var user = $("#userCP").val();
+		if($scope.password != $scope.passwordCH){
+			alert("¡¡Las contraseñas no coinciden, por favor repita nuevamente!!");
+			//$("#mensaje").val("¡¡Las contraseñas no coinciden, por favor repita nuevamente!!");
+		}else if($scope.password==="undefined" && $scope.passwordCH=="undefined"){
+			alert("¡¡Los campos, deben contener información!!");
+			//$("#mensaje").val("¡¡Los campos, deben contener información!!");
+		}
+
+
+		else if($scope.password==$scope.passwordCH){
+
+			$http({method:'GET',url: $scope.url_server+'/users/cambPass/'+$scope.password+'/'+user})
+			.then(function(data){
+
+				if(data['data']['code'] == 'OK'){
+					alert("¡La contraseña fue cambiada de forma exitosa, intente ingresar!!");
+					//$("#mensaje").val("¡La contraseña fue cambiada de forma exitosa, intente ingresar!!");
+					$("#password").val("");
+					$("#passwordCH").val("");
+				}else{
+					alert("¡La contraseña no se pudo cambiar de forma exitosa, intente nuevamente!!");
+					//$("#mensaje").val("¡La contraseña no se pudo cambiar de forma exitosa, intente nuevamente!!");
+					$("#password").val("");
+					$("#passwordCH").val("");
+				}
+				
+			},function(error) {
+				console.log("POSTCONT:: Error obteniendo data recPass: "+error)
+			});
+
+		}
+
+	}
+
 
 }]);
