@@ -5,7 +5,7 @@
     //$scope.url_server = "http://localhost:8000";
     $scope.base_href = '/simbol-web/simbol/#!';
 
-     $scope.url_server = "http://108.174.197.107:8080";
+     $scope.url_server = "https://108.174.197.107:8080";
     // $scope.base_href = '/simbol-web/simbol/#!';
     $scope.contNot=1;
     $scope.not=0;
