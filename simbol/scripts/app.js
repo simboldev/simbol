@@ -1277,9 +1277,9 @@
 			
 			console.log("entro a myFunction "+$scope.tipousuario_idtipousuario);
 			//vradio boton del contrato checkeado por default
-			if($scope.tipousuario_idtipousuario != 5){
+			/*if($scope.tipousuario_idtipousuario != 5){
 				$scope.contrato=$sce.trustAsHtml("<a href='' ng-click='downloadContr();' >T&eacute;rminos y Condiciones<a/>");
-			}
+			}*/
 			$scope.envChat = {
 				iduser:$scope.id,
 				username:$scope.username,
@@ -1323,10 +1323,14 @@
 					
 						$scope.tr = 0;
 						$scope.trackImage=$sce.trustAsHtml("<img src='./images/png/tracking0On.PNG' />");
-						$scope.fase1 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf1' name='tranf1' data-toggle='modal' ng-model='tranf1' data-target='#myModal' disabled='disabled' />");
-						$scope.fase2 = $sce.trustAsHtml("Conf. Transf. <input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal2' disabled='disabled'/>");
-						$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal' disabled='disabled' />");
-						$scope.fase4 = $sce.trustAsHtml("Conf. Transf. <input type='radio' aria-label='...' id='tranf4' name='tranf4' data-toggle='modal' ng-model='tranf4' data-target='#myModal2' disabled='disabled'/>");
+						//$scope.fase1 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf1' name='tranf1' data-toggle='modal' ng-model='tranf1' data-target='#myModal' disabled='disabled' />");
+						$scope.fase1 = $sce.trustAsHtml("Transfiri&oacute;");
+						//$scope.fase2 = $sce.trustAsHtml("Conf. Transf. <input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal2' disabled='disabled'/>");
+						$scope.fase2 = $sce.trustAsHtml("Conf. Transf. ");
+						//$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal' disabled='disabled' />");
+						$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute;");
+						//$scope.fase4 = $sce.trustAsHtml("Conf. Transf. <input type='radio' aria-label='...' id='tranf4' name='tranf4' data-toggle='modal' ng-model='tranf4' data-target='#myModal2' disabled='disabled'/>");
+						$scope.fase4 = $sce.trustAsHtml("Conf. Transf. ");
 					if($scope.tipousuario_idtipousuario != 5){	
 						$scope.botonCan = $sce.trustAsHtml("<button class='Rectangle-Operacion-s' style='float: left;' data-toggle='modal' data-target='#myModal6'><span class='Operacion-Satisfacto'>Rechazar</span></button>");
 						$scope.botonOpeSat = $sce.trustAsHtml("<button class='Rectangle-Cancelar-In' style='margin-left: 10px;' disabled='disabled' ><span class='Cancelar-In' >Operaci&oacute;n Satisfactoria</span></button>");
@@ -1350,10 +1354,14 @@
 										console.log("1-0-0-0");
 										
 											$scope.trackImage=$sce.trustAsHtml("<img src='./images/png/tracking1On.PNG' />");
-											$scope.fase1 = $sce.trustAsHtml("Transfiere<input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
-											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal2' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
-											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal2' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
-											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf4' name='tranf4' data-toggle='modal' ng-model='tranf4' data-target='#myModal2' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											///$scope.fase1 = $sce.trustAsHtml("Transfiere<input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase1 = $sce.trustAsHtml("Transfiere<p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											//$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal2' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											//$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal2' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											//$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf4' name='tranf4' data-toggle='modal' ng-model='tranf4' data-target='#myModal2' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 										if($scope.tipousuario_idtipousuario != 5){	
 											$scope.botonCan = $sce.trustAsHtml("<button class='Rectangle-Operacion-s' style='float: left;' data-toggle='modal' data-target='#myModal7' ><span class='Operacion-Satisfacto'>Denunciar</span></button>");
 											$scope.botonOpeSat = $sce.trustAsHtml("<button class='Rectangle-Cancelar-In' style='margin-left: 10px;' disabled='disabled' ><span class='Cancelar-In'>Operaci&oacute;n Satisfactoria</span></button>");
@@ -1362,10 +1370,14 @@
 										console.log("1-1-0-0");
 										
 											$scope.trackImage=$sce.trustAsHtml("<img src='./images/png/tracking2On.PNG' />");
-											$scope.fase1 = $sce.trustAsHtml("Transfiere<input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
-											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal2' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
-											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal2' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;' >"+$scope.usernameP+"</p>");
-											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf4' name='tranf4' data-toggle='modal' ng-model='tranf4' data-target='#myModal2' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											//$scope.fase1 = $sce.trustAsHtml("Transfiere<input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase1 = $sce.trustAsHtml("Transfiere<p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											//$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal2' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											//$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal2' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;' >"+$scope.usernameP+"</p>");
+											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <p style='font-size: 11px;font-weight: bold;' >"+$scope.usernameP+"</p>");
+											//$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf4' name='tranf4' data-toggle='modal' ng-model='tranf4' data-target='#myModal2' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 										if($scope.tipousuario_idtipousuario != 5){	
 											$scope.botonCan = $sce.trustAsHtml("<button class='Rectangle-Operacion-s' style='float: left;' data-toggle='modal' data-target='#myModal7' ><span class='Operacion-Satisfacto'>Denunciar</span></button>");
 											$scope.botonOpeSat = $sce.trustAsHtml("<button class='Rectangle-Cancelar-In' style='margin-left: 10px;' disabled='disabled' ><span class='Cancelar-In'>Operaci&oacute;n Satisfactoria</span></button>");
@@ -1374,10 +1386,14 @@
 										console.log("1-1-1-0");
 										
 											$scope.trackImage=$sce.trustAsHtml("<img src='./images/png/tracking3On.PNG' />");
-											$scope.fase1 = $sce.trustAsHtml("Transfiere<input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
-											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal2' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
-											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal2' checked='true' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
-											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf4' name='tranf4' data-toggle='modal' ng-model='tranf4' data-target='#myModal2' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											//$scope.fase1 = $sce.trustAsHtml("Transfiere<input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase1 = $sce.trustAsHtml("Transfiere <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											//$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal2' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											//$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal2' checked='true' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											//$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf4' name='tranf4' data-toggle='modal' ng-model='tranf4' data-target='#myModal2' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 										if($scope.tipousuario_idtipousuario != 5){	
 											$scope.botonCan = $sce.trustAsHtml("<button class='Rectangle-Operacion-s' style='float: left;' data-toggle='modal' data-target='#myModal7' ><span class='Operacion-Satisfacto'>Denunciar</span></button>");
 											$scope.botonOpeSat = $sce.trustAsHtml("<button class='Rectangle-Cancelar-In' style='margin-left: 10px;' disabled='disabled' ><span class='Cancelar-In'>Operaci&oacute;n Satisfactoria</span></button>");
@@ -1386,10 +1402,14 @@
 										console.log("1-1-1-1");
 										
 											$scope.trackImage=$sce.trustAsHtml("<img src='./images/png/tracking4On.PNG' />");
-											$scope.fase1 = $sce.trustAsHtml("Transfiere<input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											/*$scope.fase1 = $sce.trustAsHtml("Transfiere<input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal2' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
 											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal2' checked='true' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
-											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf4' name='tranf4' data-toggle='modal' ng-model='tranf4' data-target='#myModal2' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <input type='radio' aria-label='...' id='tranf4' name='tranf4' data-toggle='modal' ng-model='tranf4' data-target='#myModal2' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");*/
+											$scope.fase1 = $sce.trustAsHtml("Transfiere<p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 										if($scope.tipousuario_idtipousuario != 5){	
 											if(data['data']['data'].opsatisf1==1 && data['data']['data'].opsatisf1 == 1 ){
 												$scope.botonCan = $sce.trustAsHtml("<button class='Rectangle-Operacion-s' style='float: left;' data-toggle='modal' data-target='#myModal7' ><span class='Operacion-Satisfacto'>Denunciar</span></button>");
@@ -1408,10 +1428,15 @@
 										console.log("1-0-0-0");
 										
 											$scope.trackImage=$sce.trustAsHtml("<img src='./images/png/tracking1On.PNG' />");
-											$scope.fase1 = $sce.trustAsHtml("Transfiere <input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											/*$scope.fase1 = $sce.trustAsHtml("Transfiere <input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia<input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal3' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
 											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal2' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
-											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia  <input type='radio' aria-label='...' id='tranf4' name='tranf4' ng-model='tranf4' data-toggle='modal' data-target='#myModal4' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia  <input type='radio' aria-label='...' id='tranf4' name='tranf4' ng-model='tranf4' data-toggle='modal' data-target='#myModal4' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");*/
+
+											$scope.fase1 = $sce.trustAsHtml("Transfiere <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 										if($scope.tipousuario_idtipousuario != 5){	
 											$scope.botonCan = $sce.trustAsHtml("<button class='Rectangle-Operacion-s' style='float: left;' data-toggle='modal' data-target='#myModal7' ><span class='Operacion-Satisfacto'>Denunciar</span></button>");
 											$scope.botonOpeSat = $sce.trustAsHtml("<button class='Rectangle-Cancelar-In' style='margin-left: 10px;' disabled='disabled' ><span class='Cancelar-In'>Operaci&oacute;n Satisfactoria</span></button>");
@@ -1420,10 +1445,15 @@
 										console.log("1-1-0-0");
 										
 											$scope.trackImage=$sce.trustAsHtml("<img src='./images/png/tracking2On.PNG' />");
-											$scope.fase1 = $sce.trustAsHtml("Transfiere <input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											/*$scope.fase1 = $sce.trustAsHtml("Transfiere <input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia<input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal3' checked='true' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
 											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal2' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
-											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia  <input type='radio' aria-label='...' id='tranf4' name='tranf4' ng-model='tranf4' data-toggle='modal' data-target='disabled='disabled'#myModal4' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia  <input type='radio' aria-label='...' id='tranf4' name='tranf4' ng-model='tranf4' data-toggle='modal' data-target='disabled='disabled'#myModal4' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");*/
+
+											$scope.fase1 = $sce.trustAsHtml("Transfiere <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia<p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 										if($scope.tipousuario_idtipousuario != 5){	
 											$scope.botonCan = $sce.trustAsHtml("<button class='Rectangle-Operacion-s' style='float: left;' data-toggle='modal' data-target='#myModal7' ><span class='Operacion-Satisfacto'>Denunciar</span></button>");
 											$scope.botonOpeSat = $sce.trustAsHtml("<button class='Rectangle-Cancelar-In' style='margin-left: 10px;' disabled='disabled' ><span class='Cancelar-In'>Operaci&oacute;n Satisfactoria</span></button>");
@@ -1432,10 +1462,15 @@
 										console.log("1-1-1-0");
 										
 											$scope.trackImage=$sce.trustAsHtml("<img src='./images/png/tracking3On.PNG' />");
-											$scope.fase1 = $sce.trustAsHtml("Transfiere <input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											/*$scope.fase1 = $sce.trustAsHtml("Transfiere <input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia<input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal3' checked='true' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
 											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal2' checked='true' checked='true' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
-											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia  <input type='radio' aria-label='...' id='tranf4' name='tranf4' ng-model='tranf4' data-toggle='modal' data-target='#myModal4' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia  <input type='radio' aria-label='...' id='tranf4' name='tranf4' ng-model='tranf4' data-toggle='modal' data-target='#myModal4' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");*/
+
+											$scope.fase1 = $sce.trustAsHtml("Transfiere <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia<p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia  <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 										if($scope.tipousuario_idtipousuario != 5){
 											$scope.botonCan = $sce.trustAsHtml("<button class='Rectangle-Operacion-s' style='float: left;' data-toggle='modal' data-target='#myModal7' ><span class='Operacion-Satisfacto'>Denunciar</span></button>");
 											$scope.botonOpeSat = $sce.trustAsHtml("<button class='Rectangle-Cancelar-In' style='margin-left: 10px;' disabled='disabled' ><span class='Cancelar-In'>Operaci&oacute;n Satisfactoria</span></button>");
@@ -1444,10 +1479,15 @@
 										console.log("1-1-1-1");
 										
 											$scope.trackImage=$sce.trustAsHtml("<img src='./images/png/tracking4On.PNG' />");
-											$scope.fase1 = $sce.trustAsHtml("Transfiere <input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											/*$scope.fase1 = $sce.trustAsHtml("Transfiere <input type='radio' aria-label='...' id='tranf1' name='tranf1' ng-model='tranf1'data-toggle='modal' data-target='#myModal' checked='true' disabled='disabled'/><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia<input type='radio' aria-label='...' id='tranf3' name='tranf3' data-toggle='modal' ng-model='tranf3' data-target='#myModal3' checked='true' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
 											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute; <input type='radio' aria-label='...' id='tranf2' name='tranf2' ng-model='tranf2' data-toggle='modal' data-target='#myModal2' checked='true' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
-											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia  <input type='radio' aria-label='...' id='tranf4' name='tranf4' ng-model='tranf4' data-toggle='modal' data-target='#myModal4' checked='true' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia  <input type='radio' aria-label='...' id='tranf4' name='tranf4' ng-model='tranf4' data-toggle='modal' data-target='#myModal4' checked='true' disabled='disabled' /><p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");*/
+
+											$scope.fase1 = $sce.trustAsHtml("Transfiere <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
+											$scope.fase2 = $sce.trustAsHtml("Confirm. Transferencia<p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase3 = $sce.trustAsHtml("Transfiri&oacute;<p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP+"</p>");
+											$scope.fase4 = $sce.trustAsHtml("Confirm. Transferencia <p style='font-size: 11px;font-weight: bold;'>"+$scope.usernameP2+"</p>");
 										if($scope.tipousuario_idtipousuario != 5){	
 											if(data['data']['data'].opsatisf1==1 && data['data']['data'].opsatisf1 == 1 ){
 												$scope.botonCan = $sce.trustAsHtml("<button class='Rectangle-Operacion-s' style='float: left;' data-toggle='modal' data-target='#myModal7' ><span class='Operacion-Satisfacto'>Denunciar</span></button>");
