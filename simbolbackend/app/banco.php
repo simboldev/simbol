@@ -10,7 +10,7 @@ class banco extends Model
     //
     // protected $primaryKey = 'idbancos';
     protected $fillable = [
-    	'nombre',
+    	'nombre'
     ]; 
 
 	public function banco_pais_monedas()

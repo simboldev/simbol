@@ -11,6 +11,7 @@
 		  	<a class="enl-recpass col-md-offset-2 col-md-3 col-sm-2 col-xs-12 text-right" href="#" data-toggle='modal' data-target='#modalRecovPass' >	
 		  		&#191;Olvidó su Contraseña?
 		  	</a>
+
 		  	<div class="col-md-6 col-sm-5 col-xs-12 nomargin nopadding">
 			  	<input type="text" name="user" id="user" placeholder="Usuario" class="inp-user col-md-4 col-sm-4 col-xs-12" ng-model="user" required="true" ng-keypress="activaBoton();"  ng-mouseover="activaBoton();"/>
 			  	
@@ -40,6 +41,25 @@
 		</form>
 	  </div>
 	</nav>
+		
+	<!--modal para informar de intento de sesion invalida -->
+	<div ng-if="web_safari == false"  class="modal fade" id="modalNoSesion" role="dialog">
+		    <div class="modal-dialog" title="">
+					<div class="modal-content doublemyinput" >
+						<div class="modal-header onlyheaderModal" >
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="deseleccionarMeTransfirieron()">&times;</button>
+							<h4 class="modal-title text-center">Acceso no Exitoso</h4>
+						</div>
+						
+						<div style="text-align: center;">¡¡Combinación de Usuario y Password incorrecto, por favor intente nuevamente!!</div>
+						<!--data-dismiss="modal"-->
+						 <div class="modal-footer">
+							<button type="button" class="btn btn-default" class="close" data-dismiss="modal" ng-click="deseleccionarMeTransfirieron()">Cerrar</button>
+						</div>
+					</div>
+			</div>
+		</div>
+
 	<!--Modal para la recuperación de contraseña-->
 	<div ng-if="web_safari == false" ng-controller="LoginCtrl" class="modal fade" id="modalRecovPass" role="dialog">
 		    <div class="modal-dialog" title="">

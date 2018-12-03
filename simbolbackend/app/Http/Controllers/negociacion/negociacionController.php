@@ -116,10 +116,11 @@ class negociacionController extends Controller
         
         $datUserMon = postura::select('posturas.quiero_moneda_id')
                         ->join('posturas_matches','posturas_matches.posturas_idposturas','posturas.idposturas')
-                        ->where('posturas.iduser',$iduser)
+                        ->where('posturas_matches.users_idusers',$iduser)
+                        ->orWhere('posturas_matches.iduser2',$iduser)
                         ->where('posturas_matches.idposturasMatch',$idPosturaMatch)
                         ->first();
-
+    
         if(count($datUserMon) == 0){
             $qmoneda = '';
         }else{
@@ -143,10 +144,10 @@ class negociacionController extends Controller
         )
         ->join('bancos','bancos.idbancos','negociacions.idbanco')
         ->where('idposturamatch',$idPosturaMatch)
-        ->where('iduser',$iduser)
+        ->where('iduser','!=',$iduser)
         ->first();
         
-
+       
 
         if($existNeg == null){
             $data = ['estatusNeg'=>0,'iduser'=>'no','moneda'=>''];
@@ -273,12 +274,13 @@ class negociacionController extends Controller
             $data       = [];
 
             $idNegociacion = $request->idNeg;
+            $idUser = $request->idUser;
 
             if($request->hasFile('comprobante')){
                 $comprobante = $request->file('comprobante')->store('evidenciasNegociacion');
             }
 
-            if($query = negociacion::where('id',$idNegociacion)
+            if($query = negociacion::where('id',$idNegociacion)->where('iduser','!=',$idUser)
                 ->update([
                     'comprobante' => $comprobante,
                     'estatusnegociacion' => 3
@@ -316,7 +318,7 @@ class negociacionController extends Controller
                 $comprobante = $request->file('comprobante')->store('evidenciasNegociacion');
             }
 
-            if($query = negociacion::where('id',$idNegociacion)->where('iduser',$idUser)
+            if($query = negociacion::where('id',$idNegociacion)->where('iduser','!=',$idUser)
                 ->update([
                     'comprobante' => $comprobante,
                     'estatusnegociacion' => 5
@@ -349,7 +351,7 @@ class negociacionController extends Controller
 
             if(
                     negociacion::where('idposturamatch',$idposturamatch)
-                            ->where('iduser',$iduser)
+                            ->where('iduser','!=',$iduser)
                             ->update(['estatusnegociacion' => 3])
             ){
                 $code       = "OK";
@@ -379,7 +381,7 @@ class negociacionController extends Controller
 
             if(
                     negociacion::where('idposturamatch',$idposturamatch)
-                            ->where('iduser',$iduser)
+                            ->where('iduser','!=',$iduser)
                             ->update(['estatusnegociacion' => 4])
             ){
                 $code       = "OK";
@@ -409,7 +411,7 @@ class negociacionController extends Controller
 
             if(
                     negociacion::where('idposturamatch',$idposturamatch)
-                            ->where('iduser',$iduser)
+                            ->where('iduser','!=',$iduser)
                             ->update(['estatusnegociacion' => 5])
             ){
                 $code       = "OK";
@@ -440,6 +442,7 @@ class negociacionController extends Controller
 
             if(
                     negociacion::where('idposturamatch',$idposturamatch)
+                            ->where('iduser','!=',$iduser)
                             ->update(['estatusnegociacion' => 6])
             ){
                 $code       = "OK";

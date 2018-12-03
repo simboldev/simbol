@@ -210,10 +210,11 @@
     	var control = 1;
     	$http({method:'GET',url: $scope.url_server+'/users/'+user+'/password/'+password+'/control/'+control})
 		.then(function(data){
-			console.log(data['data']['data']);
+			console.log("data sesion "+data['data']['data']);
 			if(data['data']['data'] == 0){
 				console.log("autenticación - objeto vacio");
 				$scope.mensaje = "¡¡Combinación Usuario y Password incorrecto, por favor ingrese nuevamente!!";
+				$("#modalNoSesion").modal('show');
 			}else{
 
 				if(data['data']['data'][0].created_at == data['data']['data'][0].updated_at){
@@ -968,33 +969,34 @@
           	var link = $scope.url_server+'/simbol-web/simbolbackend/storage/app/';
 			var arrlink = link.split(":8000",2);
 			link = arrlink[0]+arrlink[1];
-			
-
+			console.log("la moneda es "+data['moneda']);
             for(var i in data['data']['data']){
                 console.log("iter is "+data['data']['data'][i].comprobante);
-                
+
                   if(data['data']['data'][i].comprobante == null){
-                      $scope.banconegBS = data['data']['data'][i].banco;
-                      $scope.nrocuetanegBS = data['data']['data'][i].nrocuenta;
-                      $scope.emailnegBS = data['data']['data'][i].email;
-                      $scope.nroidentificacionnegBS = data['data']['data'][i].nroidentificacion;
-                      $scope.comprobantenegBS = data['data']['data'][i].comprobante;
-                      $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
-                      $scope.iduserBS = data['data']['data'][i].iduser;
-                      $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
+
+	                      $scope.banconegBS = data['data']['data'][i].banco;
+	                      $scope.nrocuetanegBS = data['data']['data'][i].nrocuenta;
+	                      $scope.emailnegBS = data['data']['data'][i].email;
+	                      $scope.nroidentificacionnegBS = data['data']['data'][i].nroidentificacion;
+	                      $scope.comprobantenegBS = data['data']['data'][i].comprobante;
+	                      $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
+	                      $scope.iduserBS = data['data']['data'][i].iduser;
+	                      $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
+	                      $scope.monedaqBS = data['data']['data'][i].moneda;
 
 
+                  	}else{
 
-                  }else{
-
-                      $scope.banconegDL = data['data']['data'][i].banco;
-                      $scope.nrocuetanegDL = data['data']['data'][i].nrocuenta;
-                      $scope.emailnegDL = data['data']['data'][i].email;
-                      $scope.nroidentificacionnegDL = data['data']['data'][i].nroidentificacion;
-                      $scope.comprobantenegDL = data['data']['data'][i].comprobante;
-                      $scope.estatusnegDL = data['data']['data'][i].estatusnegociacion;
-                      $scope.iduserDL = data['data']['data'][i].iduser;
-                      $scope.nombrebancoDL = data['data']['data'][i].nombrebanco;
+                  			  $scope.banconegDL = data['data']['data'][i].banco;
+		                      $scope.nrocuetanegDL = data['data']['data'][i].nrocuenta;
+		                      $scope.emailnegDL = data['data']['data'][i].email;
+		                      $scope.nroidentificacionnegDL = data['data']['data'][i].nroidentificacion;
+		                      $scope.comprobantenegDL = data['data']['data'][i].comprobante;
+		                      $scope.estatusnegDL = data['data']['data'][i].estatusnegociacion;
+		                      $scope.iduserDL = data['data']['data'][i].iduser;
+		                      $scope.nombrebancoDL = data['data']['data'][i].nombrebanco;
+                  			  $scope.monedaq = data['data']['data'][i].moneda;
 
                   }
 
@@ -1009,6 +1011,7 @@
 		                    $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
 		                    $scope.iduserBS = data['data']['data'][i].iduser;
 		                    $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
+		                    $scope.monedaqBS = data['data']['data'][i].moneda;
                   		}else{
                   			$scope.banconegDL = data['data']['data'][i].banco;
                       		$scope.nrocuetanegDL = data['data']['data'][i].nrocuenta;
@@ -1018,6 +1021,7 @@
                       		$scope.estatusnegDL = data['data']['data'][i].estatusnegociacion;
                       		$scope.iduserDL = data['data']['data'][i].iduser;
                       		$scope.nombrebancoDL = data['data']['data'][i].nombrebanco;
+                      		$scope.monedaqDL = data['data']['data'][i].moneda;
                   		}
 
                   }
@@ -1042,7 +1046,7 @@
 
 				console.log("abadat"+$scope.aba);
 		    	$http({method: 'GET',url: $scope.url_server+'/negociacion/saveNegociacion/'+
-		    		$scope.selectBanco.negBanco+'/'+
+		    		$scope.selectBancosId+'/'+
 		    		$scope.aba+'/'+
 		    		$scope.nrocuenta+'/'+
 		    		$scope.email+'/'+
@@ -1107,12 +1111,13 @@
 	    }
 
 	    $scope.cargaSelectBanco = function(){
-	    	console.log("el parametro es "+$scope.paramPost)
-	    	$http({method: 'GET',url: $scope.url_server+'/bancos'})
+	    	console.log("el parametro es "+$scope.paramPost+'--'+$scope.id);
+	    	$http({method: 'GET',url: $scope.url_server+'/bancos/consBancos/'+$scope.paramPost+'/'+$scope.id})
 	    	.then(function (data){
-	    		//console.log('okokok '+data['data']['data'][0].nombre);
+	    		console.log('okokok '+data['data']['data']);
 	    		//for(var i in data['data'])
-	    		$scope.selectBancos = data['data']['data'];
+	    		$scope.selectBancos = data['data']['data'].nombre;
+	    		$scope.selectBancosId = data['data']['data'].idbancos;
 	    	},
 	    	function(error){
         		console.log("POSTCONT:: Error obteniendo data bancos: "+error)

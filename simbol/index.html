@@ -263,7 +263,7 @@
         });
     }
 
-    function evidenciaNeg(idNeg,comprobante){
+    function evidenciaNeg(idUser,idNeg,comprobante){
         console.log("valores negociaciono "+idNeg+'--------'+comprobante);
         var url =document.getElementById("url_server").value+'/negociacion/saveComprobante';
         var file = comprobante.files[0];

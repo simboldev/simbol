@@ -3,14 +3,27 @@
 		<div  class="container" ng-controller="ChatCtrl" ng-init="cargaSelectBanco();" >
 			<div id="negociacion" >
 
-					<div class="row nomargin nopadding" >
+					<!--<div class="row nomargin nopadding" >
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">
 							<label class="block-center">Banco</label>
 						</div>
 						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 							<select ng-model="selectBanco.negBanco" name="negBanco" id="negBanco" class="form-control input_simbol font_bold " >
-								<option  ng-repeat="item in selectBancos" ng-value="item.idbancos">{{ item.nombre }}</option>
+								<option  ng-repeat="item in selectBancos" ng-value="item.idbancos" selected="selected">{{ item.nombre }}</option>
 							</select>
+						</div>
+						
+					</div>-->
+					<div class="row nomargin nopadding" >
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">
+							<label class="block-center">Banco</label>
+						</div>
+
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+							<input type="text" id="nomBan" name="nomBan" class="input_simbol nomargin_top font_bold text-right" ng-model="selectBancos"  ng-value="selectBancos" maxlength="20"
+							readonly="readonly"  />
+							
+							<input type="hidden" id="selectBancosId" name="selectBancosId" class="input_simbol nomargin_top font_bold text-right" ng-model="selectBancosId"  maxlength="20" ng-value="selectBancosId"  required />
 						</div>
 					</div>
 

@@ -24,6 +24,7 @@ Route::get('amigos/amigos_en_comun_tabla/{iduser_1}/{iduser_2}', 'amigo\amigoCon
 Route::resource('amigos','amigo\amigoController');
 
 Route::resource('bancos','banco\bancoController');
+Route::get('bancos/consBancos/{postMatch}/{idUser}','banco\bancoController@consBancos');
 
 
 Route::get('calificaciones/califXidPmatch/{idp}', 'calificaciones\calificacionesController@califXidPmatch')->name('calificaciones.califXidPmatch');

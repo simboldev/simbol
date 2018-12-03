@@ -11,26 +11,27 @@
 			<div class="row nomargin nopadding" >
 				<div class="Cell block-center" >
 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="border-style:solid;height: 350px;">
+
 							<label for="databs">
 								Datos Transferencia en Bolivares 
 							</label>
 
 							<p style="font-size: 14px;">
 								Banco:&nbsp;&nbsp;&nbsp;&nbsp;
-								<b>{{nombrebancoBS}}</b>
+								<b>{{nombrebancoDL}} </b>
 								
 							</p>
 							<p style="font-size: 14px;">
 								Num Cuenta:&nbsp;&nbsp;&nbsp;&nbsp;
-								<b>{{nrocuetanegBS}}</b>
+								<b>{{nrocuetanegDL}}</b>
 							</p>
 							<p style="font-size: 14px;">
 								Email:&nbsp;&nbsp;&nbsp;&nbsp;
-								<b>{{emailnegBS}}</b>
+								<b>{{emailnegDL}}</b>
 							</p>
 							<p style="font-size: 14px;">
 								Num Identificación:&nbsp;&nbsp;&nbsp;&nbsp;
-								<b>{{nroidentificacionnegBS}}</b>
+								<b>{{nroidentificacionnegDL}}</b>
 							</p>
 							<br>
 
@@ -47,7 +48,7 @@
 								</button>
 							</div>
 
-							<div ng-if="estatusnegDL == 3 && estatusnegBS == 5">
+							<div ng-if="estatusnegDL == 5 && estatusnegBS == 3">
 								<p>
 									<a href="{{ linkDL }}" target="_blank">
 										<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
@@ -72,19 +73,19 @@
 
 							<p style="font-size: 14px;">
 								Banco:&nbsp;&nbsp;&nbsp;&nbsp;
-								<b>{{nombrebancoDL}}</b>
+								<b>{{nombrebancoBS}}</b>
 							</p>
 							<p style="font-size: 14px;">
 								Num Cuenta:&nbsp;&nbsp;&nbsp;&nbsp;
-								<b>{{nrocuetanegDL}}</b>
+								<b>{{nrocuetanegBS}}</b>
 							</p>
 							<p style="font-size: 14px;">
 								Email:&nbsp;&nbsp;&nbsp;&nbsp;
-								<b>{{emailnegDL}}</b>
+								<b>{{emailnegBS}}</b>
 							</p>
 							<p style="font-size: 14px;">
 								Num Identificación:&nbsp;&nbsp;&nbsp;&nbsp;
-								<b>{{nroidentificacionnegDL}}</b>
+								<b>{{nroidentificacionnegBS}}</b>
 							</p>
 							<br>
 							
@@ -92,16 +93,16 @@
 							<div ng-if="estatusnegDL == 3 && estatusnegBS == 3">
 								<p>
 									 <a href="">
-									 	<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
+									 	<img src="images/png/iconooxoGriss.png" height="40%" width="40%" style="border-style:solid;" />
 									 </a>
 								</p>
 
-								<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+								<button type="button" class="btn btn-secondary butt-login-inactivo pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12"  disabled='disabled' >
 									Confirmar Transferencia
 								</button>
 							</div>
 
-							<div ng-if="estatusnegDL == 3 && estatusnegBS == 5">
+							<div ng-if="estatusnegDL == 5 && estatusnegBS == 3">
 								<p>
 									<a href="{{ linkBS }}" target="_blank">
 										<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
@@ -211,7 +212,7 @@
 					</div>
 				</div>
 
-				<div class="Cell" ng-if="estatusNeg == 2  && moneda == '' && userNeg==id">
+				<div class="Cell" ng-if="estatusNeg == 2  && moneda == 1 && userNeg==id">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
 					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
 						<br>
@@ -219,7 +220,7 @@
 					</div>
 				</div>
 
-				<div class="Cell" ng-if="estatusNeg == 2  && userNeg == id && moneda == 2">
+				<div class="Cell" ng-if="estatusNeg == 2  && userNeg != id && moneda == 2">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
 					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
 						<br>
@@ -251,6 +252,7 @@
 						<input type = "file" name = "myFile"  id="myFile" onmouseover="comprobarExistArchivo();" />
 						
 						<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" onclick="evidenciaNeg(
+							document.getElementById('idUser').value,
 							document.getElementById('idNeg').value,
 							document.getElementById('myFile'));" style="visibility:hidden;" id="buttonTransf">
 							Transferencia Realizada
@@ -258,14 +260,14 @@
 
 					</div>		
 				</div>		
-				<div class="Cell" ng-if="estatusNeg == 3 && userNeg == id && moneda == 2 ">
+				<div class="Cell" ng-if="estatusNeg == 3 && userNeg != id && moneda == 2 ">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
 					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
 						<br>
 						La contraparte está revisando la información de la transferencia,<br> le informaremos cuando ya la haya confirmado.
 					</div>
 				</div>
-				<div class="Cell" ng-if="estatusNeg == 3 && userNeg == id && moneda == '' ">
+				<div class="Cell" ng-if="estatusNeg == 3 && userNeg != id && moneda == 1 ">
 					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
 					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
 						<br>
@@ -288,7 +290,7 @@
 					</div>
 				</div>
 				
-				<div class="Cell" ng-if="estatusNeg == 4 && userNeg == id && moneda == '' ">
+				<div class="Cell" ng-if="estatusNeg == 4 && userNeg != id && moneda == 1 ">
 					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
 					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
 						<br>
@@ -329,7 +331,7 @@
 
 					</div>
 				</div>
-				<div class="Cell" ng-if="estatusNeg == 5 && userNeg == id && moneda == '' ">
+				<div class="Cell" ng-if="estatusNeg == 5 && userNeg != id && moneda == 2 ">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
 					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
 						<br>
@@ -337,7 +339,7 @@
 					</div>
 				</div>
 
-				<div class="Cell" ng-if="estatusNeg == 5 && userNeg == id && moneda == 2 ">
+				<div class="Cell" ng-if="estatusNeg == 5 && userNeg != id && moneda == 1 ">
 					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
 					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
 						<br>
