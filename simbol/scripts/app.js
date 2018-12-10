@@ -2,11 +2,11 @@
  var mainApp = angular.module("app", ["ngRoute","ngResource",'mgcrea.ngStrap','ngCookies','cgNotify']);
  mainApp.controller('appController', function($scope,$http,$cookieStore,$sce,$window,$location,$routeParams,notify,$interval) {
     $scope.tittle_page = "Simbol";
-    //$scope.url_server = "http://localhost:8000";
-    //$scope.base_href = '/simbol-web/simbol/#!';
-    $scope.base_href = '/#!';
+    $scope.url_server = "http://localhost:8000";
+    $scope.base_href = '/simbol-web/simbol/#!';
+    //$scope.base_href = '/#!';
 	 
-    $scope.url_server = "https://api.simbol.club"
+    //$scope.url_server = "https://api.simbol.club"
      //$scope.url_server = "https://108.174.197.107:8080";
     // $scope.base_href = '/simbol-web/simbol/#!';
     $scope.contNot=1;
@@ -975,18 +975,8 @@
 
                   if(data['data']['data'][i].comprobante == null){
 
-	                      $scope.banconegBS = data['data']['data'][i].banco;
-	                      $scope.nrocuetanegBS = data['data']['data'][i].nrocuenta;
-	                      $scope.emailnegBS = data['data']['data'][i].email;
-	                      $scope.nroidentificacionnegBS = data['data']['data'][i].nroidentificacion;
-	                      $scope.comprobantenegBS = data['data']['data'][i].comprobante;
-	                      $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
-	                      $scope.iduserBS = data['data']['data'][i].iduser;
-	                      $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
-	                      $scope.monedaqBS = data['data']['data'][i].moneda;
+                  		if(i == 0){
 
-
-                  	}else{
 
                   			  $scope.banconegDL = data['data']['data'][i].banco;
 		                      $scope.nrocuetanegDL = data['data']['data'][i].nrocuenta;
@@ -996,23 +986,26 @@
 		                      $scope.estatusnegDL = data['data']['data'][i].estatusnegociacion;
 		                      $scope.iduserDL = data['data']['data'][i].iduser;
 		                      $scope.nombrebancoDL = data['data']['data'][i].nombrebanco;
-                  			  $scope.monedaq = data['data']['data'][i].moneda;
+                  			  $scope.monedaq = data['data']['data'][i].moneda; 
 
-                  }
+	                    }else{
 
-                  if(data['data']['data'][i].comprobante != null){
+	                    	  
+	                    	  $scope.banconegBS = data['data']['data'][i].banco;
+		                      $scope.nrocuetanegBS = data['data']['data'][i].nrocuenta;
+		                      $scope.emailnegBS = data['data']['data'][i].email;
+		                      $scope.nroidentificacionnegBS = data['data']['data'][i].nroidentificacion;
+		                      $scope.comprobantenegBS = data['data']['data'][i].comprobante;
+		                      $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
+		                      $scope.iduserBS = data['data']['data'][i].iduser;
+		                      $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
+		                      $scope.monedaqBS = data['data']['data'][i].moneda;
+	                    }
+
+                  	}else{
 
                   		if(i == 0){
-                  			$scope.banconegBS = data['data']['data'][i].banco;
-		                    $scope.nrocuetanegBS = data['data']['data'][i].nrocuenta;
-		                    $scope.emailnegBS = data['data']['data'][i].email;
-		                    $scope.nroidentificacionnegBS = data['data']['data'][i].nroidentificacion;
-		                    $scope.comprobantenegBS = data['data']['data'][i].comprobante;
-		                    $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
-		                    $scope.iduserBS = data['data']['data'][i].iduser;
-		                    $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
-		                    $scope.monedaqBS = data['data']['data'][i].moneda;
-                  		}else{
+
                   			$scope.banconegDL = data['data']['data'][i].banco;
                       		$scope.nrocuetanegDL = data['data']['data'][i].nrocuenta;
                       		$scope.emailnegDL = data['data']['data'][i].email;
@@ -1022,6 +1015,19 @@
                       		$scope.iduserDL = data['data']['data'][i].iduser;
                       		$scope.nombrebancoDL = data['data']['data'][i].nombrebanco;
                       		$scope.monedaqDL = data['data']['data'][i].moneda;
+                  			
+                  		}else{
+
+                  			$scope.banconegBS = data['data']['data'][i].banco;
+		                    $scope.nrocuetanegBS = data['data']['data'][i].nrocuenta;
+		                    $scope.emailnegBS = data['data']['data'][i].email;
+		                    $scope.nroidentificacionnegBS = data['data']['data'][i].nroidentificacion;
+		                    $scope.comprobantenegBS = data['data']['data'][i].comprobante;
+		                    $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
+		                    $scope.iduserBS = data['data']['data'][i].iduser;
+		                    $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
+		                    $scope.monedaqBS = data['data']['data'][i].moneda;
+
                   		}
 
                   }
@@ -1030,7 +1036,7 @@
                   	$scope.linkDL = link+$scope.comprobantenegDL;
              		$scope.linkBS = link+$scope.comprobantenegBS;
              		console.log("dime "+$scope.estatusnegBS+'----'+$scope.estatusnegDL);
-
+             		console.log("dime2 "+$scope.nombrebancoDL+'----'+$scope.nombrebancoBS);
              }
              
              
@@ -1118,6 +1124,12 @@
 	    		//for(var i in data['data'])
 	    		$scope.selectBancos = data['data']['data'].nombre;
 	    		$scope.selectBancosId = data['data']['data'].idbancos;
+	    		if(data['data']['data'].codigo_banco){
+	    			$scope.nrocuenta = '0'+data['data']['data'].codigo_banco;
+	    		}else{
+	    			$scope.nrocuenta = '';	
+	    		}
+	    		$scope.email = $cookieStore.get('email');
 	    	},
 	    	function(error){
         		console.log("POSTCONT:: Error obteniendo data bancos: "+error)

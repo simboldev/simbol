@@ -48,7 +48,7 @@
 								</button>
 							</div>
 
-							<div ng-if="estatusnegDL == 5 && estatusnegBS == 3">
+							<div ng-if="estatusnegDL == 3 && estatusnegBS == 3">
 								<p>
 									<a href="{{ linkDL }}" target="_blank">
 										<img src="images/png/iconooxo.png" height="40%" width="40%" style="border-style:solid;" />
@@ -137,7 +137,7 @@
 						<div class="cell" style="float: left">
 							<div class="Tasa-de-Cambio" style="text-align: center;">
 								Tasa de Cambio
-								<div class="Bs-F-21300"> {{tasacambio | currency:"Bs F "}}</div>
+								<div class="Bs-F-21300"> {{tasacambio | currency:"Bs S "}}</div>
 							</div>
 						</div>
 
@@ -188,7 +188,7 @@
 
 			<div  class="Usuario-DH458">
 				<div  class="text-style-1" >
-					Usuario:&nbsp;{{username}}
+					Contraparte:&nbsp;{{usernameContrap}}
 				</div>	
 			</div>
 		
@@ -197,38 +197,39 @@
 		<div class="Table" style="margin-top: -10px;" >
 			<div class="row nomargin nopadding" >
 
-				<div class="Cell" ng-if="estatusNeg == 0 && userNeg=='no' &&  moneda == ''">
+				<div class="Cell" ng-if="estatusNeg == 1 && userNeg!=id &&  moneda == 1">
 					<!--SE COMENTA PARA DESAPARECER EL CHAT-->
 					<?php //include('../chat/chat.html'); ?>
 
 					<?php include('../negociacion/negociacion.html'); ?>
 				</div>	
 				
-				<div class="Cell" ng-if="estatusNeg == 1  && moneda == '' && userNeg==id">
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
-					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+				<div class="Cell" ng-if="estatusNeg == 1  && moneda == 1 && userNeg==id">
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 block-center">
 						<br>
-						La contraparte está realizando la transferencia en Bs,<br> por favor espere a que la misma sea ejecutada.
+						La contraparte está realizando la transferencia en Bs, por favor espera a <br> que te confirmemos en el tracking para que valides los fondos en tu banca <br>online.
 					</div>
 				</div>
 
-				<div class="Cell" ng-if="estatusNeg == 2  && moneda == 1 && userNeg==id">
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
-					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+				<!--<div class="Cell" ng-if="estatusNeg == 2  && moneda == 1 && userNeg != id">
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 block-center">
 						<br>
-						La contraparte está realizando la transferencia en Bs,<br> por favor espere a que la misma sea ejecutada.
+						La contraparte está realizando la transferencia en $, por favor espera a <br> que te confirmemos en el tracking para que valides los fondos en tu <br>banca online.
 					</div>
-				</div>
+				</div>-->
 
-				<div class="Cell" ng-if="estatusNeg == 2  && userNeg != id && moneda == 2">
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
-					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+				<div class="Cell" ng-if="estatusNeg == 2  && userNeg != id && moneda == 1">
+					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 block-center">
 						<br>
 
 						<h2>Datos de la Transferencia</h2>
 						<br>
 						<table class="table-responsive">
 							<input type="hidden"  value="{{ idNeg }}" id="idNeg" name="idNeg">
+							<input type="hidden"  value="{{ id }}" id="idUser" name="idUser">
 							<tbody>
 								<tr>
 									<th>Banco:&nbsp;&nbsp; </th>
@@ -249,6 +250,8 @@
 							</tbody>
 						</table>
 						<br>
+							Una vez realices la transferencia sube tu comprobante en formato pdf o jpg  para que podamos validarlo
+						<br>	
 						<input type = "file" name = "myFile"  id="myFile" onmouseover="comprobarExistArchivo();" />
 						
 						<button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" onclick="evidenciaNeg(
@@ -260,16 +263,16 @@
 
 					</div>		
 				</div>		
-				<div class="Cell" ng-if="estatusNeg == 3 && userNeg != id && moneda == 2 ">
+				<div class="Cell" ng-if="estatusNeg == 3 && userNeg != id && moneda == 1 ">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
-					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 block-center">
 						<br>
 						La contraparte está revisando la información de la transferencia,<br> le informaremos cuando ya la haya confirmado.
 					</div>
 				</div>
-				<div class="Cell" ng-if="estatusNeg == 3 && userNeg != id && moneda == 1 ">
+				<div class="Cell" ng-if="estatusNeg == 3 && userNeg != id && moneda == 2 ">
 					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
-					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 block-left">
 						<br>
 						La transferencia fue realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
 						
@@ -292,7 +295,7 @@
 				
 				<div class="Cell" ng-if="estatusNeg == 4 && userNeg != id && moneda == 1 ">
 					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
-					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 block-left">
 						<br>
 
 						<h2>Datos de la Transferencia</h2>
@@ -333,7 +336,7 @@
 				</div>
 				<div class="Cell" ng-if="estatusNeg == 5 && userNeg != id && moneda == 2 ">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
-					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 block-center">
 						<br>
 						La contraparte está revisando la información de la transferencia,<br> le informaremos cuando ya la haya confirmado.
 					</div>
@@ -341,7 +344,7 @@
 
 				<div class="Cell" ng-if="estatusNeg == 5 && userNeg != id && moneda == 1 ">
 					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
-					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 block-left">
 						<br>
 						La transferencia fue realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
 						
@@ -364,7 +367,7 @@
 				
 				<div class="Cell" ng-if="estatusNeg == 6 && userNeg == id && moneda == 2 ">
 					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
-					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 block-center">
 						<br>
 						¡Felicitaciones¡ ya su cambio de divisas fue realizado, por favor confirme y no olvide calificar a su contraparte
 					</div>
@@ -372,7 +375,7 @@
 
 				<div class="Cell" ng-if="estatusNeg == 6 && userNeg == id && moneda == '' ">
 					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
-					<div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 block-center">
 						<br>
 						¡Felicitaciones¡ ya su cambio de divisas fue realizado, por favor confirme y no olvide calificar a su contraparte
 					</div>

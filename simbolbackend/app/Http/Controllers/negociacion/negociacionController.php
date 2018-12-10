@@ -32,9 +32,10 @@ class negociacionController extends Controller
         )
         ->join('posturas','posturas.idposturas','posturas_matches.posturas_idposturas')
         ->join('negociacions','negociacions.idposturamatch','posturas_matches.idposturasMatch')
-        ->whereIn('negociacions.estatusnegociacion',[3,4])
+        ->whereIn('negociacions.estatusnegociacion',[2])
         ->whereNotIn('posturas_matches.estatusOperaciones_idestatusOperacion',[0])
         ->orderBy('posturas_matches.idposturasMatch','DESC')
+        ->groupBy('posturas_matches.idposturasMatch','posturas_matches.created_at','posturas.tasacambio','posturas.quiero','posturas.tengo','posturas_matches.estatusOperaciones_idestatusOperacion')
         ->get();
 
         $data = $dataNegociacion;
@@ -97,6 +98,7 @@ class negociacionController extends Controller
         ->where('negociacions.idposturamatch',$id)
         ->get();
         
+        
         $data = $negociacion;
 
         return response()->json([
@@ -147,10 +149,37 @@ class negociacionController extends Controller
         ->where('iduser','!=',$iduser)
         ->first();
         
+
+        $existNeg2 = negociacion::select(
+                        'negociacions.id',
+                        'negociacions.estatusnegociacion',
+                        'negociacions.iduser',
+                        'bancos.nombre as banco',
+                        'negociacions.nrocuenta',
+                        'negociacions.email',
+                        'negociacions.nroidentificacion',
+                        'negociacions.comprobante'
+        )
+        ->join('bancos','bancos.idbancos','negociacions.idbanco')
+        ->where('idposturamatch',$idPosturaMatch)
+        ->where('iduser',$iduser)
+        ->first();
        
 
         if($existNeg == null){
-            $data = ['estatusNeg'=>0,'iduser'=>'no','moneda'=>''];
+            //$data = ['estatusNeg'=>0,'iduser'=>'no','moneda'=>''];
+            $data = [
+                        'idNeg' => $existNeg2->id,
+                        'estatusNeg'=> $existNeg2->estatusnegociacion,
+                        'iduser'=> $existNeg2->iduser,
+                        'moneda'=> $qmoneda,
+                        'banco' => $existNeg2->banco,
+                        'nrocuenta' => $existNeg2->nrocuenta,
+                        'email' =>  $existNeg2->email,
+                        'nroidentificacion' => $existNeg2->nroidentificacion,
+                        'comprobante'   => ''
+            ];
+
         }else if(count($existNeg) == 1){
             if(!$comprobante){
                 $data = [

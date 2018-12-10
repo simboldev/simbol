@@ -27,14 +27,17 @@
 						</div>
 					</div>
 
-					<div class="row nomargin nopadding" >
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">
-							<label class="block-center">ABA</label>
-						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-							<input type="text" id="aba" name="aba" class="input_simbol nomargin_top font_bold text-right" ng-model="aba"  maxlength="20" ng-value='' required />
-						</div>
-					</div>
+					
+							<div class="row nomargin nopadding" ng-controller="PostureCtrl" ng-init="montosXposturas();" >
+							
+								<div ng-if="simMonedaQuiero == '$'" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">
+									<label class="block-center">ABA</label>
+								</div>
+								<div ng-if="simMonedaQuiero == '$'" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									<input type="text" id="aba" name="aba" class="input_simbol nomargin_top font_bold text-right" ng-model="aba"  maxlength="20" ng-value='' required />
+								</div>
+							</div>
+
 
 					<div class="row nomargin nopadding" >
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">

@@ -837,12 +837,12 @@ mainApp
               
               if($scope.id == $scope.iduser){
                   if(data['data']['data'][0]['quiero_moneda_id']==1){
-                      $scope.simMonedaQuiero = 'Bs F';
+                      $scope.simMonedaQuiero = 'BsS';
                       $scope.simMonedaTengo = '$'; 
                       $scope.recibire = $scope.transferir * $scope.tasacambio;
                   }else if (data['data']['data'][0]['quiero_moneda_id']==2){
                       $scope.simMonedaQuiero = '$';
-                      $scope.simMonedaTengo = 'Bs F'; 
+                      $scope.simMonedaTengo = 'BsS'; 
                       $scope.recibire = $scope.transferir / $scope.tasacambio;
                   }
               }
