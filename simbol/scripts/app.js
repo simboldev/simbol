@@ -2,13 +2,11 @@
  var mainApp = angular.module("app", ["ngRoute","ngResource",'mgcrea.ngStrap','ngCookies','cgNotify']);
  mainApp.controller('appController', function($scope,$http,$cookieStore,$sce,$window,$location,$routeParams,notify,$interval) {
     $scope.tittle_page = "Simbol";
-    //$scope.url_server = "http://localhost:8000";
-    //$scope.base_href = '/simbol-web/simbol/#!';
-    $scope.base_href = '/#!';
-	 
-    $scope.url_server = "https://api.simbol.club"
-     //$scope.url_server = "https://108.174.197.107:8080";
+    // $scope.url_server = "http://localhost:8000";
     // $scope.base_href = '/simbol-web/simbol/#!';
+    $scope.link_g = $scope.url_server+'/simbol-web/simbolbackend/storage/app/';
+    $scope.url_server = "https://api.simbol.club";
+    $scope.base_href = '/#!';
     $scope.contNot=1;
     $scope.not=0;
     $scope.actCrono=null;
@@ -964,10 +962,8 @@
 
         $http({method: 'GET',url: $scope.url_server+'/negociacion/'+$scope.paramPost})
           .then(function (data){
-
-          	var link = $scope.url_server+'/simbol-web/simbolbackend/storage/app/';
-			var arrlink = link.split(":8000",2);
-			link = arrlink[0]+arrlink[1];
+			var arrlink = $scope.link_g.split(":8000",2);
+			var link = arrlink[0]+arrlink[1];
 			
 
             for(var i in data['data']['data']){
@@ -1079,9 +1075,8 @@
 	    $scope.consEstatusNeg = function(){
 	    	console.log("si va "+$scope.selectBanco.negBanco+'--'+$scope.abadat+"--"+$scope.nrocuenta+"--"+$scope.email+"--"+$scope.selectNacionalidad.negNacionalidad+"--"+$scope.nroidentificacion);
 	    	
-	    	var link = $scope.url_server+'/simbol-web/simbolbackend/storage/app/';
-			var arrlink = link.split(":8000",2);
-			link = arrlink[0]+arrlink[1];
+			var arrlink = $scope.link_g.split(":8000",2);
+			var link = arrlink[0]+arrlink[1];
 
         	$http({method: 'GET',url: $scope.url_server+'/negociacion/consultNeg/'+$scope.paramPost+'/'+$scope.id})
 	    	.then(function (data){
@@ -1901,13 +1896,9 @@
 			console.log("iduser: "+idUser+" y idpostumat"+idPostura);
 
 			//repositorio de archivos para mostrar en la conversación
-			var link = $scope.url_server+'/simbol-web/simbolbackend/storage/app/';
-			var arrlink = link.split(":8080",2);
-			link = arrlink[0]+arrlink[1];
-			console.log("ruta para adjuntar "+link);
-			//var link ='http://52.170.252.66/simbolbackend/storage/app/';
-			//var link ='http://localhost/simbolbackend/storage/app/';
-			//variable que guardará la imagen de icono de archivo adjunto
+			var arrlink = $scope.link_g.split(":8000",2);
+			var link = arrlink[0]+arrlink[1];
+			console.log("ruta para adjuntar "+$scope.link_g);
 			var icon="";
 			var html="";
 

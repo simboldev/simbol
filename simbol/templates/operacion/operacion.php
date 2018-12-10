@@ -136,7 +136,7 @@
 						<div class="cell" style="float: left">
 							<div class="Tasa-de-Cambio" style="text-align: center;">
 								Tasa de Cambio
-								<div class="Bs-F-21300"> {{tasacambio | currency:"Bs F "}}</div>
+								<div class="Bs-F-21300"> {{tasacambio | currency:"BsS "}}</div>
 							</div>
 						</div>
 

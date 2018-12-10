@@ -120,7 +120,7 @@ class negociacionController extends Controller
                         ->where('posturas_matches.idposturasMatch',$idPosturaMatch)
                         ->first();
 
-        if(count($datUserMon) == 0){
+        if(($datUserMon == null) || (count($datUserMon) == 0)){
             $qmoneda = '';
         }else{
             $qmoneda = $datUserMon->quiero_moneda_id;
