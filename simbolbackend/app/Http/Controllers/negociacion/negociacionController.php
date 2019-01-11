@@ -6,8 +6,13 @@ use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\negociacion;
+use App\estatusNegociacion;
 use App\postura;
 use App\posturasMatches;
+use App\User;
+use App\notificacion;
+use App\notificaciones_has_users;
+use Storage;
 
 class negociacionController extends Controller
 {
@@ -18,32 +23,83 @@ class negociacionController extends Controller
      */
     public function index()
     {
+        error_log("===============index NEGOCIACION========================");
         $code       = "OK";
         $message    = "";
         $data       = [];
 
-        $dataNegociacion = posturasMatches::select(
-            'posturas_matches.idposturasMatch as idneg',
-            DB::raw("IF(posturas_matches.estatusOperaciones_idestatusOperacion = '4','procesado','en proceso') as estatus"),
-            'posturas_matches.created_at as fecha',
-            'posturas.tasacambio as tasa',
-            'posturas.quiero as divisa1',
-            'posturas.tengo as divisa2'
+        // $dataNegociacion = posturasMatches::select(
+        //     'posturas_matches.idposturasMatch as idneg',
+        //     DB::raw("IF(posturas_matches.estatusOperaciones_idestatusOperacion = '4','procesado','en proceso') as estatus"),
+        //     'posturas_matches.created_at as fecha',
+        //     'posturas.tasacambio as tasa',
+        //     'posturas.quiero as divisa1',
+        //     'posturas.tengo as divisa2'
+        // )
+        // ->join('posturas','posturas.idposturas','posturas_matches.posturas_idposturas')
+        // ->join('negociacions','negociacions.idposturamatch','posturas_matches.idposturasMatch')
+        // ->whereIn('negociacions.estatusnegociacion',[2,3])
+        // ->whereNotIn('posturas_matches.estatusOperaciones_idestatusOperacion',[0])
+        // ->orderBy('posturas_matches.idposturasMatch','DESC')
+        // ->get();
+
+        
+      $estatusNegociaciones = estatusNegociacion::all();
+
+      $query_neg = negociacion::select(
+          'negociacions.id',
+          'negociacions.iduser as id_usuario',
+          'users.username as usuario_nombre_usuario',
+          'negociacions.estatusnegociacion as id_estatus_negociacion',
+          'estatus_negociacions.estatus as estatus_negociacion',
+          'negociacions.estatus_autoriza_backoffice',
+          'posturas_matches.idposturasMatch as id_postura_match',
+          'posturas_matches.created_at as fecha'
+          // ,
+          // 'posturas.tasacambio as tasa_cambio',
+          // 'posturas.quiero_moneda_id',
+          // 'posturas.quiero',
+          // 'posturas.tengo_moneda_id',
+          // 'posturas.tengo'
         )
-        ->join('posturas','posturas.idposturas','posturas_matches.posturas_idposturas')
-        ->join('negociacions','negociacions.idposturamatch','posturas_matches.idposturasMatch')
-        ->whereIn('negociacions.estatusnegociacion',[3,4])
-        ->whereNotIn('posturas_matches.estatusOperaciones_idestatusOperacion',[0])
-        ->orderBy('posturas_matches.idposturasMatch','DESC')
+        ->join('users','users.id','negociacions.iduser')
+        ->join('estatus_negociacions','estatus_negociacions.id','negociacions.estatusnegociacion')
+        ->join('posturas_matches','posturas_matches.idposturasMatch','negociacions.idposturamatch')
+        // ->join('posturas','posturas.idposturas','posturas_matches.posturas_idposturas')
+        ->whereIn('negociacions.estatusnegociacion',[2,3])
+        ->orderBy('negociacions.id','DESC')
         ->get();
 
-        $data = $dataNegociacion;
+      foreach ($query_neg as $negociacion)
+      {
+        $postura_match = posturasMatches::find($negociacion->id_postura_match);
 
-        return response()->json([
-            'code'      => $code,
-            'msg'   => $message,
-            'data'      => $data
-        ],200);
+        if($postura_match->users_idusers == $negociacion->id_usuario)
+        {
+            $postura = postura::where('idposturas',$postura_match->posturas_idposturas)->first();
+        }
+        else if($postura_match->iduser2 == $negociacion->id_usuario)
+        {
+            $postura = postura::where('idposturas',$postura_match->postura_contraparte_id)->first();
+        }
+
+        $negociacion['tasacambio'] = $postura->tasacambio;
+        $negociacion['quiero_moneda_id'] = $postura->quiero_moneda_id;
+        $negociacion['quiero'] = $postura->quiero;
+        $negociacion['tengo_moneda_id'] = $postura->tengo_moneda_id;
+        $negociacion['tengo'] = $postura->tengo;
+
+        if($negociacion->quiero_moneda_id == 2 && $negociacion->id_estatus_negociacion)
+          $negociacion->estatus_negociacion = estatusNegociacion::where('id',1)->first()->estatus;
+      }
+
+      $data = $query_neg;
+
+      return response()->json([
+          'code'      => $code,
+          'msg'       => $message,
+          'data'      => $data
+      ],200);
         
     }
 
@@ -79,104 +135,71 @@ class negociacionController extends Controller
     {
         $code       = "OK";
         $message    = "";
-        $data       = [];
-
-        $negociacion = negociacion::select(
-            'negociacions.id as idneg',
-            'negociacions.idbanco',
-            'negociacions.aba',
-            'negociacions.nrocuenta',
-            'negociacions.email',
-            'negociacions.nroidentificacion',
-            'negociacions.comprobante',
-            'negociacions.estatusnegociacion',
-            'negociacions.iduser',
-            'bancos.nombre as nombrebanco'   
-        )
-        ->join('bancos','bancos.idbancos','negociacions.idbanco')
-        ->where('negociacions.idposturamatch',$id)
-        ->get();
-        
-        $data = $negociacion;
+        $data       = array();
 
         return response()->json([
-            'code'      => $code,
+            'code'  => $code,
             'msg'   => $message,
-            'data'      => $data
+            'data'  => $data
         ],200);
 
     }
+    
+    public function negociacion_por_postura_match($idPosturaMatch)
+    {
+        error_log('=================negociacion_por_postura_match ========================'.$idPosturaMatch);
+        $code       = "OK";
+        $message    = "";
+        $data       = array();
 
+        $negociaciones = $this->negociacion_por_postura_y_usuario($idPosturaMatch, null,null);
+ 
+        foreach ($negociaciones as $negociacion)
+        {
+          $format_negociacion = $this->arreglo_negociacion($idPosturaMatch, $negociacion);
+          if($format_negociacion['quiero_moneda'] == 1)
+            $data['negociacion_bs'] = $format_negociacion;
+          else if($format_negociacion['quiero_moneda']  == 2)
+            $data['negociacion_moneda_extranjera'] = $format_negociacion;
+        }
 
-    public function consultNeg($idPosturaMatch,$iduser){
+        return response()->json([
+            'code'  => $code,
+            'msg'   => $message,
+            'data'  => $data
+        ],200);
+    }
 
+    public function consultNeg($idPosturaMatch,$iduser)
+    {
+        error_log("===============consultNeg NEGOCIACION======== idPosturaMatch = ".$idPosturaMatch.' $iduser = '.$iduser);
         $code       = "OK";
         $message    = "";
         $data       = [];
-        
-        $datUserMon = postura::select('posturas.quiero_moneda_id')
-                        ->join('posturas_matches','posturas_matches.posturas_idposturas','posturas.idposturas')
-                        ->where('posturas.iduser',$iduser)
-                        ->where('posturas_matches.idposturasMatch',$idPosturaMatch)
-                        ->first();
+        $datUserMon = '';
 
-        if(($datUserMon == null) || (count($datUserMon) == 0)){
-            $qmoneda = '';
-        }else{
-            $qmoneda = $datUserMon->quiero_moneda_id;
+        $existNeg = $this->negociacion_por_postura_y_usuario($idPosturaMatch, $iduser,'=')->first();
+        // AGG aca datos de la neg. de la contraparte
+
+        if($existNeg == null)
+        {
+            $data = [
+                      'mi_negociacion'=>[ 'estatusNeg'=>0,
+                                          'estatus_autoriza_backoffice'=>0,
+                                          'iduser'=> (int) $iduser,
+                                          'quiero_moneda'=>0],
+                      'negociacion_contraparte' => []
+
+            ];
         }
+        else if($existNeg != null)
+        {
+            $negContraparte = $this->negociacion_por_postura_y_usuario($idPosturaMatch, $iduser,'!=')->first();
 
-        $comprobante = negociacion::select('comprobante')
-                        ->where('idposturamatch',$idPosturaMatch)
-                        ->where('iduser','!=',$iduser)
-                        ->first();
-
-        $existNeg = negociacion::select(
-                        'negociacions.id',
-                        'negociacions.estatusnegociacion',
-                        'negociacions.iduser',
-                        'bancos.nombre as banco',
-                        'negociacions.nrocuenta',
-                        'negociacions.email',
-                        'negociacions.nroidentificacion',
-                        'negociacions.comprobante'
-        )
-        ->join('bancos','bancos.idbancos','negociacions.idbanco')
-        ->where('idposturamatch',$idPosturaMatch)
-        ->where('iduser',$iduser)
-        ->first();
-        
-
-
-        if($existNeg == null){
-            $data = ['estatusNeg'=>0,'iduser'=>'no','moneda'=>''];
-        }else if(count($existNeg) == 1){
-            if(!$comprobante){
-                $data = [
-                        'idNeg' => $existNeg->id,
-                        'estatusNeg'=> $existNeg->estatusnegociacion,
-                        'iduser'=> $existNeg->iduser,
-                        'moneda'=> $qmoneda,
-                        'banco' => $existNeg->banco,
-                        'nrocuenta' => $existNeg->nrocuenta,
-                        'email' =>  $existNeg->email,
-                        'nroidentificacion' => $existNeg->nroidentificacion,
-                        'comprobante'   => ''
-                ];
-            }else{
-                    $data = [
-                        'idNeg' => $existNeg->id,
-                        'estatusNeg'=> $existNeg->estatusnegociacion,
-                        'iduser'=> $existNeg->iduser,
-                        'moneda'=> $qmoneda,
-                        'banco' => $existNeg->banco,
-                        'nrocuenta' => $existNeg->nrocuenta,
-                        'email' =>  $existNeg->email,
-                        'nroidentificacion' => $existNeg->nroidentificacion,
-                        'comprobante'   => $comprobante->comprobante
-                    ];
-            }
-            
+            $data = [ 
+                      'mi_negociacion'=> $this->arreglo_negociacion($idPosturaMatch, $existNeg),
+                      'negociacion_contraparte' => ($negContraparte != null) ? $this->arreglo_negociacion($idPosturaMatch, $negContraparte) : []
+            ];
         }/*else if(count($existNeg) == 2){
             $data = [
                         'idNeg' => $existNeg->id,
@@ -191,17 +214,102 @@ class negociacionController extends Controller
             ];
         }*/
 
-
         return response()->json([
             'code'      => $code,
             'msg'   => $message,
             'data'      => $data
         ],200);
-
     }
 
-    public function saveNegociacion($idbancoNeg,$abaNeg,$nrocuentaNeg,$emailNeg,$nacionalidadNeg,$nroidentificacionNeg,$idposturamatchNeg,$iduser){
+    private function negociacion_por_postura_y_usuario($idPosturaMatch, $iduser, $condicion_usuario)
+    {
+      error_log('===========AAAnegociacion_por_postura_y_usuario============== idPosturaMatch = '.$idPosturaMatch.' $iduser = '.$iduser.'  $condicion_usuario = '.$condicion_usuario);
+      $user = User::where('id',$iduser)->first();
+      $query_neg = negociacion::select(
+                        'negociacions.id',
+                        'negociacions.estatusnegociacion',
+                        'negociacions.estatus_autoriza_backoffice',
+                        'negociacions.iduser',
+                        'bancos.nombre as banco',
+                        'negociacions.aba',
+                        'negociacions.nrocuenta',
+                        'negociacions.email',
+                        'negociacions.nroidentificacion',
+                        'negociacions.comprobante'
+        )
+        ->join('bancos','bancos.idbancos','negociacions.idbanco');
+        error_log($idPosturaMatch != null);
+        if($idPosturaMatch != null)
+          $query_neg->where('idposturamatch',$idPosturaMatch);
+        error_log($iduser != null && $condicion_usuario != null && $user->tipousuario_idtipousuario != 5);
+        if($iduser != null && $condicion_usuario != null && $user->tipousuario_idtipousuario != 5)
+          $query_neg->where('iduser',$condicion_usuario,$iduser);
         
+        $existNeg = $query_neg->get();
+
+        if( $existNeg != null)
+        {
+          foreach ($existNeg as $negociacion)
+          {
+            error_log('foeee '.$negociacion->id);
+            error_log($negociacion->comprobante != ''); 
+            if($negociacion->comprobante != '')
+              // $negociacion->comprobante = Storage::path($existNeg->comprobante);
+              // $existNeg->comprobante = asset(Storage::url($existNeg->comprobante));
+            error_log('sassssssssssssssssssss');
+            error_log($negociacion->estatus_autoriza_backoffice);
+            if($negociacion->estatus_autoriza_backoffice == null || $negociacion->estatus_autoriza_backoffice == '')
+              $negociacion->estatus_autoriza_backoffice = 0;
+          }
+        }
+        return $existNeg;
+    }
+
+    private function quiero_moneda($idPosturaMatch, $iduser)
+    {
+      $postura_match = posturasMatches::find($idPosturaMatch);
+
+      if($postura_match->users_idusers == $iduser)
+      {
+          $datUserMon = postura::where('idposturas',$postura_match->posturas_idposturas)->first()->quiero_moneda_id;
+      }
+      else if($postura_match->iduser2 == $iduser)
+      {
+          $datUserMon = postura::where('idposturas',$postura_match->postura_contraparte_id)->first()->quiero_moneda_id;
+      }
+
+      return $datUserMon;
+    }
+
+    private function arreglo_negociacion($idPosturaMatch, $negociacion)
+    {
+
+      $arr_negociacon = [ 'idNeg' => $negociacion->id,
+                          'estatusNeg'=> $negociacion->estatusnegociacion,
+                          'estatus_autoriza_backoffice'=>$negociacion->estatus_autoriza_backoffice,
+                          'iduser'=> $negociacion->iduser,
+                          'usuario_nombre_usuario'=>User::where('id',$negociacion->iduser)->first()->username,
+                          'quiero_moneda'=> $this->quiero_moneda($idPosturaMatch, $negociacion->iduser),
+                          'aba' => ($negociacion->aba != 'undefined' )? $negociacion->aba : '',
+                          'banco' => $negociacion->banco,
+                          'nrocuenta' => $negociacion->nrocuenta,
+                          'email' =>  $negociacion->email,
+                          'nroidentificacion' => $negociacion->nroidentificacion,
+                          'comprobante'   => ($negociacion->comprobante != null) ? ENV('BASE_URL_COMPROBANTES').$negociacion->comprobante : ''
+
+// storage_path('app/public/avatars/')
+
+
+// "http://localhost:8000//storage/evidenciasNegociacion/CWwMUlG71uYDcmBbW6k48mPJgkFhbCJ2lIpeM4RN.pdf"
+                        ];
+// http://localhost/simbol2019/simbol/simbolbackend/storage/app/evidenciasNegociacion/CWwMUlG71uYDcmBbW6k48mPJgkFhbCJ2lIpeM4RN.pdf
+
+
+      return $arr_negociacon;
+    }
+    public function saveNegociacion($idbancoNeg,$abaNeg,$nrocuentaNeg,$emailNeg,$nacionalidadNeg,$nroidentificacionNeg,$idposturamatchNeg,$iduser,$iduser_contraparte)
+    {
+        error_log("===============saveNegociacion NEGOCIACION========");
         $code       = "OK";
         $message    = "";
         $data       = [];
@@ -210,9 +318,9 @@ class negociacionController extends Controller
 
         $existNeg = negociacion::select('estatusnegociacion')
             ->where('idposturamatch',$idposturamatchNeg)
-            ->get(); 
+            ->get();
 
-        if(count($existNeg) == 0){
+        // if(count($existNeg) == 0){
             $negociacion = new \App\negociacion();
             $negociacion->idbanco = $idbancoNeg;
             $negociacion->aba = $abaNeg;
@@ -225,37 +333,55 @@ class negociacionController extends Controller
 
             $data = ['estatusNeg'=>1];
 
+        // }else{
+        //     $negociacion = new \App\negociacion();
+        //     $negociacion->idbanco = $idbancoNeg;
+        //     $negociacion->aba = $abaNeg;
+        //     $negociacion->nrocuenta = $nrocuentaNeg;
+        //     $negociacion->email = $emailNeg;
+        //     $negociacion->nroidentificacion = $identificacion;
+        //     $negociacion->idposturamatch = $idposturamatchNeg;
+        //     $negociacion->estatusnegociacion = 2;
+        //     $negociacion->iduser = $iduser;
+
+        //     $data = ['estatusNeg'=>2];
+        // }
+
+        if($negociacion->save())
+        {
+          $postura_match = posturasMatches::find($negociacion->idposturamatch);
+          error_log('ssssssss postura_match = ');
+          error_log($postura_match);
+          error_log($postura_match->users_idusers);
+          error_log($negociacion->iduser);
+          if($postura_match->users_idusers == $negociacion->iduser)
+          {
+            error_log('ifff');
+              $postura = postura::where('idposturas',$postura_match->posturas_idposturas)->first();
+          }
+          else if($postura_match->iduser2 == $negociacion->iduser)
+          {
+            error_log('elseee');
+              $postura = postura::where('idposturas',$postura_match->postura_contraparte_id)->first();
+          }
+          error_log($postura);
+
+          // Si es Bs
+          if($postura->quiero_moneda_id == 1)
+          {
+            $user_contraparte = User::find($iduser_contraparte);
+            // Esta condicion debo modificarla a su numero correspondiente sin restar 1, pero para ello debo actualizar condiciones en la operacion tambien
+            // $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion-1)->estatus;
+            $estatus_negociacion = 'agregó los datos bancarios. Ya le puedes transferir.';
+            $tittle_noti = 'Negociación';
+            $text_noti = strtoupper($user_contraparte->username).' '.$estatus_negociacion;
+
+            $this->save_notification($user_contraparte->id,$tittle_noti, $text_noti, $negociacion->idposturamatch,1);
+          }
+
+            $message = "La negociación se ha guardado con exito";
         }else{
-            $negociacion = new \App\negociacion();
-            $negociacion->idbanco = $idbancoNeg;
-            $negociacion->aba = $abaNeg;
-            $negociacion->nrocuenta = $nrocuentaNeg;
-            $negociacion->email = $emailNeg;
-            $negociacion->nroidentificacion = $identificacion;
-            $negociacion->idposturamatch = $idposturamatchNeg;
-            $negociacion->estatusnegociacion = 2;
-            $negociacion->iduser = $iduser;
-
-            $data = ['estatusNeg'=>2];
-        } 
-
-        if($negociacion->save()){
-            
-            $lastNeg = negociacion::select('id')
-                ->where('idposturamatch',$idposturamatchNeg)
-                ->where('iduser','!=',$iduser)
-                ->get()
-                ->last();
-
-            if(count($lastNeg) != 0){
-                $modEstatus = negociacion::where('id',$lastNeg->id)
-                    ->update(['estatusnegociacion'=>2]);
-            }
-
-            $message = "El registro se ha guardado con exito";
-            
-        }else{
-            $message = "El registro no se ha podido guardar con exito";
+            $message = "La negociación no se ha podido guardar con exito";
         }
 
         return response()->json([
@@ -266,83 +392,182 @@ class negociacionController extends Controller
 
     }
 
-    public function saveComprobante(Request $request){
-
-            $code       = "OK";
-            $message    = "";
-            $data       = [];
-
-            $idNegociacion = $request->idNeg;
-
-            if($request->hasFile('comprobante')){
-                $comprobante = $request->file('comprobante')->store('evidenciasNegociacion');
-            }
-
-            if($query = negociacion::where('id',$idNegociacion)
-                ->update([
-                    'comprobante' => $comprobante,
-                    'estatusnegociacion' => 3
-                ]) 
-            ) {
-
-                $code       = "OK";
-                $message    = "El comprobante se subió de forma exitosa";
-                $data = 1;
-
-            }else{
-                $code       = "NOTOK";
-                $message    = "Ocurrio un problema al intentar guardar el archivo";
-                $data = 0;
-            }  
-            
-
-            return response()->json([
-            'code'      => $code,
-            'msg'   => $message,
-            'data'      => $data
-            ],200);
-        
-    }
-
-    public function saveComprobanteContraparte(Request $request){
+    public function saveComprobante(Request $request)
+    {
+      error_log("===============saveComprobante NEGOCIACION========");
             $code       = "OK";
             $message    = "";
             $data       = [];
 
             $idNegociacion = $request->idNeg;
             $idUser = $request->idUser;
+            $idNegContraparte = $request->idNegContraparte;
 
             if($request->hasFile('comprobante')){
                 $comprobante = $request->file('comprobante')->store('evidenciasNegociacion');
             }
 
-            if($query = negociacion::where('id',$idNegociacion)->where('iduser',$idUser)
-                ->update([
-                    'comprobante' => $comprobante,
-                    'estatusnegociacion' => 5
-                ]) 
-            ) {
+            if(negociacion::where('id',$idNegociacion)->update(['comprobante' => $comprobante,'estatusnegociacion' => $request->status]) && negociacion::where('id',$idNegContraparte)->update(['estatusnegociacion' => $request->status]))
+            {
 
                 $code       = "OK";
                 $message    = "El comprobante se subió de forma exitosa";
                 $data = 1;
 
-            }else{
+            }
+            else
+            {
                 $code       = "NOTOK";
                 $message    = "Ocurrio un problema al intentar guardar el archivo";
                 $data = 0;
             }  
+            
 
             return response()->json([
-            'code'      => $code,
+            'code'  => $code,
             'msg'   => $message,
-            'data'      => $data
+            'data'  => $data
             ],200);
+        
+    }
 
+    public function confirmacionTransferenciaBackoffice($idNeg,$idNegContraparte,$estatus){
+      
+      error_log('================confirmacionTransferenciaBackoffice==================='.$idNeg.','.$idNegContraparte.','.$estatus);            
+      $code       = "OK";
+      $message    = "";
+      $data       = [];
+
+      $negociacion = negociacion::find($idNeg);
+      $negociacion_contraparte = negociacion::find($idNegContraparte);
+
+      $negociacion->estatus_autoriza_backoffice = $estatus;
+      $negociacion_contraparte->estatus_autoriza_backoffice = $estatus;
+
+
+      if($negociacion->save() && $negociacion_contraparte->save())
+      {
+        $user_username = strtoupper(User::find($negociacion->iduser)->username);
+        // Esta condicion debo modificarla a su numero correspondiente sin restar 1, pero para ello debo actualizar condiciones en la operacion tambien
+        $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion)->estatus;
+        $tittle_noti = 'Negociación';
+        $text_noti = $user_username.' '.$estatus_negociacion;
+
+        $this->save_notification($negociacion_contraparte->iduser,$tittle_noti, $text_noti, $negociacion->idposturamatch,1);
+        
+        $code       = "OK";
+        $message    = "El estatus se ha actualizado de forma exitosa";
+        $data = 1;
+      }
+      else
+      {
+        $code       = "NOTOK";
+        $message    = "Ocurrio un problema al intentar actualizar el registro";
+        $data = 0;
+      } 
+
+      return response()->json([
+      'code'      => $code,
+      'msg'   => $message,
+      'data'      => $data
+      ],200);
+    }
+
+    public function confirmacionTransferencia($miIdNeg,$idNegContraparte,$estatus){
+      error_log('================confirmacionTransferencia==================='.$miIdNeg.','.$idNegContraparte.','.$estatus);            
+      $code       = "OK";
+      $message    = "";
+      $data       = [];
+
+      $negociacion = negociacion::find($miIdNeg);
+      $negociacion->estatusnegociacion = $estatus;
+
+      $negociacion_contraparte = negociacion::find($idNegContraparte);
+      $negociacion_contraparte->estatusnegociacion = $estatus;
+
+      if( $negociacion->save() && $negociacion_contraparte->save())
+      {
+        $status_a_notificar_contraparte = [3,5];
+        if(in_array($negociacion->estatusnegociacion,$status_a_notificar_contraparte))
+        {
+            // Notifico a contraparte
+            $user_contraparte = User::find($negociacion_contraparte->iduser);
+            // Esta condicion debo modificarla a su numero correspondiente sin restar 1, pero para ello debo actualizar condiciones en la operacion tambien
+            // $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion-1)->estatus;
+            $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion-1)->estatus;;
+            $tittle_noti = 'Negociación';
+            $text_noti = strtoupper($user_contraparte->username).' '.$estatus_negociacion;
+
+            // Debo validar bien esta notificacion, no se le esta enviando al usuario correspondiente
+            // $this->save_notification($user_contraparte->id,$tittle_noti, $text_noti, $negociacion->idposturamatch,1);
+
+          // Notifico a backoffice
+          $user_backoffice = 5;
+          $backoffices = User::where('tipousuario_idtipousuario',$user_backoffice)->get();
+
+          // Esta condicion debo modificarla a su numero correspondiente sin restar 1, pero para ello debo actualizar condiciones en la operacion tambien
+          $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion-1)->estatus;
+          $tittle_noti = 'Negociación';
+
+          foreach ($backoffices as $backoffice)
+          {
+            $text_noti = strtoupper($backoffice->username).' '.$estatus_negociacion;
+
+            $this->save_notification($backoffice->id,$tittle_noti, $text_noti, $negociacion->idposturamatch,1);
+          }
+        }
+
+        $code       = "OK";
+        $message    = "El estatus se ha actualizado de forma exitosa";
+        $data = 1;
+      }
+      else
+      {
+        $code       = "NOTOK";
+        $message    = "Ocurrio un problema al intentar actualizar el registro";
+        $data = 0;
+      }  
+
+      return response()->json([
+      'code'      => $code,
+      'msg'   => $message,
+      'data'      => $data
+      ],200);
+    }
+
+    //Método para guardar notificaciones
+    private function save_notification($iduser,$tittle, $text,$postura_match_id,$status)
+    {
+      // error_log("save_notification "+$iduser+"  - "+$tittle+"  - "+$text+"   -   "+$postura_match_id);
+      error_log("..................save_notification.................. ");
+
+      $resp = false;
+      $notificacion = new \App\notificacion();
+      $not_has_user = new \App\notificaciones_has_users();
+
+      $notificacion->titulo  = $tittle;
+      $notificacion->cuerpo = $text;        
+      $notificacion->adjunto  = '';
+      $notificacion->notleida = 0;
+      $notificacion->status_notifications_id = $status;
+      
+      if($notificacion->save())
+      {
+        $not_has_user->users_id = $iduser;
+        $not_has_user->notificaciones_idnotificaciones = $notificacion->id;
+        $not_has_user->postura_match_id = $postura_match_id;
+        
+        if($not_has_user->save())
+        {
+            $resp = true;
+        }            
+      }
+      return $resp;
     }
 
     public function confirmacion1($iduser,$idposturamatch){
-            
+            error_log('===================confirmacion1======================');
+            error_log('$iduser = '.$iduser.'  /  $idposturamatch = '.$idposturamatch);
             $code       = "OK";
             $message    = "";
             $data       = [];
@@ -350,7 +575,10 @@ class negociacionController extends Controller
             if(
                     negociacion::where('idposturamatch',$idposturamatch)
                             ->where('iduser',$iduser)
-                            ->update(['estatusnegociacion' => 3])
+                            ->update(['estatusnegociacion' => 3]) && 
+                    negociacion::where('idposturamatch',$idposturamatch)
+                            ->where('iduser','!=',$iduser)
+                            ->update(['estatusnegociacion' => 4])
             ){
                 $code       = "OK";
                 $message    = "El estatus se ha actualizado de forma exitosa";
@@ -368,11 +596,11 @@ class negociacionController extends Controller
             'msg'   => $message,
             'data'      => $data
             ],200);
-
     }
 
     public function confirmacion2($iduser,$idposturamatch){
-            
+            error_log('===================confirmacion2======================');
+            error_log('$iduser = '.$iduser.'  /  $idposturamatch = '.$idposturamatch);            
             $code       = "OK";
             $message    = "";
             $data       = [];
@@ -398,11 +626,11 @@ class negociacionController extends Controller
             'msg'   => $message,
             'data'      => $data
             ],200);
-
     }
 
     public function confirmacion3($iduser,$idposturamatch){
-            
+        error_log('===================confirmacion3======================');
+        error_log('$iduser = '.$iduser.'  /  $idposturamatch = '.$idposturamatch);
             $code       = "OK";
             $message    = "";
             $data       = [];
@@ -433,7 +661,8 @@ class negociacionController extends Controller
 
 
     public function confirmacion4($iduser,$idposturamatch){
-            
+        error_log('===================confirmacion4======================');
+        error_log('$iduser = '.$iduser.'  /  $idposturamatch = '.$idposturamatch);
             $code       = "OK";
             $message    = "";
             $data       = [];

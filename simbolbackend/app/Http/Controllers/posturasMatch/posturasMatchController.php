@@ -289,35 +289,44 @@ class posturasMatchController extends Controller
         //
     }
 
-    //Método para consultar montos X Posturas
     public function montosXposturas($idposturasMatch,$iduser){
-        
+        error_log('============montosXposturas========='.$idposturasMatch.' / '.$iduser);
         $code       = "OK";
         $message    = "Success";
         $data       = [];
 
-        if(is_numeric($idposturasMatch)){
-            $posturasMatch = posturasMatches::select('posturas_idposturas','postura_contraparte_id')
-                        ->where('idposturasMatch','=',$idposturasMatch)
-                        ->get();              
-            
-            $posturas = postura::select(
-                    'idposturas',
-                    'tasacambio',
-                    'tengo',
-                    'tengo_moneda_id',
-                    'quiero_moneda_id',
-                    'iduser'
-                )
-                ->where('idposturas','=',$posturasMatch[0]->posturas_idposturas)
-                ->orWhere('idposturas','=',$posturasMatch[0]->postura_contraparte_id)
+        if(is_numeric($idposturasMatch) && is_numeric($iduser)){
+            $posturasMatch = posturasMatches::find($idposturasMatch);
+            $postura = postura::select('idposturas','tasacambio','tengo','tengo_moneda_id','quiero_moneda_id','iduser')
+                ->whereIn('idposturas',array($posturasMatch->posturas_idposturas,$posturasMatch->postura_contraparte_id))
                 ->where('iduser','=',$iduser)
                 ->get();
-            $data = $posturas;
-        
-        }else{
+            $moneda_quiero = moneda::select('idmonedas','admin_simbolo')->where('idmonedas','=',$postura[0]->quiero_moneda_id)->first();
+
+            $moneda_tengo = moneda::select('idmonedas','admin_simbolo')->where('idmonedas','=',$postura[0]->tengo_moneda_id)->first();
+
+            $postura[0]->quiero_moneda_id = $moneda_quiero->idmonedas;
+            $postura[0]->quiero_moneda_simbolo = $moneda_quiero->admin_simbolo;
+            $postura[0]->tengo_moneda_id = $moneda_tengo->idmonedas;
+            $postura[0]->tengo_moneda_simbolo = $moneda_tengo->admin_simbolo;
+            $postura[0]->idposturasMatchContraparte = $posturasMatch->postura_contraparte_id;
+             error_log('$posturasMatch->users_iduser = '.$posturasMatch->users_idusers);
+              if( $posturasMatch->users_idusers == $iduser)
+              {
+                $postura[0]->idUserContraparte = $posturasMatch->iduser2;
+              }
+              else
+              {
+                $postura[0]->idUserContraparte = $posturasMatch->users_idusers;
+              };
+              error_log('$postura[0]->idUserContraparte = '.$postura[0]->idUserContraparte);
+
+            $data = $postura;
+        }
+        else
+        {
             $code = "NOTOK";
-            $message = "Parámetro requerido (idposturasMatch) debe ser un valor numérico";
+            $message = "Parámetros requeridos (idposturasMatch, iduser) deben ser un valor numérico";
         }
         
         return response()->json([
@@ -327,7 +336,6 @@ class posturasMatchController extends Controller
         ],200);
 
     }
-
     //Método para guardar notificaciones
     private function save_notification($iduser,$tittle, $text,$postura_match_id,$status){
         // error_log("save_notification "+$iduser+"  - "+$tittle+"  - "+$text+"   -   "+$postura_match_id);

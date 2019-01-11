@@ -34,4 +34,9 @@ class negociacion extends Model
         return $this->hasMany(chat::class);
         
     }
+
+    public function estatusNegociacions()
+    {
+        return $this->hasMany(chat::class);
+    }
 }

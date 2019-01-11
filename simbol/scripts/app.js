@@ -2,11 +2,11 @@
  var mainApp = angular.module("app", ["ngRoute","ngResource",'mgcrea.ngStrap','ngCookies','cgNotify']);
  mainApp.controller('appController', function($scope,$http,$cookieStore,$sce,$window,$location,$routeParams,notify,$interval) {
     $scope.tittle_page = "Simbol";
-    // $scope.url_server = "http://localhost:8000";
-    // $scope.base_href = '/simbol-web/simbol/#!';
-    $scope.link_g = $scope.url_server+'/simbol-web/simbolbackend/storage/app/';
-    $scope.url_server = "https://api.simbol.club";
-    $scope.base_href = '/#!';
+    $scope.url_server = "http://localhost:8000";
+    $scope.base_href = '/simbol2019/simbol/simbol/#!';
+    $scope.link_g = $scope.url_server+'/simbol2019/simbol/simbolbackend/storage/app/';
+    /*$scope.url_server = "https://api.simbol.club";
+    $scope.base_href = '/#!';*/
     $scope.contNot=1;
     $scope.not=0;
     $scope.actCrono=null;
@@ -14,8 +14,8 @@
     // Recarga de index
     $scope.reload_page = function($url)
     {
-		$window.location = $url;
-		$window.location.reload();
+  		window.location = $url;
+  		window.location.reload();
     }
 
     $scope.index_init = function()
@@ -199,7 +199,6 @@
     $scope.notiPush = function(sms){
     	notify(sms);
     }
-    
 
     //metodo para autenticar
     $scope.login = function(user,password){
@@ -363,7 +362,7 @@
 	*/
 	$scope.format_date_db = function(date,opt)
 	{
-		var new_date 		= ""
+		var new_date 		= "";
 		var separador_fecha = "/";
 		var separador_hora	= ":";
 		var flag_fecha 		= true;
@@ -615,6 +614,34 @@
 			});
 	}
 
+  $scope.estatus_neg_valido = function(type,idStatus)
+  {
+
+    var result = false;
+    if(idStatus != undefined)
+    {
+      switch(type)
+      {
+        case 1: // Confirma que transfirió BsS, Confirma que recibió BsS
+          if([1,2].indexOf(idStatus) > -1)
+            result = true;
+          break;
+        case 2: // Confirma que transfirió USD, Confirma que recibió USD
+          if([3,4].indexOf(idStatus) > -1)
+            result = true;
+          break;
+        case 3:
+          // Esperando que el usuario valide transferencia, 
+          // Confirma que transfirió BsS, 
+          // Confirma que transfirió USD
+          if([undefined,null,0,2,4].indexOf(idStatus) > -1)
+            result = true;
+          break;
+      }
+    }
+    return result;
+  }
+
 	$interval(function()
 	{
 		console.log('====== Interval APP ======');		
@@ -712,12 +739,110 @@
 
 
 	 /*METODO PARA EL ADMINISTRADOR CONFIRMAR TRANSFERENCIA*/
-	 $scope.autorizaTransf = function(){
+    $scope.autorizaTransf = function(id)
+    {
+      var id_negociacon = $('#bo_id_negociacion_'+id).val();
+      var id_negociacon_contraparte = $('#bo_id_negociacion_contraparte_'+id).val();
+      // alert(id_negociacon+'  - - - - '+id_negociacon_contraparte)
+      console.log('////////////////////////////confTransf///////////////////');
+      $http({ method: 'GET',
+              url: $scope.url_server+'/negociacion/confirmacionTransferenciaBackoffice/'+id_negociacon+'/'+id_negociacon_contraparte+'/'+($scope.negociaciones.negociacion_bs.estatusNeg)})
+              // url: $scope.url_server+'/negociacion/confirmacionTransferenciaBackoffice/'+$scope.negociaciones.negociacion_bs.idNeg+'/'+$scope.negociaciones.negociacion_moneda_extranjera.idNeg+'/'+($scope.negociaciones.negociacion_bs.estatusNeg)})
+      .then(function (data){
+        if(data['data']['code'] == 'OK')
+        {
+          console.log("confTransf - "+data['data']['msg']);
+          //$location.url("/operacion/operacion/"+$scope.paramPost);
+          alert('Confirmado.');
+          $scope.reload_page(window.location);
+        }
+        else
+        {
+          console.log("confTransf - no sera "+data['data']['msg']);
+        }
+      });
+    }
 
-	 	
-	 	$http({method: 'GET',url: $scope.url_server+'/negociacion/'+$scope.paramPost})
-          .then(function (data){
-          	for(var i in data['data']['data']){
+	 // $scope.autorizaTransf = function(){
+
+	 // 	console.log('////////////////////////////autorizaTransf///////////////////')
+  //   console.log($scope.paramPost)
+	 // 	$http({method: 'GET',url: $scope.url_server+'/negociacion/'+$scope.paramPost})
+  //         .then(function (data){
+  //         	for(var i in data['data']['data'])
+  //           {
+  //         		if(i == 0)
+  //         			$scope.iduser1 = data['data']['data'][i].iduser;
+  //         		else
+  //         			$scope.iduser2 = data['data']['data'][i].iduser;
+  //         	}
+  //       		console.log("autorizaTransf - valores usersssssss "+$scope.iduser1+"--"+$scope.iduser2);
+
+  //       		$scope.envChat = {
+  //   					transferi:1,
+  //   					metransfirieron:0,
+  //   					conformetransfiere:0,
+  //   					conformetransferido:0,
+  //   					idp: $scope.paramPost,
+  //   					iduser: $scope.iduser1,
+  //   					iduser2:$scope.iduser2,
+  //   					opsatisf1:1,
+  //   					opsatisf2:''
+  //   				};
+
+		// 		$http({method: 'GET',url: $scope.url_server+'/negociacion/confirmacion1/'+$scope.iduser1+'/'+$scope.paramPost})
+  // 			.then(function (data){
+  // 				if(data['data']['data'] == 1){
+  // 					console.log("autorizaTransf - sera "+data['msg']['msg']);
+  // 					//$location.url("/operacion/operacion/"+$scope.paramPost);
+  					
+  // 				}else{
+  // 					console.log("autorizaTransf - no sera "+data['msg']['msg']);
+
+  // 				}
+  //   		});
+
+		// 		$http({method: 'POST',url: $scope.url_server+'/tracking',data:$scope.envChat})
+		// 		.then(function(data){
+		// 			if(data['data']['data']){
+		// 				console.log('autorizaTransf - se realizó el 1er proceso tracking con exito')
+		// 				angular.copy({},$scope.envChat);
+		// 				$scope.settings.success = "Mensaje enviado";
+		// 				setTimeout(function(){ location.reload(); }, 1000);
+		// 			}			
+		// 		})
+		// 		.catch(function(err){angular.noop}); 
+				
+			
+  //       });
+
+ // }
+
+  $scope.confTransf = function()
+  {
+    console.log('////////////////////////////confTransf///////////////////');
+    $http({ method: 'GET',
+            url: $scope.url_server+'/negociacion/confirmacionTransferencia/'+$scope.mi_negociacion.idNeg+'/'+$scope.negociacion_contraparte.idNeg+'/'+($scope.mi_negociacion.estatusNeg+1)})
+    .then(function (data){
+      if(data['data']['data'] == 1)
+      {
+        console.log("confTransf - sera "+data['data']['msg']);
+        alert('Confirmado.');
+        // $scope.reload_page(window.location);
+        window.location.reload();
+      }
+      else
+      {
+        console.log("confTransf - no sera "+data['data']['msg']);
+      }
+    });
+  }
+
+	$scope.confTransf2 = function(){
+    console.log('////////////////////////////confTransf2///////////////////')
+/*	 	$http({method: 'GET',url: $scope.url_server+'/negociacion/'+$scope.paramPost})
+    .then(function (data){
+          for(var i in data['data']['data']){
           		
           		if(i == 0){
           			$scope.iduser1 = data['data']['data'][i].iduser;
@@ -725,113 +850,57 @@
           			$scope.iduser2 = data['data']['data'][i].iduser;
           		}
           		
-          	}
-          		console.log("valores usersssssss "+$scope.iduser1+"--"+$scope.iduser2);
+          }
 
-          		$scope.envChat = {
-					transferi:1,
-					metransfirieron:0,
-					conformetransfiere:0,
-					conformetransferido:0,
-					idp: $scope.paramPost,
-					iduser: $scope.iduser1,
-					iduser2:$scope.iduser2,
-					opsatisf1:1,
-					opsatisf2:''
-				};
+        	  console.log("confTransf2 - valores usersssssss "+$scope.iduser1+"--"+$scope.iduser2);
+        	  var idSave = ''
+          if($scope.id != $scope.iduser1){
+          		idSave = $scope.iduser1;
+          }else{
+          		idSave = $scope.iduser2;
+          }
 
-				$http({method: 'GET',url: $scope.url_server+'/negociacion/confirmacion1/'+$scope.iduser1+'/'+$scope.paramPost})
-          			.then(function (data){
-          				if(data['data']['data'] == 1){
-          					console.log("sera "+data['msg']['msg']);
-          					//$location.url("/operacion/operacion/"+$scope.paramPost);
-          					
-          				}else{
-          					console.log("no sera "+data['msg']['msg']);
-
-          				}
-          		});
-
-				$http({method: 'POST',url: $scope.url_server+'/tracking',data:$scope.envChat})
-				.then(function(data){
-					if(data['data']['data']){
-						console.log('se realizó el 1er proceso tracking con exito')
-						angular.copy({},$scope.envChat);
-						$scope.settings.success = "Mensaje enviado";
-						setTimeout(function(){ location.reload(); }, 1000);
-					}			
-				})
-				.catch(function(err){angular.noop}); 
-				
-			
-        });
-
-	 }
+          console.log("confTransf2 - la contraparte es "+idSave);
+          $scope.envChat = {
+							transferi:1,
+							metransfirieron:0,
+							conformetransfiere:1,
+							conformetransferido:0,
+							idp: $scope.paramPost,
+							iduser:idSave,
+							iduser2:$scope.iduser1,
+							opsatisf1:1,
+							opsatisf2:1
+		  };*/
 
 
-	 $scope.confTransf2 = function(){
+	  $http({method: 'GET',url: $scope.url_server+'/negociacion/confirmacion2/'+$scope.iduser1+'/'+$scope.paramPost})
+    .then(function (data){
+      if(data['data']['data'] == 1)
+      {
+      	console.log("confTransf2 - sera "+data['msg']['msg']);
+      	//$location.url("/operacion/operacion/"+$scope.paramPost);
+      }
+      else
+      {
+      	console.log("confTransf2 - no sera "+data['msg']['msg']);
+      }
+    });
 
-	 	$http({method: 'GET',url: $scope.url_server+'/negociacion/'+$scope.paramPost})
-          .then(function (data){
-			          for(var i in data['data']['data']){
-			          		
-			          		if(i == 0){
-			          			$scope.iduser1 = data['data']['data'][i].iduser;
-			          		}else{
-			          			$scope.iduser2 = data['data']['data'][i].iduser;
-			          		}
-			          		
-			          }
-
-		          	  console.log("valores usersssssss "+$scope.iduser1+"--"+$scope.iduser2);
-		          	  var idSave = ''
-			          if($scope.id != $scope.iduser1){
-			          		idSave = $scope.iduser1;
-			          }else{
-			          		idSave = $scope.iduser2;
-			          }
-
-			          console.log("la contraparte es "+idSave);
-			          $scope.envChat = {
-										transferi:1,
-										metransfirieron:0,
-										conformetransfiere:1,
-										conformetransferido:0,
-										idp: $scope.paramPost,
-										iduser:idSave,
-										iduser2:$scope.iduser1,
-										opsatisf1:1,
-										opsatisf2:1
-					  };
-
-
-					  $http({method: 'GET',url: $scope.url_server+'/negociacion/confirmacion2/'+$scope.iduser1+'/'+$scope.paramPost})
-		          			.then(function (data){
-		          				if(data['data']['data'] == 1){
-		          					console.log("sera "+data['msg']['msg']);
-		          					//$location.url("/operacion/operacion/"+$scope.paramPost);
-		          					
-		          				}else{
-		          					console.log("no sera "+data['msg']['msg']);
-
-		          				}
-		          		});
-
-		          	$http({method: 'PUT',url: $scope.url_server+'/tracking/'+$scope.envChat.idp+'/'+1})   
-              		.then(function (data){
-				        if(data['data']['data']){
-                   			$scope.notificarTrack($cookieStore.get("userContrapp"));
-                   			setTimeout(function(){ location.reload(); }, 1000);
-                		}                                                                                   
-		            }
-              		,function(error) {
-						console.log("POSTCONT:: Error obteniendo data2 users: "+error)
-					});
-								
-
-        });
-
-	 }
+// ROB DEBES ACTUALIZAR ESTO
+        	// $http({method: 'PUT',url: $scope.url_server+'/tracking/'+$scope.envChat.idp+'/'+1})   
+        	// 	.then(function (data){
+	        //     if(data['data']['data'])
+         //      {
+         //     			$scope.notificarTrack($cookieStore.get("userContrapp"));
+         //     			setTimeout(function(){ location.reload(); }, 1000);
+         //  		}
+         //    }
+        	// 	,function(error) {
+			      //    console.log("confTransf2- APPCONT:: Error obteniendo data2 users: "+error)
+		       //  });
+  // });
+	}
 
 
 	 $scope.autorizaTransf2 = function(){
@@ -848,7 +917,7 @@
           		}
           		
           	}
-          		console.log("valores usersssssss "+$scope.iduser1+"--"+$scope.iduser2);
+          		console.log("autorizaTransf2 - valores usersssssss "+$scope.iduser1+"--"+$scope.iduser2);
 
           		$scope.envChat = {
 						transferi:1,
@@ -865,11 +934,11 @@
 				$http({method: 'GET',url: $scope.url_server+'/negociacion/confirmacion3/'+$scope.iduser2+'/'+$scope.paramPost})
           			.then(function (data){
           				if(data['data']['data'] == 1){
-          					console.log("sera "+data['msg']['msg']);
+          					console.log("autorizaTransf2 - sera "+data['msg']['msg']);
           					//$location.url("/operacion/operacion/"+$scope.paramPost);
           					
           				}else{
-          					console.log("no sera "+data['msg']['msg']);
+          					console.log("autorizaTransf2 - no sera "+data['msg']['msg']);
 
           				}
           		});
@@ -882,7 +951,7 @@
                 		}                                                                                   
 		        }
               ,function(error) {
-					console.log("POSTCONT:: Error obteniendo data2 users: "+error)
+					console.log("autorizaTransf2 - APPCONT:: Error obteniendo data2 users: "+error)
 			   });
 				
         });
@@ -904,7 +973,7 @@
 			          		
 			          }
 
-		          	  console.log("valores usersssssss "+$scope.iduser1+"--"+$scope.iduser2);
+		          	  console.log("confTransf3 - valores usersssssss "+$scope.iduser1+"--"+$scope.iduser2);
 		          	  var idSave = ''
 			          if($scope.id != $scope.iduser1){
 			          		idSave = $scope.iduser1;
@@ -912,7 +981,7 @@
 			          		idSave = $scope.iduser2;
 			          }
 
-			          console.log("la contraparte es "+idSave);
+			          console.log("confTransf3 - la contraparte es "+idSave);
 			          $scope.envChat = {
 								transferi:1,
 								metransfirieron:1,
@@ -926,30 +995,31 @@
 					};
 
 
-					  $http({method: 'GET',url: $scope.url_server+'/negociacion/confirmacion4/'+$scope.id+'/'+$scope.paramPost})
-		          			.then(function (data){
-		          				if(data['data']['data'] == 1){
-		          					console.log("sera "+data['msg']['msg']);
-		          					//$location.url("/operacion/operacion/"+$scope.paramPost);
-		          					
-		          				}else{
-		          					console.log("no sera "+data['msg']['msg']);
+			  $http({method: 'GET',url: $scope.url_server+'/negociacion/confirmacion4/'+$scope.id+'/'+$scope.paramPost})
+          			.then(function (data){
+          				if(data['data']['data'] == 1){
+          					console.log("sera "+data['msg']['msg']);
+          					//$location.url("/operacion/operacion/"+$scope.paramPost);
+          					
+          				}else{
+          					console.log("no sera "+data['msg']['msg']);
 
-		          				}
-		          		});
+          				}
+          		});
 
-		          	$http({method: 'PUT',url: $scope.url_server+'/tracking/'+$scope.envChat.idp+'/'+3})   
-              		.then(function (data){
-				        if(data['data']['data']){
-                   			$scope.notificarTrack($cookieStore.get("userContrapp"));
-                   			setTimeout(function(){ location.reload(); }, 1000);
-                		}                                                                                   
-		          	}
-              		,function(error) {
-						console.log("POSTCONT:: Error obteniendo data2 users: "+error)
-					});  		
+          	$http({method: 'PUT',url: $scope.url_server+'/tracking/'+$scope.envChat.idp+'/'+3})   
+          		.then(function (data){
+    		        if(data['data']['data'])
+                {
+             			$scope.notificarTrack($cookieStore.get("userContrapp"));
+             			setTimeout(function(){ location.reload(); }, 1000);
+            		}
+            	}
+          		,function(error) {
+        				console.log("confirmacion4 - APPCONT:: Error obteniendo data2 users: "+error)
+        			});  		
               		
-        });
+    });
 
 	 }
 
@@ -957,86 +1027,78 @@
 
 	/*METODO PARA VISUALIZAR NEGOCIACIONES*/
     $scope.verNegociacion = function(){
-        console.log('postura Match match'+$scope.paramPost);
+        console.log('verNegociacion - postura Match match '+$scope.paramPost);
+        console.log('verNegociacion / tipousuario_idtipousuario = '+$scope.tipousuario_idtipousuario)
+        console.log($scope.url_server+'/negociacion/negociacion_por_postura_match/'+$scope.paramPost)
+        $http({method: 'GET',url: $scope.url_server+'/negociacion/negociacion_por_postura_match/'+$scope.paramPost})
+        .then(function (data){
+    			// var arrlink = $scope.link_g.split(":8000",2);
+    			// var link = arrlink[0]+arrlink[1];
+          console.log('verNegociacion================================')
+          console.log(data['data']['data'])
+          $scope.negociaciones = data['data']['data'];
+          // for(var i in data['data']['data']){
+          //   console.log("iter is "+data['data']['data'][i].comprobante);
+          //   if(data['data']['data'][i].comprobante == null)
+          //   {
+          //       $scope.banconegBS = data['data']['data'][i].banco;
+          //       $scope.nrocuetanegBS = data['data']['data'][i].nrocuenta;
+          //       $scope.emailnegBS = data['data']['data'][i].email;
+          //       $scope.nroidentificacionnegBS = data['data']['data'][i].nroidentificacion;
+          //       $scope.comprobantenegBS = data['data']['data'][i].comprobante;
+          //       $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
+          //       $scope.iduserBS = data['data']['data'][i].iduser;
+          //       $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
+          //   }
+          //   else
+          //   {
+          //       $scope.banconegDL = data['data']['data'][i].banco;
+          //       $scope.nrocuetanegDL = data['data']['data'][i].nrocuenta;
+          //       $scope.emailnegDL = data['data']['data'][i].email;
+          //       $scope.nroidentificacionnegDL = data['data']['data'][i].nroidentificacion;
+          //       $scope.comprobantenegDL = data['data']['data'][i].comprobante;
+          //       $scope.estatusnegDL = data['data']['data'][i].estatusnegociacion;
+          //       $scope.iduserDL = data['data']['data'][i].iduser;
+          //       $scope.nombrebancoDL = data['data']['data'][i].nombrebanco;
 
+          //   }
 
-        $http({method: 'GET',url: $scope.url_server+'/negociacion/'+$scope.paramPost})
-          .then(function (data){
-			var arrlink = $scope.link_g.split(":8000",2);
-			var link = arrlink[0]+arrlink[1];
-			
+          //   if(data['data']['data'][i].comprobante != null){
 
-            for(var i in data['data']['data']){
-                console.log("iter is "+data['data']['data'][i].comprobante);
-                
-                  if(data['data']['data'][i].comprobante == null){
-                      $scope.banconegBS = data['data']['data'][i].banco;
-                      $scope.nrocuetanegBS = data['data']['data'][i].nrocuenta;
-                      $scope.emailnegBS = data['data']['data'][i].email;
-                      $scope.nroidentificacionnegBS = data['data']['data'][i].nroidentificacion;
-                      $scope.comprobantenegBS = data['data']['data'][i].comprobante;
-                      $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
-                      $scope.iduserBS = data['data']['data'][i].iduser;
-                      $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
+          //   		if(i == 0){
+          //   			$scope.banconegBS = data['data']['data'][i].banco;
+          //         $scope.nrocuetanegBS = data['data']['data'][i].nrocuenta;
+          //         $scope.emailnegBS = data['data']['data'][i].email;
+          //         $scope.nroidentificacionnegBS = data['data']['data'][i].nroidentificacion;
+          //         $scope.comprobantenegBS = data['data']['data'][i].comprobante;
+          //         $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
+          //         $scope.iduserBS = data['data']['data'][i].iduser;
+          //         $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
+          //   		}else{
+          //   			$scope.banconegDL = data['data']['data'][i].banco;
+          //       		$scope.nrocuetanegDL = data['data']['data'][i].nrocuenta;
+          //       		$scope.emailnegDL = data['data']['data'][i].email;
+          //       		$scope.nroidentificacionnegDL = data['data']['data'][i].nroidentificacion;
+          //       		$scope.comprobantenegDL = data['data']['data'][i].comprobante;
+          //       		$scope.estatusnegDL = data['data']['data'][i].estatusnegociacion;
+          //       		$scope.iduserDL = data['data']['data'][i].iduser;
+          //       		$scope.nombrebancoDL = data['data']['data'][i].nombrebanco;
+          //   		}
+          //   }
 
+          // 	$scope.linkDL = link+$scope.comprobantenegDL;
+         	// 	$scope.linkBS = link+$scope.comprobantenegBS;
+         	// 	console.log("verNegociacion - dime "+$scope.estatusnegBS+'----'+$scope.estatusnegDL);
 
-
-                  }else{
-
-                      $scope.banconegDL = data['data']['data'][i].banco;
-                      $scope.nrocuetanegDL = data['data']['data'][i].nrocuenta;
-                      $scope.emailnegDL = data['data']['data'][i].email;
-                      $scope.nroidentificacionnegDL = data['data']['data'][i].nroidentificacion;
-                      $scope.comprobantenegDL = data['data']['data'][i].comprobante;
-                      $scope.estatusnegDL = data['data']['data'][i].estatusnegociacion;
-                      $scope.iduserDL = data['data']['data'][i].iduser;
-                      $scope.nombrebancoDL = data['data']['data'][i].nombrebanco;
-
-                  }
-
-                  if(data['data']['data'][i].comprobante != null){
-
-                  		if(i == 0){
-                  			$scope.banconegBS = data['data']['data'][i].banco;
-		                    $scope.nrocuetanegBS = data['data']['data'][i].nrocuenta;
-		                    $scope.emailnegBS = data['data']['data'][i].email;
-		                    $scope.nroidentificacionnegBS = data['data']['data'][i].nroidentificacion;
-		                    $scope.comprobantenegBS = data['data']['data'][i].comprobante;
-		                    $scope.estatusnegBS = data['data']['data'][i].estatusnegociacion;
-		                    $scope.iduserBS = data['data']['data'][i].iduser;
-		                    $scope.nombrebancoBS = data['data']['data'][i].nombrebanco;
-                  		}else{
-                  			$scope.banconegDL = data['data']['data'][i].banco;
-                      		$scope.nrocuetanegDL = data['data']['data'][i].nrocuenta;
-                      		$scope.emailnegDL = data['data']['data'][i].email;
-                      		$scope.nroidentificacionnegDL = data['data']['data'][i].nroidentificacion;
-                      		$scope.comprobantenegDL = data['data']['data'][i].comprobante;
-                      		$scope.estatusnegDL = data['data']['data'][i].estatusnegociacion;
-                      		$scope.iduserDL = data['data']['data'][i].iduser;
-                      		$scope.nombrebancoDL = data['data']['data'][i].nombrebanco;
-                  		}
-
-                  }
-
-
-                  	$scope.linkDL = link+$scope.comprobantenegDL;
-             		$scope.linkBS = link+$scope.comprobantenegBS;
-             		console.log("dime "+$scope.estatusnegBS+'----'+$scope.estatusnegDL);
-
-             }
-             
-             
-          },
-          function(error){
-              console.log("POSTCONT:: Error en la consulta de estatus de  negociacion: "+error)
-          });
-
-        
+          // }
+        },
+        function(error){
+            console.log("verNegociacion - APPCONT:: Error en la consulta verNegociacion: "+error)
+        });
     }
 
-	    $scope.guardarNegociacion = function(){
-
-				console.log("abadat"+$scope.aba);
+    $scope.guardarNegociacion = function(){
+				console.log("guardarNegociacion - abadat"+$scope.aba);
 		    	$http({method: 'GET',url: $scope.url_server+'/negociacion/saveNegociacion/'+
 		    		$scope.selectBanco.negBanco+'/'+
 		    		$scope.aba+'/'+
@@ -1045,64 +1107,61 @@
 		    		$scope.selectNacionalidad.negNacionalidad+'/'+
 		    		$scope.nroidentificacion+'/'+
 		    		$scope.paramPost+'/'+
-		    		$scope.id
+		    		$scope.id+'/'+
+            $scope.idUserContraparte
 		    	})
 		    	.then(function (data){
-		    		console.log("data guardada "+data['data']['data']['estatusNeg']);
+		    		console.log("guardarNegociacion - data guardada "+data['data']['data']['estatusNeg']);
 		    		if(data['data']['data']['estatusNeg'] == 1){
-		    			console.log('vamos para alla '+$location.url("/operacion/operacion/"+$scope.paramPost));
-		    			console.log("tipo de valor es "+typeof($scope.paramPost));
-		    			//$location.url("/operacion/operacion/"+$scope.paramPost);
-		    			//$location.url();
-		    			//$route.reload();
-		    			$window.location.reload();
-		    		}else if(data['data']['data']['estatusNeg'] == 2){
-		    			console.log('cayo en 2');
-		    			//$location.url("/operacion/operacion/"+$scope.paramPost);
-		    			//$location.url();
-		    			//$route.reload();
-		    			$window.location.reload();
+		    			console.log('guardarNegociacion - vamos para alla '+$location.url("/operacion/operacion/"+$scope.paramPost));
+		    			console.log("guardarNegociacion - tipo de valor es "+typeof($scope.paramPost));
+		    			// $scope.consEstatusNeg();
+              // $window.location.reload();
+              window.location.reload();
 		    		}
-		    		$scope.consEstatusNeg();
+        //     else if(data['data']['data']['estatusNeg'] == 2){
+		    		// 	console.log('guardarNegociacion - cayo en 2');
+		    		// 	$window.location.reload();
+		    		// }
 		    	}
 				,function (xhr, ajaxOptions, thrownError){ 
-					console.log("POSTCONT:: Error guardando negociacion: \n Error: "+xhr.status+" "+thrownError);
+					console.log("guardarNegociacion - APPTCONT:: Error guardando negociacion: \n Error: "+xhr.status+" "+thrownError);
 				});
 
 	    }
 
 
 	    $scope.consEstatusNeg = function(){
-	    	console.log("si va "+$scope.selectBanco.negBanco+'--'+$scope.abadat+"--"+$scope.nrocuenta+"--"+$scope.email+"--"+$scope.selectNacionalidad.negNacionalidad+"--"+$scope.nroidentificacion);
+	    	console.log("consEstatusNeg - si va "+$scope.selectBanco.negBanco+'--'+$scope.abadat+"--"+$scope.nrocuenta+"--"+$scope.email+"--"+$scope.selectNacionalidad.negNacionalidad+"--"+$scope.nroidentificacion);
 	    	
-			var arrlink = $scope.link_g.split(":8000",2);
-			var link = arrlink[0]+arrlink[1];
+  			var arrlink = $scope.link_g.split(":8000",2);
+  			var link = arrlink[0]+arrlink[1];
 
-        	$http({method: 'GET',url: $scope.url_server+'/negociacion/consultNeg/'+$scope.paramPost+'/'+$scope.id})
+      	$http({method: 'GET',url: $scope.url_server+'/negociacion/consultNeg/'+$scope.paramPost+'/'+$scope.id})
 	    	.then(function (data){
-
-	    		console.log('buenooo  '+data['data']['data']['estatusNeg']+'--'+data['data']['data']['iduser']+'--'+data['data']['data']['moneda']);
-	    		
-	    		$scope.idNeg	=	data['data']['data']['idNeg'];
-	    		$scope.estatusNeg = data['data']['data']['estatusNeg'];
-	    		$scope.userNeg = data['data']['data']['iduser'];
-	    		$scope.moneda = data['data']['data']['moneda'];
-	    		$scope.banco = data['data']['data']['banco'];
-	    		$scope.nrocuenta = data['data']['data']['nrocuenta'];
-	    		$scope.email = data['data']['data']['email'];
-	    		$scope.nroidentificacion = data['data']['data']['nroidentificacion'];
-	    		console.log("comprobante "+data['data']['data']['comprobante']);
-	    		$scope.comprobante = link+data['data']['data']['comprobante'];
+    		  console.log('consEstatusNeg - buenooo  '+data['data']['data']['mi_negociacion']['estatusNeg']+'--'+data['data']['data']['mi_negociacion']['iduser']+'--'+Object.keys(data['data']['data']['negociacion_contraparte']).length);
+	    		$scope.mi_negociacion  = data['data']['data']['mi_negociacion'];
+          $scope.negociacion_contraparte  = data['data']['data']['negociacion_contraparte'];
+          $scope.negociacion_contraparte_length = Object.keys(data['data']['data']['negociacion_contraparte']).length;
+          console.log('consEstatusNeg /// negociacion_contraparte_length'+$scope.negociacion_contraparte_length);
+	    		$scope.idNeg	=	data['data']['data']['mi_negociacion']['idNeg'];
+	    		$scope.estatusNeg = data['data']['data']['mi_negociacion']['estatusNeg'];
+	    		$scope.userNeg = data['data']['data']['mi_negociacion']['iduser'];
+	    		$scope.quiero_moneda = data['data']['data']['mi_negociacion']['quiero_moneda'];
+	    		$scope.banco = data['data']['data']['mi_negociacion']['banco'];
+	    		$scope.nrocuenta = data['data']['data']['mi_negociacion']['nrocuenta'];
+	    		$scope.email = data['data']['data']['mi_negociacion']['email'];
+	    		$scope.nroidentificacion = data['data']['data']['mi_negociacion']['nroidentificacion'];
+	    		console.log("consEstatusNeg - comprobante "+data['data']['data']['mi_negociacion']['comprobante']);
+	    		$scope.comprobante = link+data['data']['data']['mi_negociacion']['comprobante'];
 	    	},
 	    	function(error){
         		console.log("POSTCONT:: Error en la consulta de estatus de  negociacion: "+error)
-      		});
-
-
+    		});
 	    }
 
 	    $scope.cargaSelectBanco = function(){
-	    	console.log("el parametro es "+$scope.paramPost)
+	    	console.log("cargaSelectBanco - el parametro es "+$scope.paramPost)
 	    	$http({method: 'GET',url: $scope.url_server+'/bancos'})
 	    	.then(function (data){
 	    		//console.log('okokok '+data['data']['data'][0].nombre);
@@ -1110,11 +1169,10 @@
 	    		$scope.selectBancos = data['data']['data'];
 	    	},
 	    	function(error){
-        		console.log("POSTCONT:: Error obteniendo data bancos: "+error)
+        		console.log("cargaSelectBanco - POSTCONT:: Error obteniendo data bancos: "+error)
       		});
-
 	    }
-     
+
       	$scope.setPage = function(index, type_table) {
 	        switch(type_table)
 	        {
@@ -1135,59 +1193,59 @@
 	  		$interval(function() {$scope.conStatusOper();},5000);
 	  	}
 
-      	//consulta el estatus del match de la postura
-      	$scope.conStatusOper = function(){
-      		console.log('la consulta esss '+$scope.paramPost);
-      		console.log("urlurl "+window.location.href);
-      		var param = window.location.href;
-      		param = param.split("/operacion/operacion/",2);
-      		param = param[1];
-      		console.log("urlurl "+param);
-
-
-      		$http({method: 'GET',url: $scope.url_server+'/posturasMatch/'+param})
-      		.then(function (data){
-      			console.log("datos estatusPostura "+data['data']['data'][0].estatusOperaciones_idestatusOperacion);
-      			if(data['data']['data'][0].estatusOperaciones_idestatusOperacion == 3){
-      				$scope.actCrono=$cookieStore.remove("actCrono");
-      				//$('#myModaIInfOper').modal('show');
-      			}else if(data['data']['data'][0].estatusOperaciones_idestatusOperacion == 4){
-      				$scope.actCrono=$cookieStore.remove("actCrono");
-      				$('#myModaIInfOperCan').modal('show');
-      			}else if(data['data']['data'][0].estatusOperaciones_idestatusOperacion == 5){
-      				$scope.actCrono=$cookieStore.remove("actCrono");
-      				$('#myModaIInfOperDen').modal('show');
-      			}
-
-      		}
-      		,function(error){
-        		console.log("POSTCONT:: Error obteniendo data users: "+error)
-      		});
-
-      	}
+    	//consulta el estatus del match de la postura
+    	$scope.conStatusOper = function(){
+    		console.log('conStatusOper - la consulta esss '+$scope.paramPost);
+    		console.log("conStatusOper - url "+window.location.href);
+    		var param = window.location.href;
+    		param = param.split("/operacion/operacion/",2);
+    		param = param[1];
+        console.log('conStatusOper - PARAM = '+param)
+        if(param != '' || param != undefined)
+        {
+          $http({method: 'GET',url: $scope.url_server+'/posturasMatch/'+param})
+          .then(function (data){
+            console.log("conStatusOper - datos estatusPostura "+data['data']['data'][0].estatusOperaciones_idestatusOperacion);
+            if(data['data']['data'][0].estatusOperaciones_idestatusOperacion == 3){
+              // $scope.actCrono=$cookieStore.remove("actCrono");
+              //$('#myModaIInfOper').modal('show');
+            }else if(data['data']['data'][0].estatusOperaciones_idestatusOperacion == 4){
+              // $scope.actCrono=$cookieStore.remove("actCrono");
+              $('#myModaIInfOperCan').modal('show');
+            }else if(data['data']['data'][0].estatusOperaciones_idestatusOperacion == 5){
+              // $scope.actCrono=$cookieStore.remove("actCrono");
+              $('#myModaIInfOperDen').modal('show');
+            }
+          }
+          ,function(error){
+            console.log("conStatusOper - POSTCONT:: Error obteniendo data users: "+error)
+          });
+        }
+    	}
 
 
 		//intervalo de tiempo en el que se carga el tracking
 		$scope.refTrack = function(){
 
-			$scope.captUrl();
+			// $scope.captUrl();
 
 			$http({method: 'GET',url: $scope.url_server+'/posturasMatch/'+$routeParams.id_posturas_match})
 			.then(function (data){
 				if(data['data']['data'] == ""){
-					console.log("POSTCONT:: la consulta no trajo datos posturasMatch: ");
+					console.log("refTrack - POSTCONT:: la consulta no trajo datos posturasMatch: ");
 				} else {
 
-					console.log('usuario id sesion: '+$scope.id);
-					console.log('usuario users_idusers '+data['data']['data'][0].users_idusers);
-					console.log('usuario iduser2 '+data['data']['data'][0].iduser2);
+					console.log('refTrack - usuario id sesion: '+$scope.id);
+					console.log('refTrack - usuario users_idusers '+data['data']['data'][0].users_idusers);
+					console.log('refTrack - usuario iduser2 '+data['data']['data'][0].iduser2);
 
 					/*se crea esta variable para que en la interfaz del tracking se pueda usar para subir
 					  las evidencias*/
 					$scope.idUserContraparte = data['data']['data'][0].iduser2;
-
+					console.log('refTrack - JSONN')
+					console.log('refTrack - DATA: '+data['data'])
 					if($scope.id == data['data']['data'][0].users_idusers){
-						console.log("es la sesion");
+						console.log("refTrack - es la sesion");
 						$cookieStore.put("userSes",data['data']['data'][0].users_idusers);
 						$cookieStore.put("userContrapp",data['data']['data'][0].iduser2);
 						$scope.param1 = $cookieStore.get("userSes");
@@ -1198,25 +1256,25 @@
 						}
 
 						if($scope.param2){
-							console.log("param 2"+$scope.param2);
+							console.log("refTrack - param 2"+$scope.param2);
 							//$http({method: 'GET',url: $scope.url_server+'/users/'+$scope.param2+'/'+$scope.param2})
 							$http({method: 'GET',url: $scope.url_server+'/users/'+$scope.param2})
 							.then(function (data){
-								console.log(data['data']['data'].username+"data usuario2");
+								console.log('refTrack - DATA USERS: '+data['data']['data'].username+"data usuario2");
 								if(data['data']['data'] == ""){
 									console.log("POSTCONT:: la consulta no trajo datos de users: ");
 								}else {
-									$cookieStore.put('usernameContrap',data['data']['data'].username);
+									$cookieStore.put('refTrack - usernameContrap',data['data']['data'].username);
 									$scope.usernameContrap = $cookieStore.get('usernameContrap');
 								}
 							}
 							,function(error) {
-								console.log("POSTCONT:: Error obteniendo data2 users: "+error)
+								console.log("refTrack - APPCONT:: Error obteniendo data2 users: "+error)
 							});
 				 		}
 
 					}else{
-						console.log("es la contraporter");
+						console.log("refTrack - es la contraporter");
 						
 						$cookieStore.put("userSes",data['data']['data'][0].iduser2);
 						$cookieStore.put("userContrapp",data['data']['data'][0].users_idusers);
@@ -1224,40 +1282,42 @@
 						$scope.param2 = $cookieStore.get("userSes");
 					
 						if($scope.param1){
-							console.log("param 1"+$scope.param1);
+							console.log("refTrack - param 1"+$scope.param1);
 							//$http({method: 'GET',url: $scope.url_server+'/users/'+$scope.param1+'/'+$scope.param1})
 							$http({method: 'GET',url: $scope.url_server+'/users/'+$scope.param1})
 							.then(function (data){
-								console.log(data['data']['data'].username+"data usuario");
+								console.log('refTrack - '+data['data']['data'].username+" data usuario ZBSJ");
 								if(data['data']['data'] == ""){
-									console.log("POSTCONT:: la consulta no trajo datos de users: ");
+									console.log("refTrack - APPCONT:: la consulta no trajo datos de users: ");
 								}else {
 									$cookieStore.put('userSes',data['data']['data'].username);
 									$scope.usernameContrap = $cookieStore.get('userSes');
 								}
 							}
 							,function(error) {
-								console.log("POSTCONT:: Error obteniendo data1 users: "+error)
+								console.log("refTrack - APPCONT:: Error obteniendo data1 users: "+error)
 							}
 							);
 						}
 
 						if($scope.param2){
+							console.log('refTrack - $scope.param2 == '+$scope.param2)
 							$scope.usernameT = $scope.username;
 				 		}
 
 					}				
 					
-					console.log("resultado de userContrapp: "+$cookieStore.get("userContrapp"));
-				    console.log("resultado de userSes: "+$cookieStore.get("userSes"));
-					console.log("POSTCONT:: datos posturasMatch: ");
+					console.log("refTrack - resultado de userContrapp: "+$cookieStore.get("userContrapp"));
+				    console.log("refTrack - resultado de userSes: "+$cookieStore.get("userSes"));
+					console.log("refTrack - APPCONT:: datos posturasMatch: ");
 					//console.log('parametro de url: '+$scope.param);
 				}
 
 			});
 			
 			if($location.url()=="/operacion/operacion/"+$routeParams.id_posturas_match){
-				$interval(function() {  
+				$interval(function() {
+          console.log('refTrack - $location.url()=="/operacion/operacion/')
 					if($routeParams.id_posturas_match && $scope.id){
 						$scope.myFunction();
 						//$scope.mosConv($routeParams.id_posturas_match,$scope.id);
@@ -1285,31 +1345,36 @@
 		    .then(function(data){	
 		    	//console.log('data es el valor '+data['data']['data'].idtracking);
 				var c=0;
+				console.log('MMMMMMMMMMM 0')
+				console.log(data['data'])
 				if( data['data']['data'] != null){
+					console.log('MMMMMMMMMMM 1')
+					console.log(data['data'])
 					var c =	data['data']['data'].idtracking;
 					var usernamePart = data['data']['data'].iduser;
 					var usernamePart2 = data['data']['data'].iduser2;
           			console.log("valor del idtracking essssss "+usernamePart);
-				}
 				
-				/*traemos un contraparte de la transaccion*/
-				$http({method:'GET',url: $scope.url_server+'/users/'+usernamePart})
-				.then(function(data){
-					$scope.usernameP = data['data']['data'].username;
-					console.log('el usuario es '+data['data']['data'].username);
-				}
-				,function(error) {
-					console.log("POSTCONT:: Error obteniendo data users: "+error)
-				});
+				
+					/*traemos un contraparte de la transaccion*/
+					$http({method:'GET',url: $scope.url_server+'/users/'+usernamePart})
+					.then(function(data){
+						$scope.usernameP = data['data']['data'].username;
+						console.log('aaaaaaaaaaaaaaa el usuario es users 1'+data['data']['data'].username);
+					}
+					,function(error) {
+						console.log("POSTCONT:: Error obteniendo data users 1: "+error)
+					});
 
-				$http({method:'GET',url: $scope.url_server+'/users/'+usernamePart2})
-				.then(function(data){
-					$scope.usernameP2 = data['data']['data'].username;
-					console.log('el usuario es '+data['data']['data'].username);
+					$http({method:'GET',url: $scope.url_server+'/users/'+usernamePart2})
+					.then(function(data){
+						$scope.usernameP2 = data['data']['data'].username;
+						console.log('bbbbbbbbbbbbbb el usuario es users 2'+data['data']['data'].username);
+					}
+					,function(error) {
+						console.log("POSTCONT:: Error obteniendo data users 2: "+error)
+					});
 				}
-				,function(error) {
-					console.log("POSTCONT:: Error obteniendo data users: "+error)
-				});
 
 
 				console.log("C "+c);
@@ -1816,7 +1881,7 @@
 				}else{
 					document.getElementById('tranf4').checked=false;
 				
-}
+				}
 			});
 		}
 

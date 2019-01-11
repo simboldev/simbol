@@ -1,11 +1,10 @@
-<div id="negociacion"  ng-app="app" >
-	<form role="form" name="envNeg"   enctype="multipart/form-data" >
+<div id="negociacion"  ng-app="app">
+	<form role="form" name="envNeg" enctype="multipart/form-data">
 		<div  class="container" ng-controller="ChatCtrl" ng-init="cargaSelectBanco();" >
 			<div id="negociacion" >
-
 					<div class="row nomargin nopadding" >
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">
-							<label class="block-center">Banco</label>
+							<label class="block-center">Banco {{idUserContrapate}}</label>
 						</div>
 						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 							<select ng-model="selectBanco.negBanco" name="negBanco" id="negBanco" class="form-control input_simbol font_bold " >
@@ -14,7 +13,8 @@
 						</div>
 					</div>
 
-					<div class="row nomargin nopadding" >
+					<!-- <div class="row nomargin nopadding" ng-if='idMonedaQuiero == 2'> -->
+					<div class="row nomargin nopadding">
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">
 							<label class="block-center">ABA</label>
 						</div>
@@ -56,13 +56,12 @@
 					</div>
 					<div class="row nomargin nopadding" >
 						<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-							<button type="button" class="btn btn-secondary btn_orange_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="guardarNegociacion();" onclick="reloadd();">
+
+							<button type="button" class="btn btn-secondary btn_orange_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="guardarNegociacion();">
 								Enviar
 							</button>
 						</div>
 					</div>
-
-
 			</div>
 		</div>
 	</form>

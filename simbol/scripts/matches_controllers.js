@@ -662,38 +662,21 @@ mainApp
 
 	$scope.get_postura_match = function($id_postura_match)
 	{
+		console.log('----------------get_postura_match---------------'+$id_postura_match)
 		// Se obtiene Postura del id recibido
-		$http({ method: 'GET',
-				url: $scope.url_server+'/posturasMatch/'+$id_postura_match })
-				.then(function (data){
-					$scope.postura_match_det = data['data']['data'][0];
+		if($id_postura_match != undefined)
+		{
+			$http({ method: 'GET',
+					url: $scope.url_server+'/posturasMatch/'+$id_postura_match })
+					.then(function (data){
+						$scope.postura_match_det = data['data']['data'][0];
 
-					if(data['data']['data'].length > 0)
-					{
-						// Se da nuevo formato a fechas del log de la postura match
-						if(Object.keys($scope.postura_match_det['log']).length > 0)
+						if(data['data']['data'].length > 0)
 						{
-							$scope.postura_match_det['log'].forEach(function(log) {
-								if($scope.validar_navegador() == 2) // Safari
-								{
-									log['created_at'] = $scope.format_date_db(new Date(log['created_at'].split(' ')[0]),0);
-								}
-								else
-								{
-									log['created_at'] = $scope.format_date_db(new Date(log['created_at']),0);
-								}
-					        });
-						}
-
-						// Valido que las posturas contengan informacion
-						if(	(Object.keys($scope.postura_match_det['postura'][0]).length > 0)
-							&& (Object.keys($scope.postura_match_det['postura_contraparte'][0]).length > 0))
-						{						
-							// Se da nuevo formato a fechas del log de cada postura (propietario y contraparte)
-							console.log(($scope.postura_match_det['postura'][0]['usuario']['log'].length))
-							if(Object.keys($scope.postura_match_det['postura'][0]['usuario']['log']).length > 0)
+							// Se da nuevo formato a fechas del log de la postura match
+							if(Object.keys($scope.postura_match_det['log']).length > 0)
 							{
-								$scope.postura_match_det['postura'][0]['usuario']['log'].forEach(function(log) {
+								$scope.postura_match_det['log'].forEach(function(log) {
 									if($scope.validar_navegador() == 2) // Safari
 									{
 										log['created_at'] = $scope.format_date_db(new Date(log['created_at'].split(' ')[0]),0);
@@ -702,41 +685,62 @@ mainApp
 									{
 										log['created_at'] = $scope.format_date_db(new Date(log['created_at']),0);
 									}
-
 						        });
 							}
-							if(Object.keys($scope.postura_match_det['postura_contraparte'][0]['usuario']['log']).length > 0)
+
+							// Valido que las posturas contengan informacion
+							if(	(Object.keys($scope.postura_match_det['postura'][0]).length > 0)
+								&& (Object.keys($scope.postura_match_det['postura_contraparte'][0]).length > 0))
+							{						
+								// Se da nuevo formato a fechas del log de cada postura (propietario y contraparte)
+								console.log(($scope.postura_match_det['postura'][0]['usuario']['log'].length))
+								if(Object.keys($scope.postura_match_det['postura'][0]['usuario']['log']).length > 0)
+								{
+									$scope.postura_match_det['postura'][0]['usuario']['log'].forEach(function(log) {
+										if($scope.validar_navegador() == 2) // Safari
+										{
+											log['created_at'] = $scope.format_date_db(new Date(log['created_at'].split(' ')[0]),0);
+										}
+										else
+										{
+											log['created_at'] = $scope.format_date_db(new Date(log['created_at']),0);
+										}
+
+							        });
+								}
+								if(Object.keys($scope.postura_match_det['postura_contraparte'][0]['usuario']['log']).length > 0)
+								{
+						        	$scope.postura_match_det['postura_contraparte'][0]['usuario']['log'].forEach(function(log) {
+										if($scope.validar_navegador() == 2) // Safari
+										{
+											log['created_at'] = $scope.format_date_db(new Date(log['created_at'].split(' ')[0]),0);
+										}
+										else
+										{
+											log['created_at'] = $scope.format_date_db(new Date(log['created_at']),0);
+										}
+						        	});
+						        }
+							}
+							else
 							{
-					        	$scope.postura_match_det['postura_contraparte'][0]['usuario']['log'].forEach(function(log) {
-									if($scope.validar_navegador() == 2) // Safari
-									{
-										log['created_at'] = $scope.format_date_db(new Date(log['created_at'].split(' ')[0]),0);
-									}
-									else
-									{
-										log['created_at'] = $scope.format_date_db(new Date(log['created_at']),0);
-									}
-					        	});
-					        }
+								posture_match.text_postura 	= "problemas cargando la información, comuniquese con el administrador";
+								posture_match.text_postura_contraparte	= "problemas cargando la información, comuniquese con el administrador";
+							}
 						}
 						else
 						{
-							posture_match.text_postura 	= "problemas cargando la información, comuniquese con el administrador";
-							posture_match.text_postura_contraparte	= "problemas cargando la información, comuniquese con el administrador";
+							$location.url('/');
+							alert("Dirección solicitada no encontrada.");
 						}
 					}
-					else
-					{
-						$location.url('/');
-						alert("Dirección solicitada no encontrada.");
-					}
-				}
-				,function (error){
-					console.log("get_postura_match:: Error obteniendo data postura match: ");
-					console.log(error);
-				});
+					,function (error){
+						console.log("get_postura_match:: Error obteniendo data postura match: ");
+						console.log(error);
+					});
 
-		// return posture;
+			// return posture;
+		}
 	}
 
 

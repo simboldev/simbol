@@ -12,7 +12,8 @@ mainApp
   $scope.fecha_desde.setHours(0);
   $scope.fecha_desde.setMinutes(0);
   $scope.fecha_desde.setSeconds(0);
-
+  $scope.monedaBs = [1];
+  $scope.monedaInternacional = [2];
 	$scope.datestring = $scope.d.getDate()  
 	+ "-" + ($scope.d.getMonth()+1) 
 	+ "-" + $scope.d.getFullYear()
@@ -22,7 +23,6 @@ mainApp
 	$scope.timestring = new Date($scope.d.getFullYear(), $scope.d.getMonth(), $scope.d.getDate(), $scope.d.getHours(), $scope.d.getMinutes()+60, 0);
 
 	// Monedas registradas para el intercambio en el sistemaheaders_json
-
 	$http({ method: 'GET',
           url: $scope.url_server+'/monedas' 
       })
@@ -465,17 +465,15 @@ mainApp
 
     /*METODO PARA TRAER LAS NEGOCIACIONES EN PROCESO JUNTO CON LAS POSTURAS QUE HICIERON MATCH*/
     $scope.negList = function(){
-
-          $http({method: 'GET',url: $scope.url_server+'/negociacion'})
-          .then(function (data){
-              console.log('buenooo neg '+data['data']['data'][0]['divisa1']);
-              $scope.listNeg = data['data']['data'];
-          },
-          function(error){
-              console.log("POSTCONT:: Error en la consulta de estatus de  negociacion: "+error)
-          });
+      $http({method: 'GET',url: $scope.url_server+'/negociacion'})
+      .then(function (data){
+          console.log('buenooo neg '+data['data']['data'][0]['divisa1']);
+          $scope.listNeg = data['data']['data'];
+      },
+      function(error){
+          console.log("POSTCONT:: Error en la consulta de estatus de  negociacion: "+error)
+      });
     }
-
 
     //Método para traer las posturas en interfaz de inicio
     $scope.misPosturasList = function(){
@@ -499,7 +497,6 @@ mainApp
             console.log("POSTCONT:: misPosturasList Error al crear postura: \n Error: "+xhr.status+" "+thrownError);
       });
     }
-
 
     $scope.configPagesTableNeg = function() {
         $scope.post_pages.length = 0;
@@ -826,37 +823,32 @@ mainApp
       $http({method: 'GET',url: $scope.url_server+'/posturasMatch/montosXposturas/'+$routeParams.id_posturas_match+'/'+$scope.id})
       .then(function(data){
           if(data['data']['data']){
-
-              console.log("si hay data "+data['data']['data'][0]['tasacambio']);
-              console.log("moneda que quiero  "+data['data']['data'][0]['quiero_moneda_id']);
-              console.log("el id user traido es "+data['data']['data'][0]['iduser']);
+              console.log("montosXposturas - si hay data "+data['data']['data'][0]['tasacambio']);
+              console.log("montosXposturas - moneda que quiero  "+data['data']['data'][0]['quiero_moneda_id']);
+              console.log("montosXposturas - el id user traido es "+data['data']['data'][0]['iduser']);
 
               $scope.tasacambio = data['data']['data'][0]['tasacambio'];
               $scope.transferir = data['data']['data'][0]['tengo'];
               $scope.iduser = data['data']['data'][0]['iduser'];
-              
-              if($scope.id == $scope.iduser){
-                  if(data['data']['data'][0]['quiero_moneda_id']==1){
-                      $scope.simMonedaQuiero = 'BsS';
-                      $scope.simMonedaTengo = 'USD'; 
-                      $scope.recibire = $scope.transferir * $scope.tasacambio;
-                  }else if (data['data']['data'][0]['quiero_moneda_id']==2){
-                      $scope.simMonedaQuiero = 'USD';
-                      $scope.simMonedaTengo = 'BsS'; 
-                      $scope.recibire = $scope.transferir / $scope.tasacambio;
-                  }
-              }
+              $scope.idMonedaQuiero = data['data']['data'][0]['quiero_moneda_id'];
+              $scope.simMonedaQuiero = data['data']['data'][0]['quiero_moneda_simbolo'];
+              $scope.idMonedaTengo = data['data']['data'][0]['tengo_moneda_id'];
+              $scope.simMonedaTengo = data['data']['data'][0]['tengo_moneda_simbolo'];
+              $scope.idposturasMatchContraparte = data['data']['data'][0]['idposturasMatchContraparte'];
+              $scope.idUserContraparte = data['data']['data'][0]['idUserContraparte'];
 
-          }else{
-              console.log("no hay data hay data");
+              if($scope.id == $scope.iduser){
+                if(data['data']['data'][0]['quiero_moneda_id']==1)
+                  $scope.recibire = $scope.transferir * $scope.tasacambio;
+                else if (data['data']['data'][0]['quiero_moneda_id']==2)
+                  $scope.recibire = $scope.transferir / $scope.tasacambio;
+              }
           }
       }
       ,function (xhr, ajaxOptions, thrownError){
           console.log("POSTCONT:: Error al agregar nuevo amigo a circulo de confianza:\n Error: "+xhr.status+" "+thrownError);
       });
     }
-
-
 }])
 .filter('startFromGrid', function() {
   return function(input, start) {

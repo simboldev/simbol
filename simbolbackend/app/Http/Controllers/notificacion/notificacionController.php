@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 
 class notificacionController extends Controller
 {
+  var $charset="UTF-8";
     /**
      * Display a listing of the resource.
      *
@@ -127,7 +128,7 @@ class notificacionController extends Controller
         $code       = "OK";
         $message    = "";
         $data       = [];
-        
+        error_log('$charset ================== '.$this->charset);
         if(is_numeric($iduser)){
             
             $not = DB::table('notificacions')
@@ -150,19 +151,21 @@ class notificacionController extends Controller
             $j=1;
             for($i = 0 ;$i <= count($not)-1;$i++){
                 error_log(count($not));
-                $resultadoTracking = strpos($not[$i]->titulo,'Tracking');
-                $resultadoConfiabilidad = strpos($not[$i]->titulo,'Confiabilidad');
-                //dd($resultadoConfiabilidad);
+                $str_titulo = iconv($this->charset, 'ASCII//TRANSLIT', $not[$i]->titulo);
+                // $resultadoTracking = strpos($str_titulo,'Tracking');
+                // $resultadoConfiabilidad = strpos($str_titulo,'Confiabilidad');
+                // $resultadoNegociacion = strpos($str_titulo,'Negociacion');
+                
+                $resultadoTracking = ($str_titulo == 'Tracking') ? true : false ;
+                $resultadoConfiabilidad = ($str_titulo == 'Confiabilidad') ? true : false ;
+                $resultadoNegociacion = ($str_titulo == 'Negociacion') ? true : false ;
+
+                
                 $idPostMatch =  $not[$i]->postura_match_id;  
+                
                 if($resultadoTracking == true){
+                  error_log('$resultadoTracking ================== '.$resultadoTracking);
                     if($not[$i]->postura_match_id){
-                          /*$idPostMatch= DB::table('posturas_matches')
-                                     ->where('iduser2','=',$iduser)
-                                     ->where('idposturasMatch','=',$not[$i]->postura_match_id)
-                                     ->whereNotNull('trackings_idtracking')
-                                     ->where('estatusOperaciones_idestatusOperacion','=',1)
-                                     ->orWhere('estatusOperaciones_idestatusOperacion','=',2)
-                                     ->max('idposturasMatch');*/
                           if($idPostMatch){
                             $not[$i]->identificador=1;
                             $not[$i]->idPostMatch=$idPostMatch; 
@@ -171,11 +174,11 @@ class notificacionController extends Controller
                           }           
                     }else{
                         $not[$i]->identificador=1;
-                    }       
-                    
+                    }   
                 }
+                
                 if($resultadoConfiabilidad == true){
-
+                  error_log('$resultadoConfiabilidad ================== '.$resultadoConfiabilidad);
                     if($not[$i]->postura_match_id){
                         $idPostMatch =  $not[$i]->postura_match_id;         
                           if($idPostMatch){
@@ -190,9 +193,25 @@ class notificacionController extends Controller
                     
                 }
 
-                if($not[$i]->status_notifications_id == 1 && ($resultadoTracking == false && $resultadoConfiabilidad == false))
-                {
+                if($resultadoNegociacion == true){
+                  error_log('$resultadoNegociacion ================== '.$resultadoNegociacion);
+                    if($not[$i]->postura_match_id){
+                        $idPostMatch =  $not[$i]->postura_match_id;         
+                        if($idPostMatch){
+                          $not[$i]->identificador=6;
+                          $not[$i]->idPostMatch=$idPostMatch; 
+                        }else{
+                          $not[$i]->identificador=2;
+                        }   
+                    }else{
+                      $not[$i]->identificador=6;
+                    }
+                    
+                }
 
+                if($not[$i]->status_notifications_id == 1 && ($resultadoTracking == false && $resultadoConfiabilidad == false && $resultadoNegociacion == false))
+                {
+                  error_log('$if grande ================== ');
                   // Aplica cuando las notificaciones son MATCH que se le muestran a la contraparte.
                   $idPostMatch= DB::table('posturas_matches')
                                     ->where('idposturasMatch','=',$not[$i]->postura_match_id)
@@ -218,7 +237,7 @@ class notificacionController extends Controller
 
                     }
                 }
-                else if((int)$not[$i]->status_notifications_id == 2 && ($resultadoTracking == false && $resultadoConfiabilidad == false))
+                else if((int)$not[$i]->status_notifications_id == 2 && ($resultadoTracking == false && $resultadoConfiabilidad == false && $resultadoNegociacion == false))
                 {
                   // Aplica cuando las notificaciones son MATCH que se le muestran al propietario.
 

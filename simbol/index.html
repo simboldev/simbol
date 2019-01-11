@@ -151,7 +151,8 @@
                 tick();
             }else{
                 
-                var estatusOperaciones_idestatusOperacion = 4;
+                var estatusOperacion
+                es_idestatusOperacion = 4;
                 var posturasMatches_idposturasMatch = document.getElementById("posturasMatch_idposturasMatch").value; 
                 /*var url ='http://52.170.252.66:8080/posturas/cambiar_estatus_operacion/'+posturasMatches_idposturasMatch+'/'+estatusOperaciones_idestatusOperacion;*/
                 //var url ='http://localhost:8000/posturas/cambiar_estatus_operacion/'+
@@ -263,8 +264,8 @@
         });
     }
 
-    function evidenciaNeg(idNeg,comprobante){
-        console.log("valores negociaciono "+idNeg+'--------'+comprobante);
+    function evidenciaNeg(idUser,idNeg,comprobante,idNegContraparte,status){
+        console.log("evidenciaNeg - valores negociaciono "+idNeg+'--------'+comprobante);
         var url =document.getElementById("url_server").value+'/negociacion/saveComprobante';
         var file = comprobante.files[0];
 
@@ -272,74 +273,10 @@
 
         var formData = new FormData();
         formData.append('idNeg',idNeg);
-        console.log("url comprobante"+url);
-        if( extensiones=='.jpg' || 
-            extensiones=='.JPG' || 
-            extensiones=='.jpeg' || 
-            extensiones=='.JPEG' || 
-            extensiones=='.png' || 
-            extensiones=='.PNG' || 
-            extensiones=='.pdf' || 
-            extensiones=='.PDF'){
-
-                formData.append('comprobante',file);
-
-        }else{
-
-                /*formData.append('textouser','¡ Extensión no perimitida, extenciones soportadas png,jpg y pdf !');
-                formData.append('adjuntouser','');*/
-        }
-
-        $.ajax({
-            data:formData,
-            url:url,
-            method:'POST',
-            cache:false,
-            processData:false,
-            contentType: false,
-           success: function (data) {
-                if(data['data'] == 1){
-                    
-                    //consEstatusNeg();
-                    reloadd();
-                }else{
-
-                }
-           }
-        })
-    
-    }
-
-    function comprobarExistArchivo2(){
-        if ($('#myFile2').val()) { 
-            $("#buttonTransf2").css("visibility","visible");
-        }else{
-            $("#buttonTransf2").css("visibility","hidden");
-        }
-    }
-
-
-    function comprobarExistArchivo(){
-        if ($('#myFile').val()) { 
-            $("#buttonTransf").css("visibility","visible");
-        }else{
-            $("#buttonTransf").css("visibility","hidden");
-        }
-    }
-
-
-    function evidenciaNegContraparte(idUser,idNeg,comprobante){
-        console.log("valores negociaciono "+idNeg+'--------'+comprobante);
-        var url =document.getElementById("url_server").value+'/negociacion/saveComprobanteContraparte';
-        var file = comprobante.files[0];
-
-        var extensiones =file.name.substring(file.name.lastIndexOf('.'));
-
-        var formData = new FormData();
-        formData.append('idNeg',idNeg);
         formData.append('idUser',idUser);
-
-        console.log("url comprobante"+url);
+        formData.append('idNegContraparte',idNegContraparte);
+        formData.append('status',status);
+        console.log("evidenciaNeg - url comprobante"+url);
         if( extensiones=='.jpg' || 
             extensiones=='.JPG' || 
             extensiones=='.jpeg' || 
@@ -347,39 +284,54 @@
             extensiones=='.png' || 
             extensiones=='.PNG' || 
             extensiones=='.pdf' || 
-            extensiones=='.PDF'){
+            extensiones=='.PDF')
+        {
 
-                formData.append('comprobante',file);
+            formData.append('comprobante',file);
+            $.ajax({
+                data:formData,
+                url:url,
+                method:'POST',
+                cache:false,
+                processData:false,
+                contentType: false,
+                success: function (data) {
+                    if(data['data'] == 1){
+                        //consEstatusNeg();
+                        reloadd();
+                    }else{
 
-        }else{
-
-                /*formData.append('textouser','¡ Extensión no perimitida, extenciones soportadas png,jpg y pdf !');
-                formData.append('adjuntouser','');*/
+                    }
+               }
+            });
         }
+        else
+        {
+          formData.append('comprobante','');
+          alert('¡Extensión de archivo no perimitida, extenciones soportadas png,jpg y pdf!');
+        }
+    }
 
-        $.ajax({
-            data:formData,
-            url:url,
-            method:'POST',
-            cache:false,
-            processData:false,
-            contentType: false,
-           success: function (data) {
-                if(data['data'] == 1){
-                    //consEstatusNeg();
-                    reloadd();
-                }else{
+    function comprobarExistArchivo2()
+    {
+        if ($('#myFile2').val())
+          $("#buttonTransf2").css("visibility","visible");
+        else
+          $("#buttonTransf2").css("visibility","hidden");
+    }
 
-                }
-           }
-        })
-        
+
+    function comprobarExistArchivo()
+    {
+      if ($('#myFile').val())
+        $("#buttonTransf").css("visibility","visible");
+      else
+          $("#buttonTransf").css("visibility","hidden");
     }
 
     function reloadd(){
-
-        setTimeout(function(){ location.reload(); }, 7000);
-        
+        // setTimeout(function(){ location.reload(); }, 2000);
+        location.reload();
     }
 
     function denunciarOperacion(
@@ -422,7 +374,6 @@
         if(document.getElementById('nocumplecondpreest').checked == true){
             nocumplecondpreest = "No cumplio con las condiciones pre-establecidas.";
         }
-
 
         var url =document.getElementById("url_server").value+'/denuncias';
         var archivos = evidencia.files;
@@ -515,4 +466,17 @@
             }
         }   
     }
+
+    function mostrar_btn_transferencia_reliazada($input)
+    {
+      if( $input.val() != '')
+      {
+        $("#btn_transferecia_"+$input.attr('id')).prop( "disabled", false );
+      }
+      else
+      {
+        $("#btn_transferecia_"+$input.attr('id')).prop( "disabled", true );
+      }
+    };
+
 </script>

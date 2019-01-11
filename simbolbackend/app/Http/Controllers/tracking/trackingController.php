@@ -152,6 +152,7 @@ class trackingController extends Controller
      */
     public function show($id)
     {
+      error_log("===============SHOW Tracking========================".$id);
         //
         $code       = "OK";
         $message    = "";

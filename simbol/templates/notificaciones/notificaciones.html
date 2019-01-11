@@ -50,8 +50,10 @@
                                     <a ng-if='x.identificador == 5' ng-href="{{base_href}}/calificacion/calificacion/{{x.postura_match_id}}" style="text-decoration:none;" class="titleNot">
                                           {{x.titulo}} 
                                     </a>
-
-
+                                    <a ng-if='x.identificador == 6' ng-href="{{base_href}}/operacion/operacion/{{x.postura_match_id}}" style="text-decoration:none;" class="nopadding etiqNot">
+                                          {{x.titulo}}
+                                    </a>
+                                    
                                 </td>
                                 <td class="text-right" ng-if='x.identificador'>
 
@@ -65,6 +67,9 @@
                                           {{x.cuerpo}}
                                     </a>
                                     <a ng-if='x.identificador == 5' ng-href="{{base_href}}/calificacion/calificacion/{{x.postura_match_id}}" style="text-decoration:none;" class="bodyNot">
+                                          {{x.cuerpo}}
+                                    </a>
+                                    <a ng-if='x.identificador == 6' ng-href="{{base_href}}/operacion/operacion/{{x.postura_match_id}}" style="text-decoration:none;" class="nopadding etiqNot">
                                           {{x.cuerpo}}
                                     </a>
 
@@ -83,7 +88,9 @@
                                     <a ng-if='x.identificador == 5' ng-href="{{base_href}}/calificacion/calificacion/{{x.postura_match_id}}" style="text-decoration:none;" class="nopadding etiqNot">
                                           {{x.created_at}}
                                     </a>
-
+                                    <a ng-if='x.identificador == 6' ng-href="{{base_href}}/operacion/operacion/{{x.postura_match_id}}" style="text-decoration:none;" class="nopadding etiqNot">
+                                          {{x.created_at}}
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

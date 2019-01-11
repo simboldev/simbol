@@ -41,10 +41,15 @@ Route::resource('estatusPosturas','estatusPostura\estatusPosturaController');
 
 Route::resource('negociacion','negociacion\negociacionController');
 Route::get('negociacion/consultNeg/{idPosturaMatch}/{iduser}', 'negociacion\negociacionController@consultNeg')->name('negociacion.consultNeg');
-Route::get('negociacion/saveNegociacion/{idbancoNeg}/{abaNeg}/{nrocuentaNeg}/{emailNeg}/{nacionalidadNeg}/{nroidentificacionNeg}/{idposturamatchNeg}/{iduser}', 'negociacion\negociacionController@saveNegociacion')->name('negociacion.saveNegociacion');
+
+Route::get('negociacion/negociacion_por_postura_match/{idPosturaMatch}', 'negociacion\negociacionController@negociacion_por_postura_match')->name('negociacion.negociacion_por_postura_match');
+
+Route::get('negociacion/saveNegociacion/{idbancoNeg}/{abaNeg}/{nrocuentaNeg}/{emailNeg}/{nacionalidadNeg}/{nroidentificacionNeg}/{idposturamatchNeg}/{iduser}/{iduser_contraparte}', 'negociacion\negociacionController@saveNegociacion')->name('negociacion.saveNegociacion');
 Route::post('negociacion/saveComprobante', 'negociacion\negociacionController@saveComprobante')->name('negociacion.saveComprobante');
 Route::post('negociacion/saveComprobanteContraparte', 'negociacion\negociacionController@saveComprobanteContraparte')->name('negociacion.saveComprobanteContraparte');
 
+Route::get('negociacion/confirmacionTransferencia/{miIdNeg}/{idNegContraparte}/{estatus}', 'negociacion\negociacionController@confirmacionTransferencia')->name('negociacion.confirmacionTransferencia');
+Route::get('negociacion/confirmacionTransferenciaBackoffice/{idNeg}/{idNegContraparte}/{estatus}', 'negociacion\negociacionController@confirmacionTransferenciaBackoffice')->name('negociacion.confirmacionTransferenciaBackoffice');
 Route::get('negociacion/confirmacion1/{iduser}/{idPosturaMatch}', 'negociacion\negociacionController@confirmacion1')->name('negociacion.confirmacion1');
 Route::get('negociacion/confirmacion2/{iduser}/{idPosturaMatch}', 'negociacion\negociacionController@confirmacion2')->name('negociacion.confirmacion2');
 Route::get('negociacion/confirmacion3/{iduser}/{idPosturaMatch}', 'negociacion\negociacionController@confirmacion3')->name('negociacion.confirmacion3');
