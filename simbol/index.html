@@ -151,8 +151,7 @@
                 tick();
             }else{
                 
-                var estatusOperacion
-                es_idestatusOperacion = 4;
+                var estatusOperaciones_idestatusOperacion = 4;
                 var posturasMatches_idposturasMatch = document.getElementById("posturasMatch_idposturasMatch").value; 
                 /*var url ='http://52.170.252.66:8080/posturas/cambiar_estatus_operacion/'+posturasMatches_idposturasMatch+'/'+estatusOperaciones_idestatusOperacion;*/
                 //var url ='http://localhost:8000/posturas/cambiar_estatus_operacion/'+
@@ -374,6 +373,7 @@
         if(document.getElementById('nocumplecondpreest').checked == true){
             nocumplecondpreest = "No cumplio con las condiciones pre-establecidas.";
         }
+
 
         var url =document.getElementById("url_server").value+'/denuncias';
         var archivos = evidencia.files;

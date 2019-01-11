@@ -2,11 +2,12 @@
  var mainApp = angular.module("app", ["ngRoute","ngResource",'mgcrea.ngStrap','ngCookies','cgNotify']);
  mainApp.controller('appController', function($scope,$http,$cookieStore,$sce,$window,$location,$routeParams,notify,$interval) {
     $scope.tittle_page = "Simbol";
-    $scope.url_server = "http://localhost:8000";
-    $scope.base_href = '/simbol2019/simbol/simbol/#!';
-    $scope.link_g = $scope.url_server+'/simbol2019/simbol/simbolbackend/storage/app/';
-    /*$scope.url_server = "https://api.simbol.club";
-    $scope.base_href = '/#!';*/
+    //$scope.url_server = "http://localhost:8000";
+    //$scope.base_href = '/simbol-web/simbol/#!';
+    //$scope.base_href = '/#!';
+	 
+    $scope.url_server = "https://api.simbol.club"
+    $scope.base_href = '/simbol-web/simbol/#!';
     $scope.contNot=1;
     $scope.not=0;
     $scope.actCrono=null;
@@ -14,8 +15,8 @@
     // Recarga de index
     $scope.reload_page = function($url)
     {
-  		window.location = $url;
-  		window.location.reload();
+		$window.location = $url;
+		$window.location.reload();
     }
 
     $scope.index_init = function()

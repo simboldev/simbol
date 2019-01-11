@@ -228,7 +228,7 @@ class userController extends Controller
         }else{
             $code = "OK";
             $message = "No hubo resultados en la consula";
-            $data = 0;
+            $user = 0;
         }
 
         return response()->json([
