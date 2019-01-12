@@ -2,10 +2,6 @@
  var mainApp = angular.module("app", ["ngRoute","ngResource",'mgcrea.ngStrap','ngCookies','cgNotify']);
  mainApp.controller('appController', function($scope,$http,$cookieStore,$sce,$window,$location,$routeParams,notify,$interval) {
     $scope.tittle_page = "Simbol";
-    //$scope.url_server = "http://localhost:8000";
-    //$scope.base_href = '/simbol-web/simbol/#!';
-    //$scope.base_href = '/#!';
-	 
     $scope.url_server = "https://api.simbol.club"
     $scope.base_href = '/#!';
     $scope.contNot=1;
@@ -1135,8 +1131,8 @@
 	    $scope.consEstatusNeg = function(){
 	    	console.log("consEstatusNeg - si va "+$scope.selectBanco.negBanco+'--'+$scope.abadat+"--"+$scope.nrocuenta+"--"+$scope.email+"--"+$scope.selectNacionalidad.negNacionalidad+"--"+$scope.nroidentificacion);
 	    	
-  			var arrlink = $scope.link_g.split(":8000",2);
-  			var link = arrlink[0]+arrlink[1];
+  			// var arrlink = $scope.link_g.split(":8000",2);
+  			// var link = arrlink[0]+arrlink[1];
 
       	$http({method: 'GET',url: $scope.url_server+'/negociacion/consultNeg/'+$scope.paramPost+'/'+$scope.id})
 	    	.then(function (data){
@@ -1962,9 +1958,9 @@
 			console.log("iduser: "+idUser+" y idpostumat"+idPostura);
 
 			//repositorio de archivos para mostrar en la conversación
-			var arrlink = $scope.link_g.split(":8000",2);
-			var link = arrlink[0]+arrlink[1];
-			console.log("ruta para adjuntar "+$scope.link_g);
+			// var arrlink = $scope.link_g.split(":8000",2);
+			// var link = arrlink[0]+arrlink[1];
+			// console.log("ruta para adjuntar "+$scope.link_g);
 			var icon="";
 			var html="";
 
@@ -2004,7 +2000,7 @@
 
 
 								   if(data['data']['data'][i]['adjuntouser'] != null){
-								   		html +="<a href='"+link+data['data']['data'][i]['adjuntouser']+"' download="+data['data']['data'][i]['adjuntouser']+"  target='_blank' >"+icon+"</a>";
+								   		// html +="<a href='"+link+data['data']['data'][i]['adjuntouser']+"' download="+data['data']['data'][i]['adjuntouser']+"  target='_blank' >"+icon+"</a>";
 								   }
 								   html +=" </div>"+
 								   " <div class='flecha-derecha'></div>"+
