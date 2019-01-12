@@ -14,7 +14,7 @@ class AddColumnsToNegociacions extends Migration
   public function up()
   {
     Schema::table('negociacions', function (Blueprint $table) {
-        $table->integer('estatus_autoriza_backoffice')->nullable();
+        $table->integer('estatus_autoriza_backoffice')->unsigned();
     });
   }
 
@@ -26,7 +26,7 @@ class AddColumnsToNegociacions extends Migration
   public function down()
   {
     Schema::table('negociacions', function (Blueprint $table){
-        $table->dropColumn('estatus_autoriza_backoffice')->nullable();
+        $table->dropColumn('estatus_autoriza_backoffice');
     });
   }
 }

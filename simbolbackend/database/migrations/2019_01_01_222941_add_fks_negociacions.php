@@ -13,15 +13,11 @@ class AddFksNegociacions extends Migration
      */
     public function up()
     {
-      Schema::table('negociacions', function($table)
-      {
+      Schema::table('negociacions', function (Blueprint $table) {
 
-          $table->integer('estatusnegociacion')->unsigned();
-          $table->integer('estatus_autoriza_backoffice')->unsigned();
+        $table->foreign('estatusnegociacion')->references('id')->on('estatus_negociacions')->onDelete('cascade');
 
-          $table->foreign('estatusnegociacion')->references('id')->on('estatus_negociacions')->onDelete('cascade');
-
-          $table->foreign('estatus_autoriza_backoffice')->references('id')->on('estatus_negociacions')->onDelete('cascade');
+        $table->foreign('estatus_autoriza_backoffice')->references('id')->on('estatus_negociacions')->onDelete('cascade');
       });
     }
 
