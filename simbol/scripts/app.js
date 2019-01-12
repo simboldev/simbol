@@ -7,7 +7,7 @@
     //$scope.base_href = '/#!';
 	 
     $scope.url_server = "https://api.simbol.club"
-    $scope.base_href = '/simbol-web/simbol/#!';
+    $scope.base_href = '/#!';
     $scope.contNot=1;
     $scope.not=0;
     $scope.actCrono=null;
