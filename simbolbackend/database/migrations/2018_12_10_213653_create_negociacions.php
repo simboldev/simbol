@@ -24,7 +24,7 @@ class CreateNegociacions extends Migration
             $table->string('comprobante',500)->nullable();
             $table->integer('idposturamatch')->unsigned();
             $table->integer('estatusnegociacion')->unsigned()->nullable();
-            $table->integer('iduser')->unsigned();;
+            $table->integer('iduser')->unsigned();
             $table->timestamps();
         });
         

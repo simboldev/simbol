@@ -20,19 +20,4 @@ class AddFksNegociacions extends Migration
         $table->foreign('estatus_autoriza_backoffice')->references('id')->on('estatus_negociacions')->onDelete('cascade');
       });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {      
-      Schema::table('negociacions', function($table)
-      {
-          $table->drop_foreign('estatusnegociacion')->references('id')->on('estatus_negociacions')->onDelete('cascade');
-
-          $table->drop_foreign('estatus_autoriza_backoffice')->references('id')->on('estatus_negociacions')->onDelete('cascade');
-      });
-    }
 }

@@ -296,20 +296,15 @@ class negociacionController extends Controller
                           'email' =>  $negociacion->email,
                           'nroidentificacion' => $negociacion->nroidentificacion,
                           'comprobante'   => ($negociacion->comprobante != null) ? ENV('BASE_URL_COMPROBANTES').$negociacion->comprobante : ''
-
-// storage_path('app/public/avatars/')
-
-
-// "http://localhost:8000//storage/evidenciasNegociacion/CWwMUlG71uYDcmBbW6k48mPJgkFhbCJ2lIpeM4RN.pdf"
+                          // 'comprobante'   => ($negociacion->comprobante != null) ? join('',explode ("/public", ENV('BASE_URL_COMPROBANTES').$negociacion->comprobante)) : ''
                         ];
-// http://localhost/simbol2019/simbol/simbolbackend/storage/app/evidenciasNegociacion/CWwMUlG71uYDcmBbW6k48mPJgkFhbCJ2lIpeM4RN.pdf
-
-
+                        
       return $arr_negociacon;
     }
     public function saveNegociacion($idbancoNeg,$abaNeg,$nrocuentaNeg,$emailNeg,$nacionalidadNeg,$nroidentificacionNeg,$idposturamatchNeg,$iduser,$iduser_contraparte)
     {
         error_log("===============saveNegociacion NEGOCIACION========");
+        error_log('$iduser = '.$iduser.', $iduser_contraparte ='.$iduser_contraparte);
         $code       = "OK";
         $message    = "";
         $data       = [];
@@ -320,35 +315,22 @@ class negociacionController extends Controller
             ->where('idposturamatch',$idposturamatchNeg)
             ->get();
 
-        // if(count($existNeg) == 0){
-            $negociacion = new \App\negociacion();
-            $negociacion->idbanco = $idbancoNeg;
-            $negociacion->aba = $abaNeg;
-            $negociacion->nrocuenta = $nrocuentaNeg;
-            $negociacion->email = $emailNeg;
-            $negociacion->nroidentificacion = $identificacion;
-            $negociacion->idposturamatch = $idposturamatchNeg;
-            $negociacion->estatusnegociacion = 1;
-            $negociacion->iduser = $iduser;
+        $negociacion = new \App\negociacion();
+        $negociacion->idbanco = $idbancoNeg;
+        $negociacion->aba = $abaNeg;
+        $negociacion->nrocuenta = $nrocuentaNeg;
+        $negociacion->email = $emailNeg;
+        $negociacion->nroidentificacion = $identificacion;
+        $negociacion->idposturamatch = $idposturamatchNeg;
+        $negociacion->estatusnegociacion = 1;
+        $negociacion->iduser = $iduser;
 
-            $data = ['estatusNeg'=>1];
-
-        // }else{
-        //     $negociacion = new \App\negociacion();
-        //     $negociacion->idbanco = $idbancoNeg;
-        //     $negociacion->aba = $abaNeg;
-        //     $negociacion->nrocuenta = $nrocuentaNeg;
-        //     $negociacion->email = $emailNeg;
-        //     $negociacion->nroidentificacion = $identificacion;
-        //     $negociacion->idposturamatch = $idposturamatchNeg;
-        //     $negociacion->estatusnegociacion = 2;
-        //     $negociacion->iduser = $iduser;
-
-        //     $data = ['estatusNeg'=>2];
-        // }
+        $data = ['estatusNeg'=>1];
 
         if($negociacion->save())
         {
+          $negociaciones = negociacion::where('iduser','!=', $negociacion->iduser)->where('estatusnegociacion',$negociacion->estatusnegociacion)->where('idposturamatch',$negociacion->idposturamatch)->get();
+
           $postura_match = posturasMatches::find($negociacion->idposturamatch);
           error_log('ssssssss postura_match = ');
           error_log($postura_match);
@@ -365,23 +347,42 @@ class negociacionController extends Controller
               $postura = postura::where('idposturas',$postura_match->postura_contraparte_id)->first();
           }
           error_log($postura);
-
-          // Si es Bs
-          if($postura->quiero_moneda_id == 1)
+          
+          $user_emisor = User::find($iduser);
+          $user_contraparte = User::find($iduser_contraparte);
+          $tittle_noti = 'Negociación';
+          
+          if($postura->quiero_moneda_id == 1) // Bs
           {
-            $user_contraparte = User::find($iduser_contraparte);
-            // Esta condicion debo modificarla a su numero correspondiente sin restar 1, pero para ello debo actualizar condiciones en la operacion tambien
-            // $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion-1)->estatus;
-            $estatus_negociacion = 'agregó los datos bancarios. Ya le puedes transferir.';
-            $tittle_noti = 'Negociación';
-            $text_noti = strtoupper($user_contraparte->username).' '.$estatus_negociacion;
 
-            $this->save_notification($user_contraparte->id,$tittle_noti, $text_noti, $negociacion->idposturamatch,1);
+            $estatus_negociacion = 'agregó los datos bancarios.';
+
+            if(count($negociaciones) > 0)
+            {
+              $estatus_negociacion = $estatus_negociacion.' Ya le puedes transferir.';
+            }
+            else
+            {
+              $estatus_negociacion = $estatus_negociacion.' Agrega tus datos para que puedas transferirle.';
+            }
+          }
+          else if($postura->quiero_moneda_id == 2) // USD
+          {
+            if(count($negociaciones) > 0)
+            {
+              $estatus_negociacion = 'está relizando la transferencia.';
+            }
+            else
+            {
+              $estatus_negociacion = 'espera que agregues tus datos bancarios para transferirte.';
+            }
           }
 
-            $message = "La negociación se ha guardado con exito";
+          $text_noti = strtoupper($user_emisor->username).' '.$estatus_negociacion;
+          $this->save_notification($user_contraparte->id,$tittle_noti, $text_noti, $negociacion->idposturamatch,1);
+          $message = "La negociación se ha guardado con exito";
         }else{
-            $message = "La negociación no se ha podido guardar con exito";
+          $message = "La negociación no se ha podido guardar con exito";
         }
 
         return response()->json([
@@ -395,39 +396,57 @@ class negociacionController extends Controller
     public function saveComprobante(Request $request)
     {
       error_log("===============saveComprobante NEGOCIACION========");
-            $code       = "OK";
-            $message    = "";
-            $data       = [];
+      $code       = "OK";
+      $message    = "";
+      $data       = [];
 
-            $idNegociacion = $request->idNeg;
-            $idUser = $request->idUser;
-            $idNegContraparte = $request->idNegContraparte;
+      $idNegociacion = $request->idNeg;
+      $idUser = $request->idUser;
+      $idNegContraparte = $request->idNegContraparte;
+      error_log('$idNegociacion = '.$idNegociacion.' $idUser = '.$idUser.' $idNegContraparte = '.$idNegContraparte);
+      if($request->hasFile('comprobante')){
+          $comprobante = $request->file('comprobante')->store('public/evidenciasNegociacion');
+      }
 
-            if($request->hasFile('comprobante')){
-                $comprobante = $request->file('comprobante')->store('evidenciasNegociacion');
-            }
+      if(negociacion::where('id',$idNegociacion)->update(['comprobante' => $comprobante,'estatusnegociacion' => $request->status]) && negociacion::where('id',$idNegContraparte)->update(['estatusnegociacion' => $request->status]))
+      {
+        error_log('inicializo vriables para status not');
+        // Notifico a backoffice
+        $user_backoffice = 5;
+        $backoffices = User::where('tipousuario_idtipousuario',$user_backoffice)->get();
+        $negociacion = negociacion::find($idNegociacion);
+        $user_emisor = User::find($negociacion->iduser);
+        error_log('inicializadas  backoffices y negociacion');
+        $estatus_negociacion = 'agregó el comprobante de transferencia';
+        $tittle_noti = 'Negociación';
+        error_log('antes de enviar not a back for');
+        $text_noti = strtoupper($user_emisor->username).' '.$estatus_negociacion;
+        error_log('foreach ($backoffices as $backoffice)');
+        foreach ($backoffices as $backoffice)
+        {
+          error_log('antes de enviar not a '.$backoffice->username);
+          $this->save_notification($backoffice->id,$tittle_noti, $text_noti, $negociacion->idposturamatch,1);
+          error_log('despues de enviar not a '.$backoffice->username);
+        }
 
-            if(negociacion::where('id',$idNegociacion)->update(['comprobante' => $comprobante,'estatusnegociacion' => $request->status]) && negociacion::where('id',$idNegContraparte)->update(['estatusnegociacion' => $request->status]))
-            {
+        $code       = "OK";
+        $message    = "El comprobante se subió de forma exitosa";
+        $data = 1;
 
-                $code       = "OK";
-                $message    = "El comprobante se subió de forma exitosa";
-                $data = 1;
+      }
+      else
+      {
+        $code  = "NOTOK";
+        $message = "Ocurrio un problema al intentar guardar el archivo";
+        $data = 0;
+      }  
+      
 
-            }
-            else
-            {
-                $code       = "NOTOK";
-                $message    = "Ocurrio un problema al intentar guardar el archivo";
-                $data = 0;
-            }  
-            
-
-            return response()->json([
-            'code'  => $code,
-            'msg'   => $message,
-            'data'  => $data
-            ],200);
+      return response()->json([
+      'code'  => $code,
+      'msg'   => $message,
+      'data'  => $data
+      ],200);
         
     }
 
@@ -449,7 +468,7 @@ class negociacionController extends Controller
       {
         $user_username = strtoupper(User::find($negociacion->iduser)->username);
         // Esta condicion debo modificarla a su numero correspondiente sin restar 1, pero para ello debo actualizar condiciones en la operacion tambien
-        $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion)->estatus;
+        $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion-1)->estatus;
         $tittle_noti = 'Negociación';
         $text_noti = $user_username.' '.$estatus_negociacion;
 
@@ -479,6 +498,8 @@ class negociacionController extends Controller
       $message    = "";
       $data       = [];
 
+      $status_a_notificar_contraparte = [3,5];
+
       $negociacion = negociacion::find($miIdNeg);
       $negociacion->estatusnegociacion = $estatus;
 
@@ -487,33 +508,34 @@ class negociacionController extends Controller
 
       if( $negociacion->save() && $negociacion_contraparte->save())
       {
-        $status_a_notificar_contraparte = [3,5];
         if(in_array($negociacion->estatusnegociacion,$status_a_notificar_contraparte))
         {
-            // Notifico a contraparte
-            $user_contraparte = User::find($negociacion_contraparte->iduser);
-            // Esta condicion debo modificarla a su numero correspondiente sin restar 1, pero para ello debo actualizar condiciones en la operacion tambien
-            // $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion-1)->estatus;
-            $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion-1)->estatus;;
-            $tittle_noti = 'Negociación';
-            $text_noti = strtoupper($user_contraparte->username).' '.$estatus_negociacion;
+          $user_emisor = User::find($negociacion->iduser);
+          $user_contraparte = User::find($negociacion_contraparte->iduser);
 
-            // Debo validar bien esta notificacion, no se le esta enviando al usuario correspondiente
-            // $this->save_notification($user_contraparte->id,$tittle_noti, $text_noti, $negociacion->idposturamatch,1);
-
-          // Notifico a backoffice
           $user_backoffice = 5;
           $backoffices = User::where('tipousuario_idtipousuario',$user_backoffice)->get();
 
           // Esta condicion debo modificarla a su numero correspondiente sin restar 1, pero para ello debo actualizar condiciones en la operacion tambien
-          $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion-1)->estatus;
+          $estatus_negociacion = estatusNegociacion::find($negociacion->estatusnegociacion-1)->estatus;;
           $tittle_noti = 'Negociación';
+          $text_noti = strtoupper($user_emisor->username).' '.$estatus_negociacion;
 
+          // Notifico a contraparte
+          $this->save_notification($user_contraparte->id,$tittle_noti, $text_noti, $negociacion->idposturamatch,1);
+
+          // Notifico a backoffice
           foreach ($backoffices as $backoffice)
           {
-            $text_noti = strtoupper($backoffice->username).' '.$estatus_negociacion;
-
             $this->save_notification($backoffice->id,$tittle_noti, $text_noti, $negociacion->idposturamatch,1);
+          }
+
+          if($negociacion->estatusnegociacion == 5)
+          {
+            $concretada = 5;
+            $postura_match = posturasMatches::find($negociacion->idposturamatch);
+            postura::where('idposturas',$postura_match->posturas_idposturas)->first()->update(['estatusposturas_idestatusposturas' => $concretada]);
+            postura::where('idposturas',$postura_match->postura_contraparte_id)->first()->update(['estatusposturas_idestatusposturas' => $concretada]);
           }
         }
 
