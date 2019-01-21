@@ -752,9 +752,10 @@
 
 
 	 /*METODO PARA EL ADMINISTRADOR CONFIRMAR TRANSFERENCIA*/
-    $scope.autorizaTransf = function(id)
+    $scope.autorizaTransf = function(id, btn_id)
     {
-      // disabled_btn($btn,$option,$msg,$text_btn)
+      var btn = $('#'+btn_id);
+      $scope.disabled_btn(btn,true,'Guardando...','Enviar');
       var id_negociacon = $('#bo_id_negociacion_'+id).val();
       var id_negociacon_contraparte = $('#bo_id_negociacion_contraparte_'+id).val();
       // alert(id_negociacon+'  - - - - '+id_negociacon_contraparte)
@@ -766,12 +767,13 @@
         if(data['data']['code'] == 'OK')
         {
           console.log("autorizaTransf - "+data['data']['msg']);
-          //$location.url("/operacion/operacion/"+$scope.paramPost);
+          $scope.disabled_btn(btn,true,'Guardando...','Enviar');
           alert('Confirmado.');
           $scope.reload_page(window.location);
         }
         else
         {
+          $scope.disabled_btn(btn,false,'Guardando...','Enviar');
           console.log("autorizaTransf - no sera "+data['data']['msg']);
         }
       });
@@ -832,22 +834,24 @@
 
  // }
 
-  $scope.confTransf = function()
+  $scope.confTransf = function(btn_id)
   {
     console.log('////////////////////////////confTransf///////////////////');
-    // disabled_btn($btn,$option,$msg,$text_btn)
+    var btn = $('#'+btn_id);
+    $scope.disabled_btn(btn,true,'Guardando...','Enviar');
     $http({ method: 'GET',
             url: $scope.url_server+'/negociacion/confirmacionTransferencia/'+$scope.mi_negociacion.idNeg+'/'+$scope.negociacion_contraparte.idNeg+'/'+($scope.mi_negociacion.estatusNeg+1)})
     .then(function (data){
       if(data['data']['data'] == 1)
       {
         console.log("confTransf - sera "+data['data']['msg']);
+        $scope.disabled_btn(btn,true,'Guardando...','Enviar');
         alert('Confirmado.');
-        // $scope.reload_page(window.location);
         window.location.reload();
       }
       else
       {
+        $scope.disabled_btn(btn,false,'Guardando...','Enviar');
         console.log("confTransf - no sera "+data['data']['msg']);
       }
     });
