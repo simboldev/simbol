@@ -478,6 +478,7 @@ mainApp
     //Método para traer las posturas en interfaz de inicio
     $scope.misPosturasList = function(){
       console.log("se inicia la carga de las posturas activas de "+$cookieStore.get('username'));
+      console.log($scope.url_server+'/posturas/lista_posturas/'+$cookieStore.get('id')+'/1/1/0/0')
       $http({method:'GET',
         url: $scope.url_server+'/posturas/lista_posturas/'+$cookieStore.get('id')+'/1/1/0/0'})
       .then(function(data){

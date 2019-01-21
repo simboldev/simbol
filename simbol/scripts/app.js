@@ -8,7 +8,6 @@
     $scope.not=0;
     $scope.actCrono=null;
     
-    // Recarga de index
     $scope.reload_page = function($url)
     {
 		$window.location = $url;
@@ -18,6 +17,10 @@
     $scope.index_init = function()
     {
     	$scope.web_safari = $scope.validar_navegador() == 2 ? true : false;
+    }
+
+    $scope.go_home = function(){
+      $scope.reload_page($scope.base_href);
     }
 
     //Método para capturar url
@@ -271,7 +274,20 @@
 		});
 		
     }
-   
+
+    $scope.disabled_btn = function($btn,$option,$msg,$text_btn)
+    {
+      $btn.attr("disabled",$option);
+      if($option)
+      {
+        $btn.text($msg);
+      }
+      else
+      {
+        $btn.text($text_btn);
+      }
+    }
+
    //Limpiador de cookies de sesión
    if($cookieStore.get('username')){
 
@@ -738,24 +754,25 @@
 	 /*METODO PARA EL ADMINISTRADOR CONFIRMAR TRANSFERENCIA*/
     $scope.autorizaTransf = function(id)
     {
+      // disabled_btn($btn,$option,$msg,$text_btn)
       var id_negociacon = $('#bo_id_negociacion_'+id).val();
       var id_negociacon_contraparte = $('#bo_id_negociacion_contraparte_'+id).val();
       // alert(id_negociacon+'  - - - - '+id_negociacon_contraparte)
-      console.log('////////////////////////////confTransf///////////////////');
+      console.log('////////////////////////////autorizaTransf///////////////////');
       $http({ method: 'GET',
               url: $scope.url_server+'/negociacion/confirmacionTransferenciaBackoffice/'+id_negociacon+'/'+id_negociacon_contraparte+'/'+($scope.negociaciones.negociacion_bs.estatusNeg)})
               // url: $scope.url_server+'/negociacion/confirmacionTransferenciaBackoffice/'+$scope.negociaciones.negociacion_bs.idNeg+'/'+$scope.negociaciones.negociacion_moneda_extranjera.idNeg+'/'+($scope.negociaciones.negociacion_bs.estatusNeg)})
       .then(function (data){
         if(data['data']['code'] == 'OK')
         {
-          console.log("confTransf - "+data['data']['msg']);
+          console.log("autorizaTransf - "+data['data']['msg']);
           //$location.url("/operacion/operacion/"+$scope.paramPost);
           alert('Confirmado.');
           $scope.reload_page(window.location);
         }
         else
         {
-          console.log("confTransf - no sera "+data['data']['msg']);
+          console.log("autorizaTransf - no sera "+data['data']['msg']);
         }
       });
     }
@@ -818,6 +835,7 @@
   $scope.confTransf = function()
   {
     console.log('////////////////////////////confTransf///////////////////');
+    // disabled_btn($btn,$option,$msg,$text_btn)
     $http({ method: 'GET',
             url: $scope.url_server+'/negociacion/confirmacionTransferencia/'+$scope.mi_negociacion.idNeg+'/'+$scope.negociacion_contraparte.idNeg+'/'+($scope.mi_negociacion.estatusNeg+1)})
     .then(function (data){
@@ -1095,37 +1113,41 @@
     }
 
     $scope.guardarNegociacion = function(){
-				console.log("guardarNegociacion - abadat"+$scope.aba);
-		    	$http({method: 'GET',url: $scope.url_server+'/negociacion/saveNegociacion/'+
-		    		$scope.selectBanco.negBanco+'/'+
-		    		$scope.aba+'/'+
-		    		$scope.nrocuenta+'/'+
-		    		$scope.email+'/'+
-		    		$scope.selectNacionalidad.negNacionalidad+'/'+
-		    		$scope.nroidentificacion+'/'+
-		    		$scope.paramPost+'/'+
-		    		$scope.id+'/'+
-            $scope.idUserContraparte
-		    	})
-		    	.then(function (data){
-		    		console.log("guardarNegociacion - data guardada "+data['data']['data']['estatusNeg']);
-		    		if(data['data']['data']['estatusNeg'] == 1){
-		    			console.log('guardarNegociacion - vamos para alla '+$location.url("/operacion/operacion/"+$scope.paramPost));
-		    			console.log("guardarNegociacion - tipo de valor es "+typeof($scope.paramPost));
-		    			// $scope.consEstatusNeg();
-              // $window.location.reload();
-              window.location.reload();
-		    		}
+			console.log("guardarNegociacion - abadat"+$scope.aba);
+      console.log($('#btn_send_data_negotiation'))
+      var btn = $('#btn_send_data_negotiation')
+      $scope.disabled_btn(btn,true,'Guardando...','Enviar');
+      $http({method: 'GET',url: $scope.url_server+'/negociacion/saveNegociacion/'+
+        $scope.selectBanco.negBanco+'/'+
+        $scope.aba+'/'+
+        $scope.nrocuenta+'/'+
+        $scope.email+'/'+
+        $scope.selectNacionalidad.negNacionalidad+'/'+
+        $scope.nroidentificacion+'/'+
+        $scope.paramPost+'/'+
+        $scope.id+'/'+
+        $scope.idUserContraparte
+      })
+      .then(function (data){
+        console.log("guardarNegociacion - data guardada "+data['data']['data']['estatusNeg']);
+        if(data['data']['data']['estatusNeg'] == 1){
+          console.log('guardarNegociacion - vamos para alla '+$location.url("/operacion/operacion/"+$scope.paramPost));
+          console.log("guardarNegociacion - tipo de valor es "+typeof($scope.paramPost));
+          // $scope.consEstatusNeg();
+          // $window.location.reload();
+          $scope.disabled_btn(btn,true,'Guardando...','Enviar');
+          window.location.reload();
+        }
         //     else if(data['data']['data']['estatusNeg'] == 2){
-		    		// 	console.log('guardarNegociacion - cayo en 2');
-		    		// 	$window.location.reload();
-		    		// }
-		    	}
-				,function (xhr, ajaxOptions, thrownError){ 
-					console.log("guardarNegociacion - APPTCONT:: Error guardando negociacion: \n Error: "+xhr.status+" "+thrownError);
-				});
-
-	    }
+        // 	console.log('guardarNegociacion - cayo en 2');
+        // 	$window.location.reload();
+        // }
+      }
+      ,function (xhr, ajaxOptions, thrownError){ 
+        console.log("guardarNegociacion - APPTCONT:: Error guardando negociacion: \n Error: "+xhr.status+" "+thrownError);
+        $scope.disabled_btn(btn,false,'','Enviar');
+      });
+    }
 
 
 	    $scope.consEstatusNeg = function(){

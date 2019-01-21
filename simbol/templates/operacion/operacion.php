@@ -50,7 +50,7 @@
                 <input type="hidden"  value="{{ negociaciones.negociacion_bs.idNeg }}" id="bo_id_negociacion_contraparte_1">
 
                 <button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf(1);" ng-if="negociaciones.negociacion_moneda_extranjera.estatusNeg == 2 && negociaciones.negociacion_bs.estatusNeg == 2 && negociaciones.negociacion_bs.estatus_autoriza_backoffice == 0">
-                  Confirmar transferencia_bs de {{negociaciones.negociacion_moneda_extranjera.usuario_nombre_usuario}}
+                  Confirmar transferencia de {{negociaciones.negociacion_moneda_extranjera.usuario_nombre_usuario}}
                 </button>
               </div>
               <!-- Confirma recepcion de BS -->
@@ -219,11 +219,15 @@
           <div class="Cell" ng-if="mi_negociacion.estatusNeg == 0 && mi_negociacion.quiero_moneda == 0 && mi_negociacion.iduser==id">
             <!--SE COMENTA PARA DESAPARECER EL CHAT-->
             <?php //include('../chat/chat.html'); ?>
+              <h3>Datos para transferencia</h3>
+              <br>
+              <h4>Agrega los datos de tu cuenta bancaria donde deseas recibir tus fondos</h4>
+              <br>
             <?php include('../negociacion/negociacion.html'); ?>
           </div>
 
           <div class="Cell block-center" ng-if="mi_negociacion.estatusNeg == 1  && mi_negociacion.quiero_moneda == 1 && mi_negociacion.iduser == id && negociacion_contraparte_length == 0">
-            <p>Esperamos a que la contraparte envíe los datos para que le pueda transferirte.</p>
+            <p>Esperamos a que la contraparte envíe los datos para que pueda transferirte.</p>
           </div>
 
           <!-- CASO 1 CONF. TRANSF. BS -->
@@ -232,20 +236,17 @@
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
               <br>
-              La contraparte está realizando la transferencia en {{simMonedaQuiero}}, por favor espera a que te confirmemos en el tracking para que valides los fondos en tu banca online.
+              Tu contraparte está realizando la transferencia en {{simMonedaQuiero}}, por favor espera a que te confirmemos para que valides los fondos en tu banca online.
             </div>
           </div>
 
           <div class="Cell block-center" ng-if="mi_negociacion.estatusNeg == 1  && mi_negociacion.quiero_moneda == 2 && mi_negociacion.iduser == id && negociacion_contraparte_length == 0">
-            <p>Esperamos a que la contraparte envíe los datos para que le puedas transferir.</p>
+            <p>Esperamos a que tu contraparte envíe los datos para que puedas transferirle.</p>
           </div>
 
           <div class="Cell" ng-if="mi_negociacion.estatusNeg == 1 && mi_negociacion.quiero_moneda == 2 && mi_negociacion.iduser == id && negociacion_contraparte_length > 0 ">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
-              <br>
-              <h4>Rellena tus datos bancarios para que tu contraparte pueda transferirte los fondos. Recuerda, es tu responsabilidad colocar correctamente los datos bancarios.</h4>
-              <br>
               <b><p>Datos de la Transferencia</p></b>
               <br>
               <table class="table-responsive">
@@ -275,15 +276,16 @@
               <br>
               <p>Una vez realices la transferencia sube tu comprobante en formato pdf o jpg para que podamos validarlo</p>
               <br>
-              <input type = "file" name = "myFile"  id="myFile" onchange="mostrar_btn_transferencia_reliazada($(this));" />
+              <input type = "file" name = "myFile"  id="myFile" onchange="mostrar_btn_transferencia_reliazada('myFile');" />
               <br>
-              <button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
+              <button type="button" id="btn_transferecia_myFile" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
+                'btn_transferecia_myFile',
                 document.getElementById('idUser').value,
                 document.getElementById('idNeg').value,
                 document.getElementById('myFile'),
                 document.getElementById('idNegContraparte').value,
-                document.getElementById('estatusNeg').value);" id="btn_transferecia_myFile">
-                Transferencia Realizada
+                document.getElementById('estatusNeg').value);">
+                Ya transfer&iacute;
               </button>
             </div>    
           </div>
@@ -293,7 +295,7 @@
             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
               <br>
-              La transferencia fue realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
+              La transferencia fu&eacute; realizada, puedes descargar el comprobante y confirmar la recepción de los fondos.
               
               <br><br><br>
             
@@ -316,7 +318,7 @@
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
               <br>
-              La contraparte está revisando la información de la transferencia, por favor espera a que te confirmemos en el tracking para que valides los fondos en tu banca online.
+              Tu contraparte está revisando la información de la transferencia, por favor espera a que te confirmemos para que valides los fondos en tu banca online.
             </div>
           </div>
 
@@ -327,7 +329,7 @@
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
               <br>
-              La contraparte está realizando la transferencia en {{simMonedaQuiero}}, por favor espera a que te confirmemos en el tracking para que valides los fondos en tu banca online.
+              Tu contraparte está realizando la transferencia en {{simMonedaQuiero}}, por favor espera a que te confirmemos para que valides los fondos en tu banca online.
             </div>
           </div>
 
@@ -335,10 +337,9 @@
           <div class="Cell" ng-if="mi_negociacion.estatusNeg == 3  && mi_negociacion.quiero_moneda == 1 && negociacion_contraparte.estatus_autoriza_backoffice == 2 && mi_negociacion.iduser == id && negociacion_contraparte_length > 0 ">
             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
+              <h3>Datos para transferencia</h3>
               <br>
-              <h4>Rellena tus datos bancarios para que tu contraparte pueda transferirte los fondos. Recuerda, es tu responsabilidad colocar correctamente los datos bancarios.</h4>
-              <br>
-              <b><p>Datos de la Transferencia</p></b>
+              <h4>Agrega los datos de tu cuenta bancaria donde deseas recibir tus fondos</h4>
               <br>
               <table class="table-responsive">
                 <input type="hidden"  value="{{ mi_negociacion.idNeg }}" id="idNeg2">
@@ -367,17 +368,17 @@
               <br>
               <p>Una vez realices la transferencia sube tu comprobante en formato pdf o jpg para que podamos validarlo</p>
               <br>
-              <input type = "file" id="myFile2" onchange="mostrar_btn_transferencia_reliazada($(this));"/>
+              <input type = "file" id="myFile2" onchange="mostrar_btn_transferencia_reliazada('myFile2');"/>
               <br>
-              <button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
+              <button type="button" id="btn_transferecia_myFile2" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
+                'btn_transferecia_myFile2',
                 document.getElementById('idUser2').value,
                 document.getElementById('idNeg2').value,
                 document.getElementById('myFile2'),
                 document.getElementById('idNegContraparte2').value,
-                document.getElementById('estatusNeg2').value);" id="btn_transferecia_myFile2">
-                Transferencia Realizada
+                document.getElementById('estatusNeg2').value);">
+                Ya transfer&iacute;
               </button>
-
             </div>
           </div>
 
@@ -386,7 +387,7 @@
             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
               <br>
-              La transferencia fue realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
+              La transferencia fu&eacute; realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
               
               <br><br><br>
             
@@ -407,147 +408,44 @@
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
               <br>
-              La contraparte está revisando la información de la transferencia, por favor espera a que te confirmemos en el tracking para que valides los fondos en tu banca online.
+              Tu contraparte está revisando la información de la transferencia, por favor espera a que te confirmemos para que valides los fondos en tu banca online.
             </div>
           </div>
 
-          <div class="Cell" ng-if="mi_negociacion.estatusNeg == 5 && mi_negociacion.quiero_moneda == 1 && mi_negociacion.iduser == id ">
+          <div class="Cell text-center" ng-if="mi_negociacion.estatusNeg == 5 && mi_negociacion.quiero_moneda == 1 && mi_negociacion.iduser == id ">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
               <br>
-              ¡Felicitaciones! ya su cambio fue realizado, por favor confirme y no olvide calificar a su contraparte
+              ¡Felicitaciones! ya tu cambio fu&eacute; realizado.
             </div>
-          </div>  
-
-          <div class="Cell" ng-if="mi_negociacion.estatusNeg == 5 && mi_negociacion.quiero_moneda == 2 && mi_negociacion.iduser == id ">
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
-            <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
-              <br>
-              ¡Felicitaciones! ya su cambio fue realizado, por favor confirme y no olvide calificar a su contraparte
-            </div>
-          </div>
-
-
-          <!-- VALIDAR BIEN ESTA CONDICION CUANDO SE DEBE MOSTRAR  -->
-<!--           <div class="Cell" ng-if="estatusNeg == 2  && quiero_moneda == 2 && userNeg==id">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
-            <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
-              <br>
-              La contraparte está realizando la transferencia en USD,<br> por favor espere a que la misma sea ejecutada.
-            </div>
-          </div>
- -->
-          <!-- <div class="Cell" ng-if="estatusNeg == 2  && quiero_moneda == 2 && userNeg == id"> -->
-
-    
-         <!--  <div class="Cell" ng-if="estatusNeg == 3 && quiero_moneda == 2 && userNeg == id">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
-            <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
-              <br>
-              La contraparte está revisando la información de la transferencia,<br> le informaremos cuando ya la haya confirmado.
-            </div>
-          </div>
-          
-          
-          <div class="Cell" ng-if="estatusNeg == 4 && quiero_moneda == 1 && userNeg == id ">
-            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
-            <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
-              <br>
-
-              <h2>Datos de la Transferencia</h2>
-              <br>
-              <table class="table-responsive">
-                <input type="hidden"  value="{{ idNeg }}" id="idNeg" name="idNeg">
-                <input type="hidden"  value="{{ id }}" id="idUser" name="idUser">
-                <tbody>
-                  <tr>
-                    <th>Banco:&nbsp;&nbsp;</th>
-                    <th>{{ banco }}</th>
-                  </tr>
-                  <tr>
-                    <th>Número de Cuenta:&nbsp;&nbsp; </th>
-                    <th>{{ nrocuenta }}</th>
-                  </tr>
-                  <tr>
-                    <th>Correo Electrónico:&nbsp;&nbsp; </th>
-                    <th>{{ email }}</th>
-                  </tr>
-                  <tr>
-                    <th>Nro Identificación:&nbsp;&nbsp; </th>
-                    <th>{{ nroidentificacion }}</th>
-                  </tr>
-                </tbody>
-              </table>
-              <br>
-              <input type = "file" name = "myFile2"  id="myFile2" onmouseover="comprobarExistArchivo2();"/>
-              
-              <button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" onclick="evidenciaNegContraparte(
-                document.getElementById('idUser').value,
-                document.getElementById('idNeg').value,
-                document.getElementById('myFile2'));" style="visibility:hidden;" id="buttonTransf2">
-                Transferencia Realizada
+            <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 col-md-offset-4 col-ms-offset-4">
+              <button type="button" id="btn_go_home" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-md-4 col-sm-4 col-xs-12" ng-click="go_home()">
+                  Ir al inicio
               </button>
-
-            </div>
-          </div>
-          <div class="Cell" ng-if="estatusNeg == 5 && quiero_moneda == 1 && userNeg == id ">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 "></div>
-            <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
-              <br>
-              La contraparte está revisando la información de la transferencia,<br> le informaremos cuando ya la haya confirmado.
-            </div>
-          </div>
-
-          <div class="Cell" ng-if="estatusNeg == 5 && quiero_moneda == 2 && userNeg == id ">
-            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 "></div>
-            <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-left">
-              <br>
-              La transferencia fue realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
-              
-              <br><br><br>
-            
-                <a href="{{ comprobante }}" target="_blank">
-                  <button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
-                      Descargar Comprobante
-                  </button>
-                </a>
-              <br><br>
-              
-                <button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf3();">
-                    Confirmar Transferencia
-                </button>
-              
-
-            </div>
-          </div>
-          
-          <div class="Cell" ng-if="estatusNeg == 6 && quiero_moneda == 1 && userNeg == id ">
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
-            <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
-              <br>
-              ¡Felicitaciones! ya su cambio de divisas fue realizado, por favor confirme y no olvide calificar a su contraparte
             </div>
           </div>  
 
-          <div class="Cell" ng-if="estatusNeg == 6 && quiero_moneda == 2 && userNeg == id ">
+          <div class="Cell text-center" ng-if="mi_negociacion.estatusNeg == 5 && mi_negociacion.quiero_moneda == 2 && mi_negociacion.iduser == id ">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 "></div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 block-center">
               <br>
-              ¡Felicitaciones! ya su cambio de divisas fue realizado, por favor confirme y no olvide calificar a su contraparte
+              ¡Felicitaciones! ya tu cambio fu&eacute; realizado.
             </div>
-          </div> -->
-                    
+            <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 col-md-offset-4 col-ms-offset-4">
+              <button type="button" id="btn_go_home" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-md-4 col-sm-4 col-xs-12" ng-click="go_home()">
+                  Ir al inicio
+              </button>
+            </div>
+          </div>
         </div>
-        
       </div>
     </div>
 
-      <div class="row nomargin nopadding" >
-        <div class="Cell" >
-          <!--area tracking -->
-          <?php include('../tracking/tracking.html'); ?>
-        </div>
+    <div class="row nomargin nopadding" >
+      <div class="Cell" >
+        <?php include('../tracking/tracking.html'); ?>
       </div>
+    </div>
 
     </div>
 

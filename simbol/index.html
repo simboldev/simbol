@@ -263,7 +263,9 @@
         });
     }
 
-    function evidenciaNeg(idUser,idNeg,comprobante,idNegContraparte,status){
+    function evidenciaNeg(id_input,idUser,idNeg,comprobante,idNegContraparte,status){
+        $btn = $('#'+id_input);
+        disabled_btn($btn,true,'Gardando ...','Transferencia Realizada');
         console.log("evidenciaNeg - valores negociaciono "+idNeg+'--------'+comprobante);
         var url =document.getElementById("url_server").value+'/negociacion/saveComprobante';
         var file = comprobante.files[0];
@@ -288,27 +290,56 @@
 
             formData.append('comprobante',file);
             $.ajax({
-                data:formData,
-                url:url,
-                method:'POST',
-                cache:false,
-                processData:false,
-                contentType: false,
-                success: function (data) {
-                    if(data['data'] == 1){
-                        //consEstatusNeg();
-                        reloadd();
-                    }else{
+              data:formData,
+              url:url,
+              method:'POST',
+              cache:false,
+              processData:false,
+              contentType: false
+              // ,
+              // success: function (data) {
+              //     if(data['data'] == 1){
+              //         //consEstatusNeg();
+              //         disabled_btn($btn,true,'Gardando ...','Transferencia Realizada');
+              //         reloadd();
+              //     }else{
 
-                    }
-               }
+              //     }
+              // }
+              // error: function(xhr, ajaxOptions, thrownError){ 
+              //   console.log("INDEX:: Error al guardar comprobante negociacion: \n Error: "+xhr.status+" "+thrownError);
+              // }
+            })
+            .done(function(data) {
+              alert('doooone')
+                disabled_btn($btn,true,'Gardando ...','Transferencia Realizada');
+                reloadd();
+            })
+            .fail(function(xhr, ajaxOptions, thrownError){
+            alert('faaaaail') 
+              console.log("INDEX:: Error al guardar comprobante negociacion: \n Error: "+xhr.status+" "+thrownError);
+              disabled_btn($btn,true,'Gardando ...','Transferencia Realizada');
             });
         }
         else
         {
           formData.append('comprobante','');
           alert('¡Extensión de archivo no perimitida, extenciones soportadas png,jpg y pdf!');
+          disabled_btn($btn,false,'Gardando ...','Transferencia Realizada');
         }
+    }
+
+    function disabled_btn($btn,$option,$msg,$text_btn)
+    {
+      $btn.attr("disabled",$option);
+      if($option)
+      {
+        $btn.text($msg);
+      }
+      else
+      {
+        $btn.text($text_btn);
+      }
     }
 
     function comprobarExistArchivo2()
@@ -328,9 +359,9 @@
           $("#buttonTransf").css("visibility","hidden");
     }
 
-    function reloadd(){
-        // setTimeout(function(){ location.reload(); }, 2000);
-        location.reload();
+    function reloadd()
+    {
+      window.location.reload();
     }
 
     function denunciarOperacion(
@@ -467,16 +498,11 @@
         }   
     }
 
-    function mostrar_btn_transferencia_reliazada($input)
+    function mostrar_btn_transferencia_reliazada($id_input)
     {
-      if( $input.val() != '')
-      {
-        $("#btn_transferecia_"+$input.attr('id')).prop( "disabled", false );
-      }
-      else
-      {
-        $("#btn_transferecia_"+$input.attr('id')).prop( "disabled", true );
-      }
+      $input = $('#'+$id_input);
+      $disabled = $input.val() == '' ? true : false;
+      $("#btn_transferecia_"+$input.attr('id')).prop( "disabled", $disabled );
     };
 
 </script>
