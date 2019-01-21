@@ -49,7 +49,7 @@
 
                 <input type="hidden"  value="{{ negociaciones.negociacion_bs.idNeg }}" id="bo_id_negociacion_contraparte_1">
 
-                <button type="button" id="bo_btn_confirma_transf_bs" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf(1,bo_btn_confirma_transf_bs);" ng-if="negociaciones.negociacion_moneda_extranjera.estatusNeg == 2 && negociaciones.negociacion_bs.estatusNeg == 2 && negociaciones.negociacion_bs.estatus_autoriza_backoffice == 0">
+                <button type="button" id="bo_btn_confirma_transf_bs" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf(1,'bo_btn_confirma_transf_bs');" ng-if="negociaciones.negociacion_moneda_extranjera.estatusNeg == 2 && negociaciones.negociacion_bs.estatusNeg == 2 && negociaciones.negociacion_bs.estatus_autoriza_backoffice == 0">
                   Confirmar transferencia de {{negociaciones.negociacion_moneda_extranjera.usuario_nombre_usuario}}
                 </button>
               </div>
@@ -132,7 +132,7 @@
                 
                 <input type="hidden"  value="{{ negociaciones.negociacion_moneda_extranjera.idNeg }}" id="bo_id_negociacion_contraparte_2">
 
-                <button type="button" id="bo_btn_confirma_transf_usd" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf(2,bo_btn_confirma_transf_usd);" ng-if="negociaciones.negociacion_moneda_extranjera.estatusNeg == 4 && negociaciones.negociacion_bs.estatusNeg == 4 && negociaciones.negociacion_bs.estatus_autoriza_backoffice == 2">
+                <button type="button" id="bo_btn_confirma_transf_usd" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf(2,'bo_btn_confirma_transf_usd');" ng-if="negociaciones.negociacion_moneda_extranjera.estatusNeg == 4 && negociaciones.negociacion_bs.estatusNeg == 4 && negociaciones.negociacion_bs.estatus_autoriza_backoffice == 2">
                   Confirmar Transferencia
                 </button>
               </div>
