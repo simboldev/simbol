@@ -116,14 +116,7 @@ class posturasMatchController extends Controller
     public function show($id)
     {
         //
-
-        if( is_numeric($id))
-        {
-            $posturasMatch = posturasMatches::where('idposturasMatch','=',$id)->get();
-        }else{
-            $code = "NOTOK";
-            $message = "Parámetro requerido (id) debe ser un valor numérico";
-        }
+        $posturas_matches = [];
 
         if( is_numeric($id))
         {

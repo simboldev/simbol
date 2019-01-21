@@ -265,7 +265,7 @@
 
     function evidenciaNeg(id_input,idUser,idNeg,comprobante,idNegContraparte,status){
         $btn = $('#'+id_input);
-        disabled_btn($btn,true,'Gardando ...','Transferencia Realizada');
+        disabled_btn($btn,true,'Guardando ...','Transferencia Realizada');
         console.log("evidenciaNeg - valores negociaciono "+idNeg+'--------'+comprobante);
         var url =document.getElementById("url_server").value+'/negociacion/saveComprobante';
         var file = comprobante.files[0];
@@ -287,45 +287,29 @@
             extensiones=='.pdf' || 
             extensiones=='.PDF')
         {
-
-            formData.append('comprobante',file);
-            $.ajax({
-              data:formData,
-              url:url,
-              method:'POST',
-              cache:false,
-              processData:false,
-              contentType: false
-              // ,
-              // success: function (data) {
-              //     if(data['data'] == 1){
-              //         //consEstatusNeg();
-              //         disabled_btn($btn,true,'Gardando ...','Transferencia Realizada');
-              //         reloadd();
-              //     }else{
-
-              //     }
-              // }
-              // error: function(xhr, ajaxOptions, thrownError){ 
-              //   console.log("INDEX:: Error al guardar comprobante negociacion: \n Error: "+xhr.status+" "+thrownError);
-              // }
-            })
-            .done(function(data) {
-              alert('doooone')
-                disabled_btn($btn,true,'Gardando ...','Transferencia Realizada');
-                reloadd();
-            })
-            .fail(function(xhr, ajaxOptions, thrownError){
-            alert('faaaaail') 
-              console.log("INDEX:: Error al guardar comprobante negociacion: \n Error: "+xhr.status+" "+thrownError);
-              disabled_btn($btn,true,'Gardando ...','Transferencia Realizada');
-            });
+          formData.append('comprobante',file);
+          $.ajax({
+            data:formData,
+            url:url,
+            method:'POST',
+            cache:false,
+            processData:false,
+            contentType: false
+          })
+          .done(function(data) {
+              disabled_btn($btn,true,'Guardando ...','Transferencia Realizada');
+              reloadd();
+          })
+          .fail(function(xhr, ajaxOptions, thrownError){
+            console.log("INDEX:: Error al guardar comprobante negociacion: \n Error: "+xhr.status+" "+thrownError);
+            disabled_btn($btn,true,'Guardando ...','Transferencia Realizada');
+          });
         }
         else
         {
           formData.append('comprobante','');
           alert('¡Extensión de archivo no perimitida, extenciones soportadas png,jpg y pdf!');
-          disabled_btn($btn,false,'Gardando ...','Transferencia Realizada');
+          disabled_btn($btn,false,'Guardando ...','Transferencia Realizada');
         }
     }
 

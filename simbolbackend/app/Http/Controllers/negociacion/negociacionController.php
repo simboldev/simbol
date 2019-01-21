@@ -295,8 +295,7 @@ class negociacionController extends Controller
                           'nrocuenta' => $negociacion->nrocuenta,
                           'email' =>  $negociacion->email,
                           'nroidentificacion' => $negociacion->nroidentificacion,
-                          'comprobante'   => ($negociacion->comprobante != null) ? ENV('BASE_URL_COMPROBANTES').$negociacion->comprobante : ''
-                          // 'comprobante'   => ($negociacion->comprobante != null) ? join('',explode ("/public", ENV('BASE_URL_COMPROBANTES').$negociacion->comprobante)) : ''
+                          'comprobante'   => ($negociacion->comprobante != null) ? join('',explode ("/public", ENV('BASE_URL_COMPROBANTES').$negociacion->comprobante)) : ''
                         ];
                         
       return $arr_negociacon;
@@ -532,10 +531,14 @@ class negociacionController extends Controller
 
           if($negociacion->estatusnegociacion == 5)
           {
-            $concretada = 5;
+            $postura_concretada = 5;
+            $operacion_concretada = 3;
             $postura_match = posturasMatches::find($negociacion->idposturamatch);
-            postura::where('idposturas',$postura_match->posturas_idposturas)->first()->update(['estatusposturas_idestatusposturas' => $concretada]);
-            postura::where('idposturas',$postura_match->postura_contraparte_id)->first()->update(['estatusposturas_idestatusposturas' => $concretada]);
+
+            $postura_match->update(['estatusOperaciones_idestatusOperacion' => $operacion_concretada]);
+
+            postura::where('idposturas',$postura_match->posturas_idposturas)->first()->update(['estatusposturas_idestatusposturas' => $postura_concretada]);
+            postura::where('idposturas',$postura_match->postura_contraparte_id)->first()->update(['estatusposturas_idestatusposturas' => $postura_concretada]);
           }
         }
 
