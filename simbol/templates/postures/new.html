@@ -376,7 +376,7 @@
 				              	<a ng-if="id == negociacion.iduser2 && negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 0" href="{{base_href}}/postures/{{negociacion.postura_contraparte[0].idposturas}}/match/{{negociacion.postura[0].idposturas}}">ver</a>
 
 				              	<!-- CHAT -->
-				              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 1" href="{{base_href}}/operacion/operacion/{{negociacion.idposturasMatch}}">ver</a>
+				              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 1" href="{{base_href}}/operacion/{{negociacion.idposturasMatch}}">ver</a>
 
 				              	<!-- CONCRETADA -->
 				              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion == 3 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 1" href="{{base_href}}/detalle_negociacion/{{negociacion.idposturasMatch}}">ver</a>

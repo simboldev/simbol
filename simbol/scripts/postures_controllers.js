@@ -459,7 +459,7 @@ mainApp
       $scope.rip = '';
 
     $scope.irNegociacion = function($idposturamatch){
-        $location.url("/operacion/operacion/"+$idposturamatch);
+        $location.url("/operacion/"+$idposturamatch);
     }      
 
 

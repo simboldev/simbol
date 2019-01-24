@@ -26,9 +26,9 @@
     //Método para capturar url
     $scope.captUrl = function(){
        console.log(window.location.href+" url");
-       console.log("/operacion/operacion/"+$routeParams.id_posturas_match);
+       console.log("/operacion/"+$routeParams.id_posturas_match);
        console.log("location "+$location.url());
-	   if($location.url()=="/operacion/operacion/"+$routeParams.id_posturas_match){
+	   if($location.url()=="/operacion/"+$routeParams.id_posturas_match){
 		    	$cookieStore.put("actCrono",1);
 		    	$scope.actCrono = $cookieStore.get("actCrono");
           console.log("actCrono "+$scope.actCrono);              
@@ -74,7 +74,7 @@
     		if(data['data']['data']==1){
     			console.log(data['data']['msg']+" se modifico");
     			$scope.consultaNot();
-    			//$location.url("/operacion/operacion/"+$routeParams.id_posturas_match);
+    			//$location.url("/operacion/"+$routeParams.id_posturas_match);
     		}else{
     			console.log(data['data']['msg']);
     		}
@@ -205,12 +205,14 @@
     	console.log('login')
     	console.log(user+" autenticación");
     	var control = 1;
-    	$http({method:'GET',url: $scope.url_server+'/users/'+user+'/password/'+password+'/control/'+control})
+    	$http({  method:'GET',
+              url: $scope.url_server+'/users/'+user+'/password/'+password+'/control/'+control})
 		.then(function(data){
 			console.log(data['data']['data']);
 			if(data['data']['data'] == 0){
 				console.log("autenticación - objeto vacio");
 				$scope.mensaje = "¡¡Combinación Usuario y Password incorrecto, por favor ingrese nuevamente!!";
+        alert($scope.mensaje);
 			}else{
 
 				if(data['data']['data'][0].created_at == data['data']['data'][0].updated_at){
@@ -701,7 +703,7 @@
 		templateUrl: 'templates/postures/new.html',
 		controller: 'PostureCtrl'
 	})
-	.when('/operacion/operacion/:id_posturas_match',{
+	.when('/operacion/:id_posturas_match',{
 		templateUrl: 'templates/operacion/operacion.php',
 		controller: 'ChatCtrl'
 	})
@@ -721,7 +723,7 @@
 		templateUrl: 'templates/calificacion/calificacion.html',
 		controller: 'PostureCtrl'
 	})
-	.when('/notificaciones/notificaciones',{
+	.when('/notificaciones',{
 		templateUrl: 'templates/notificaciones/notificaciones.html',
 		controller: 'appController'
 	})
@@ -810,7 +812,7 @@
   // 			.then(function (data){
   // 				if(data['data']['data'] == 1){
   // 					console.log("autorizaTransf - sera "+data['msg']['msg']);
-  // 					//$location.url("/operacion/operacion/"+$scope.paramPost);
+  // 					//$location.url("/operacion/"+$scope.paramPost);
   					
   // 				}else{
   // 					console.log("autorizaTransf - no sera "+data['msg']['msg']);
@@ -898,7 +900,7 @@
       if(data['data']['data'] == 1)
       {
       	console.log("confTransf2 - sera "+data['msg']['msg']);
-      	//$location.url("/operacion/operacion/"+$scope.paramPost);
+      	//$location.url("/operacion/"+$scope.paramPost);
       }
       else
       {
@@ -954,7 +956,7 @@
           			.then(function (data){
           				if(data['data']['data'] == 1){
           					console.log("autorizaTransf2 - sera "+data['msg']['msg']);
-          					//$location.url("/operacion/operacion/"+$scope.paramPost);
+          					//$location.url("/operacion/"+$scope.paramPost);
           					
           				}else{
           					console.log("autorizaTransf2 - no sera "+data['msg']['msg']);
@@ -1018,7 +1020,7 @@
           			.then(function (data){
           				if(data['data']['data'] == 1){
           					console.log("sera "+data['msg']['msg']);
-          					//$location.url("/operacion/operacion/"+$scope.paramPost);
+          					//$location.url("/operacion/"+$scope.paramPost);
           					
           				}else{
           					console.log("no sera "+data['msg']['msg']);
@@ -1135,7 +1137,7 @@
       .then(function (data){
         console.log("guardarNegociacion - data guardada "+data['data']['data']['estatusNeg']);
         if(data['data']['data']['estatusNeg'] == 1){
-          console.log('guardarNegociacion - vamos para alla '+$location.url("/operacion/operacion/"+$scope.paramPost));
+          console.log('guardarNegociacion - vamos para alla '+$location.url("/operacion/"+$scope.paramPost));
           console.log("guardarNegociacion - tipo de valor es "+typeof($scope.paramPost));
           // $scope.consEstatusNeg();
           // $window.location.reload();
@@ -1221,7 +1223,7 @@
     		console.log('conStatusOper - la consulta esss '+$scope.paramPost);
     		console.log("conStatusOper - url "+window.location.href);
     		var param = window.location.href;
-    		param = param.split("/operacion/operacion/",2);
+    		param = param.split("/operacion/",2);
     		param = param[1];
         console.log('conStatusOper - PARAM = '+param)
         if(param != '' || param != undefined)
@@ -1338,9 +1340,9 @@
 
 			});
 			
-			if($location.url()=="/operacion/operacion/"+$routeParams.id_posturas_match){
+			if($location.url()=="/operacion/"+$routeParams.id_posturas_match){
 				$interval(function() {
-          console.log('refTrack - $location.url()=="/operacion/operacion/')
+          console.log('refTrack - $location.url()=="/operacion/')
 					if($routeParams.id_posturas_match && $scope.id){
 						$scope.myFunction();
 						//$scope.mosConv($routeParams.id_posturas_match,$scope.id);

@@ -228,7 +228,7 @@ mainApp
 						cambiar_estatus_postura($id_postura,4);
 						cambiar_estatus_postura($id_postura_contraparte,4);
 						// Debo enviar al indez y notificar que debe esperar a que la contraparte acepte el match
-						// $location.url('/operacion/operacion/'+$scope.id_postura_match);
+						// $location.url('/operacion/'+$scope.id_postura_match);
 						alert('Debes esperar a que la contraparte acepte el match');
 						$location.url('postures/new');
 		    		}
@@ -280,7 +280,7 @@ mainApp
 						data:$scope.post_match
 					})
 					.then(function (data){
-						$location.url('/operacion/operacion/'+data['data']['data'][0]['idposturasMatch']);
+						$location.url('/operacion/'+data['data']['data'][0]['idposturasMatch']);
 					}
 					,function (xhr, ajaxOptions, thrownError){
 						console.log("MATCHES_CONT:: Error actualizando postura match: \n Error: "+xhr.status+" "+thrownError);
