@@ -13,7 +13,8 @@ class CreateNegociacions extends Migration
      */
     public function up()
     {
-        //
+      if (!Schema::hasTable('negociacions'))
+      {
         Schema::create('negociacions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idbanco')->unsigned();
@@ -34,7 +35,7 @@ class CreateNegociacions extends Migration
 
             $table->foreign('iduser')->references('id')->on('users')->onDelete('cascade');
         });
-        
+      }
     }
 
     /**

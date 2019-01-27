@@ -18,6 +18,21 @@ use Illuminate\Http\Request;
 });*/
 
 //112 rutas
+Route::group(['prefix' => 'auth'], function ()
+{
+    Route::post('login', 'AuthController@login');
+    // Route::post('signup', 'AuthController@signup');
+  
+    Route::group(['middleware' => 'auth:api'], function()
+    {
+        Route::get('logout', 'AuthController@logout');
+        Route::get('user', 'AuthController@user');
+    });
+});
+
+Route::get('Auth/index', 'Auth\AuthController@index')->name('auth.index');
+Route::post('auth/signup', 'auth\AuthController@signup')->name('auth.signup');
+
 Route::get('amigos/consAmistad/{id1}/{id2}', 'amigo\amigoController@consAmistad')->name('amigos.consAmistad');
 Route::get('amigos/amigos_en_comun/{iduser_1}/{iduser_2}', 'amigo\amigoController@amigos_en_comun')->name('amigos.amigos_en_comun');
 Route::get('amigos/amigos_en_comun_tabla/{iduser_1}/{iduser_2}', 'amigo\amigoController@amigos_en_comun_tabla')->name('amigos.amigos_en_comun_tabla');
@@ -91,8 +106,8 @@ Route::resource('recomendaciones','recomendacion\recomendacionController');
 
 Route::resource('tipousuarios','tipousuario\tipousuarioController');
 
-Route::resource('users','user\userController');
 // Route::get('users/{iduser}/{id_id}', 'user\userController@shows')->name('users.shows');
+Route::post('users/login', 'user\userController@login')->name('users.login');
 Route::get('users/{v_username}/control/{v_control}', 'user\userController@logout')->name('users.logout');
 Route::get('users/{v_username}', 'user\userController@recPass')->name('users.recPass');
 Route::get('users/{v_username}/password/{v_password}/control/{v_control}', 'user\userController@consUsername')->name('users.consUsername');
@@ -100,7 +115,7 @@ Route::get('users/{id}/notCP/{id_s}', 'user\userController@notCP')->name('users.
 Route::get('users/{id}/banks/{id_bank}', 'user\userController@banks')->name('users.banks');
 Route::get('users/{id}/negociaciones', 'user\userController@negociaciones')->name('users.negociaciones');
 Route::get('users/cambPass/{pass}/{user}', 'user\userController@cambPass')->name('users.cambPass');
-
+Route::resource('users','user\userController');
 
 
 Route::put('tracking/modEstatusBoton/{idpm}/{idUser}', 'tracking\trackingController@modEstatusBoton')->name('tracking.modEstatusBoton');

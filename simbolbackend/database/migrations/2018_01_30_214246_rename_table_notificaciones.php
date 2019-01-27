@@ -14,7 +14,10 @@ class RenameTableNotificaciones extends Migration
     public function up()
     {
         //
-        Schema::rename('notificaciones', 'notificacions');
+        if (!Schema::hasTable('notificaciones'))
+        {
+            Schema::rename('notificaciones', 'notificacions');
+        }
     }
 
     /**

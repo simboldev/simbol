@@ -13,15 +13,17 @@ class AddColumnsToCalificaciones extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('calificaciones', function (Blueprint $table) {
-            //
-            $table->integer('idusuariocalificado')->default(1)->unsigned();
-            $table->integer('idPosturasMatch')->default(1)->unsigned();
-            
-            $table->foreign('idusuariocalificado')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('idPosturasMatch')->references('idposturasMatch')->on('posturasMatches')->onDelete('cascade');
+      if(!Schema::hasColumn('calificaciones', 'idusuariocalificado','idPosturasMatch'))
+      {
+        Schema::table('calificaciones', function (Blueprint $table)
+        {
+          $table->integer('idusuariocalificado')->default(1)->unsigned();
+          $table->integer('idPosturasMatch')->default(1)->unsigned();
+          
+          $table->foreign('idusuariocalificado')->references('id')->on('users')->onDelete('cascade');
+          $table->foreign('idPosturasMatch')->references('idposturasMatch')->on('posturasMatches')->onDelete('cascade');
         });
+      }
     }
 
     /**
@@ -31,11 +33,12 @@ class AddColumnsToCalificaciones extends Migration
      */
     public function down()
     {
-        //
-        Schema::table('calificaciones', function (Blueprint $table) {
-            //
-            $table->dropColumn('idusuariocalificado');
-            $table->dropColumn('idPosturasMatch');
+        Schema::table('calificaciones', function (Blueprint $table)
+        {
+          $table->dropForeign(['idusuariocalificado']);
+          $table->dropForeign(['idPosturasMatch']);
+          $table->dropColumn('idusuariocalificado');
+          $table->dropColumn('idPosturasMatch');
         });
     }
 }

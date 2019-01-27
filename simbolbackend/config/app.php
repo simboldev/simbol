@@ -169,6 +169,8 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
 
+        // Passport. Provides a full OAuth2 server implementation
+        Laravel\Passport\PassportServiceProvider::class,
         /*
          * Application Service Providers...
          */

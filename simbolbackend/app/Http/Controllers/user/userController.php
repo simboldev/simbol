@@ -29,8 +29,17 @@ class userController extends Controller
      */
     public function index()
     {
-        //
+        $code       = "OK";
+        $message    = "Success";
 
+        $data       = User::get();
+       
+        return response()->json([
+            'code'=> $code,
+            'message' => $message,
+            'data'=> $data
+        ],
+        200);
     }
 
     /**
@@ -189,6 +198,10 @@ class userController extends Controller
         //
     }
 
+    public function login()
+    {
+
+    }
     //metodo para consultar por username
     public function consUsername($username,$password,$control){
         

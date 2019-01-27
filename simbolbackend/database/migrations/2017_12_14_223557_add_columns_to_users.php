@@ -16,7 +16,7 @@ class AddColumnsToUsers extends Migration
         //
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->string('verification_token',40);
+            $table->string('verification_token',40)->nullable();
             $table->integer('online')->default(0);
         });
     }
@@ -28,11 +28,12 @@ class AddColumnsToUsers extends Migration
      */
     public function down()
     {
-        //
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->dropColumn('verification_token',40);
-            $table->dropColumn('online')->default(0);
-        });
+        if(Schema::hasColumn('users', 'verification_token','online'))
+        {
+          Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('verification_token');
+            $table->dropColumn('online');
+          });
+        }
     }
 }

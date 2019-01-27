@@ -13,12 +13,15 @@ class AddEstatusOperacionIdestatusOperacionToPosturasMatch extends Migration
      */
     public function up()
     {
+      if (Schema::hasTable('posturasMatches'))
+      {
         Schema::table('posturasMatches', function (Blueprint $table) {
             //
             $table->integer('estatusOperaciones_idestatusOperacion')->unsigned();
             
             $table->foreign('estatusOperaciones_idestatusOperacion')->references('idestatusOperacion')->on('estatusOperaciones')->onDelete('cascade');
         });
+      }
     }
 
     /**
@@ -28,9 +31,12 @@ class AddEstatusOperacionIdestatusOperacionToPosturasMatch extends Migration
      */
     public function down()
     {
+      if (Schema::hasTable('posturasMatches'))
+      {
         Schema::table('posturasMatches', function (Blueprint $table) {
-            //
-            $table->dropColumn('estatusOperaciones_idestatusOperacion');
+          $table->dropForeign(['estatusOperaciones_idestatusOperacion']);
+          $table->dropColumn('estatusOperaciones_idestatusOperacion');
         });
+      }
     }
 }

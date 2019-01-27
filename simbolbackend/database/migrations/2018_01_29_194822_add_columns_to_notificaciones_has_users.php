@@ -13,11 +13,13 @@ class AddColumnsToNotificacionesHasUsers extends Migration
      */
     public function up()
     {
-        //
+      if (Schema::hasTable('posturasMatches'))
+      {
         Schema::table('notificaciones_has_users', function (Blueprint $table) {
             //
             $table->timestamps();
         });
+      }
     }
 
     /**

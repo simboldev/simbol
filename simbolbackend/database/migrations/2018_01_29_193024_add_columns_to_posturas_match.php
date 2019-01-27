@@ -13,11 +13,14 @@ class AddColumnsToPosturasMatch extends Migration
      */
     public function up()
     {
+      if (Schema::hasTable('posturasMatches'))
+      {
         Schema::table('posturasMatches', function (Blueprint $table) {
             //
             $table->boolean('acepta_user_propietario')->default(false);
             $table->boolean('acepta_user_contraparte')->default(false);
         });
+      }
     }
 
     /**
@@ -27,10 +30,12 @@ class AddColumnsToPosturasMatch extends Migration
      */
     public function down()
     {
+      if (Schema::hasTable('posturasMatches'))
+      {
         Schema::table('posturasMatches', function (Blueprint $table) {
-            //
-            $table->dropColumn('acepta_user_propietario');
-            $table->dropColumn('acepta_user_contraparte');
+          $table->dropColumn('acepta_user_propietario');
+          $table->dropColumn('acepta_user_contraparte');
         });
+      }
     }
 }

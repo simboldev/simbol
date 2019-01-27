@@ -9,10 +9,11 @@ use App\notificaciones_has_users;
 use App\users_bancos_pais_monedas;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +21,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password',
+        'username',
+        'nombres',
+        'apellidos',
+        'email',
+        'password',
+        'tipousuario_idtipousuario',
+        'verification_token'
     ];
 
     /**
@@ -31,7 +38,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
 
     public function tipousuario()
     {

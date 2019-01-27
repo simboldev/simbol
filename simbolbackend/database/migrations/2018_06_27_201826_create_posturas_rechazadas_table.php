@@ -13,18 +13,21 @@ class CreatePosturasRechazadasTable extends Migration
      */
     public function up()
     {
-        Schema::create('posturas_rechazadas', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('mi_postura_id')->unsigned();
-            $table->integer('postura_rechazada_id')->unsigned();
-            $table->timestamps();
-        });
-
-        Schema::table('posturas_rechazadas', function($table)
+        if (!Schema::hasTable('posturas_rechazadas'))
         {
-            $table->foreign('mi_postura_id')->references('idposturas')->on('posturas')->onDelete('cascade');
-            $table->foreign('postura_rechazada_id')->references('idposturas')->on('posturas')->onDelete('cascade');
-        });
+          Schema::create('posturas_rechazadas', function (Blueprint $table) {
+              $table->increments('id');
+              $table->integer('mi_postura_id')->unsigned();
+              $table->integer('postura_rechazada_id')->unsigned();
+              $table->timestamps();
+          });
+
+          Schema::table('posturas_rechazadas', function($table)
+          {
+              $table->foreign('mi_postura_id')->references('idposturas')->on('posturas')->onDelete('cascade');
+              $table->foreign('postura_rechazada_id')->references('idposturas')->on('posturas')->onDelete('cascade');
+          });
+        }
     }
 
     /**

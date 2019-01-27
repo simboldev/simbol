@@ -13,13 +13,14 @@ class AddColumnPosturaMatchIdToNotificacionesHasUsers extends Migration
      */
     public function up()
     {
-        //
+      if(!Schema::hasColumn('notificaciones_has_users', 'postura_match_id'))
+      {
         Schema::table('notificaciones_has_users', function (Blueprint $table) {
-            //
             $table->integer('postura_match_id')->unsigned()->nullable();
             
             $table->foreign('postura_match_id')->references('idPosturasMatch')->on('posturasMatches')->onDelete('cascade');
         });
+      }
     }
 
     /**
@@ -29,10 +30,9 @@ class AddColumnPosturaMatchIdToNotificacionesHasUsers extends Migration
      */
     public function down()
     {
-        //
-        Schema::table('notificaciones_has_users', function (Blueprint $table) {
-            //
-            $table->dropColumn('postura_match_id');
-        });
+      Schema::table('notificaciones_has_users', function (Blueprint $table) {
+          $table->dropForeign(['postura_match_id']);
+          $table->dropColumn('postura_match_id');
+      });
     }
 }

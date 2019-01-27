@@ -13,6 +13,7 @@ namespace Carbon;
 
 use Carbon\Exceptions\InvalidDateException;
 use Closure;
+use DateInterval;
 use DatePeriod;
 use DateTime;
 use DateTimeInterface;
@@ -195,7 +196,7 @@ class Carbon extends DateTime implements JsonSerializable
         't' => '(2[89]|3[01])',
         'L' => '(0|1)',
         'o' => '([1-9][0-9]{0,4})',
-        'Y' => '([1-9][0-9]{0,4})',
+        'Y' => '([1-9]?[0-9]{4})',
         'y' => '([0-9]{2})',
         'a' => '(am|pm)',
         'A' => '(AM|PM)',
@@ -217,8 +218,8 @@ class Carbon extends DateTime implements JsonSerializable
         'U' => '([0-9]*)',
 
         // The formats below are combinations of the above formats.
-        'c' => '(([1-9][0-9]{0,4})\-(1[012]|0[1-9])\-(3[01]|[12][0-9]|0[1-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])[\+\-](1[012]|0[0-9]):([0134][05]))', // Y-m-dTH:i:sP
-        'r' => '(([a-zA-Z]{3}), ([123][0-9]|[1-9]) ([a-zA-Z]{3}) ([1-9][0-9]{0,4}) (2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9]) [\+\-](1[012]|0[0-9])([0134][05]))', // D, j M Y H:i:s O
+        'c' => '(([1-9]?[0-9]{4})\-(1[012]|0[1-9])\-(3[01]|[12][0-9]|0[1-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])[\+\-](1[012]|0[0-9]):([0134][05]))', // Y-m-dTH:i:sP
+        'r' => '(([a-zA-Z]{3}), ([123][0-9]|[1-9]) ([a-zA-Z]{3}) ([1-9]?[0-9]{4}) (2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9]) [\+\-](1[012]|0[0-9])([0134][05]))', // D, j M Y H:i:s O
     );
 
     /**
@@ -1015,17 +1016,24 @@ class Carbon extends DateTime implements JsonSerializable
     }
 
     /**
-     * Throws an exception if the given object is not a DateTime and does not implement DateTimeInterface.
+     * Throws an exception if the given object is not a DateTime and does not implement DateTimeInterface
+     * and not in $other.
      *
-     * @param mixed $date
+     * @param mixed        $date
+     * @param string|array $other
      *
      * @throws \InvalidArgumentException
      */
-    protected static function expectDateTime($date)
+    protected static function expectDateTime($date, $other = array())
     {
+        $message = 'Expected ';
+        foreach ((array) $other as $expect) {
+            $message .= "{$expect}, ";
+        }
+
         if (!$date instanceof DateTime && !$date instanceof DateTimeInterface) {
             throw new InvalidArgumentException(
-                'Expected null, string, DateTime or DateTimeInterface, '.
+                $message.'DateTime or DateTimeInterface, '.
                 (is_object($date) ? get_class($date) : gettype($date)).' given'
             );
         }
@@ -1049,7 +1057,7 @@ class Carbon extends DateTime implements JsonSerializable
             return static::parse($date, $this->getTimezone());
         }
 
-        static::expectDateTime($date);
+        static::expectDateTime($date, array('null', 'string'));
 
         return $date instanceof self ? $date : static::instance($date);
     }
@@ -1847,7 +1855,7 @@ class Carbon extends DateTime implements JsonSerializable
     /**
      * Set the default format used when type juggling a Carbon instance to a string
      *
-     * @param string $format
+     * @param string|Closure $format
      *
      * @return void
      */
@@ -1863,7 +1871,9 @@ class Carbon extends DateTime implements JsonSerializable
      */
     public function __toString()
     {
-        return $this->format(static::$toStringFormat);
+        $format = static::$toStringFormat;
+
+        return $this->format($format instanceof Closure ? $format($this) : $format);
     }
 
     /**
@@ -2255,6 +2265,13 @@ class Carbon extends DateTime implements JsonSerializable
         return $this->gt($date1) && $this->lt($date2);
     }
 
+    protected function floatDiffInSeconds($date)
+    {
+        $date = $this->resolveCarbon($date);
+
+        return abs($this->diffInRealSeconds($date, false) + ($date->micro - $this->micro) / 1000000);
+    }
+
     /**
      * Get the closest date from the instance.
      *
@@ -2265,7 +2282,7 @@ class Carbon extends DateTime implements JsonSerializable
      */
     public function closest($date1, $date2)
     {
-        return $this->diffInSeconds($date1) < $this->diffInSeconds($date2) ? $date1 : $date2;
+        return $this->floatDiffInSeconds($date1) < $this->floatDiffInSeconds($date2) ? $date1 : $date2;
     }
 
     /**
@@ -2278,13 +2295,13 @@ class Carbon extends DateTime implements JsonSerializable
      */
     public function farthest($date1, $date2)
     {
-        return $this->diffInSeconds($date1) > $this->diffInSeconds($date2) ? $date1 : $date2;
+        return $this->floatDiffInSeconds($date1) > $this->floatDiffInSeconds($date2) ? $date1 : $date2;
     }
 
     /**
      * Get the minimum instance between a given instance (default now) and the current instance.
      *
-     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date
+     * @param \Carbon\Carbon|\DateTimeInterface|string|null $date
      *
      * @return static
      */
@@ -2312,7 +2329,7 @@ class Carbon extends DateTime implements JsonSerializable
     /**
      * Get the maximum instance between a given instance (default now) and the current instance.
      *
-     * @param \Carbon\Carbon|\DateTimeInterface|mixed $date
+     * @param \Carbon\Carbon|\DateTimeInterface|string|null $date
      *
      * @return static
      */
@@ -2523,7 +2540,7 @@ class Carbon extends DateTime implements JsonSerializable
     {
         $date = $date ?: static::now($this->tz);
 
-        static::expectDateTime($date);
+        static::expectDateTime($date, 'null');
 
         return $this->format($format) === $date->format($format);
     }
@@ -2572,7 +2589,7 @@ class Carbon extends DateTime implements JsonSerializable
     {
         $date = $date ? static::instance($date) : static::now($this->tz);
 
-        static::expectDateTime($date);
+        static::expectDateTime($date, 'null');
 
         $ofSameYear = is_null($ofSameYear) ? static::shouldCompareYearWithMonth() : $ofSameYear;
 
@@ -3745,16 +3762,91 @@ class Carbon extends DateTime implements JsonSerializable
     ///////////////////////////////////////////////////////////////////
 
     /**
-     * Get the difference as a CarbonInterval instance
-     *
-     * @param \Carbon\Carbon|\DateTimeInterface|string|null $date
-     * @param bool                                          $absolute Get the absolute of the difference
+     * @param DateInterval $diff
+     * @param bool         $absolute
+     * @param bool         $trimMicroseconds
      *
      * @return CarbonInterval
      */
-    public function diffAsCarbonInterval($date = null, $absolute = true)
+    protected static function fixDiffInterval(DateInterval $diff, $absolute, $trimMicroseconds)
     {
-        return CarbonInterval::instance($this->diff($this->resolveCarbon($date), $absolute));
+        $diff = CarbonInterval::instance($diff, $trimMicroseconds);
+
+        // @codeCoverageIgnoreStart
+        if (version_compare(PHP_VERSION, '7.1.0-dev', '<')) {
+            return $diff;
+        }
+
+        // Work-around for https://bugs.php.net/bug.php?id=77145
+        if ($diff->f > 0 && $diff->y === -1 && $diff->m === 11 && $diff->d >= 27 && $diff->h === 23 && $diff->i === 59 && $diff->s === 59) {
+            $diff->y = 0;
+            $diff->m = 0;
+            $diff->d = 0;
+            $diff->h = 0;
+            $diff->i = 0;
+            $diff->s = 0;
+            $diff->f = (1000000 - round($diff->f * 1000000)) / 1000000;
+            $diff->invert();
+        } elseif ($diff->f < 0) {
+            if ($diff->s !== 0 || $diff->i !== 0 || $diff->h !== 0 || $diff->d !== 0 || $diff->m !== 0 || $diff->y !== 0) {
+                $diff->f = (round($diff->f * 1000000) + 1000000) / 1000000;
+                $diff->s--;
+                if ($diff->s < 0) {
+                    $diff->s += 60;
+                    $diff->i--;
+                    if ($diff->i < 0) {
+                        $diff->i += 60;
+                        $diff->h--;
+                        if ($diff->h < 0) {
+                            $diff->h += 24;
+                            $diff->d--;
+                            if ($diff->d < 0) {
+                                $diff->d += 30;
+                                $diff->m--;
+                                if ($diff->m < 0) {
+                                    $diff->m += 12;
+                                    $diff->y--;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                $diff->f *= -1;
+                $diff->invert();
+            }
+        }
+        // @codeCoverageIgnoreEnd
+        if ($absolute && $diff->invert) {
+            $diff->invert();
+        }
+
+        return $diff;
+    }
+
+    /**
+     * Get the difference as a CarbonInterval instance.
+     *
+     * Pass false as second argument to get a microseconds-precise interval. Else
+     * microseconds in the original interval will not be kept.
+     *
+     * @param \Carbon\Carbon|\DateTimeInterface|string|null $date
+     * @param bool                                          $absolute         Get the absolute of the difference
+     * @param bool                                          $trimMicroseconds (true by default)
+     *
+     * @return CarbonInterval
+     */
+    public function diffAsCarbonInterval($date = null, $absolute = true, $trimMicroseconds = true)
+    {
+        $from = $this;
+        $to = $this->resolveCarbon($date);
+
+        if ($trimMicroseconds) {
+            $from = $from->copy()->startOfSecond();
+            $to = $to->copy()->startOfSecond();
+        }
+
+        return static::fixDiffInterval($from->diff($to, $absolute), $absolute, $trimMicroseconds);
     }
 
     /**
@@ -3964,6 +4056,9 @@ class Carbon extends DateTime implements JsonSerializable
     public function diffInSeconds($date = null, $absolute = true)
     {
         $diff = $this->diff($this->resolveCarbon($date));
+        if (!$diff->days && version_compare(PHP_VERSION, '5.4.0-dev', '>=')) {
+            $diff = static::fixDiffInterval($diff, $absolute, false);
+        }
         $value = $diff->days * static::HOURS_PER_DAY * static::MINUTES_PER_HOUR * static::SECONDS_PER_MINUTE +
             $diff->h * static::MINUTES_PER_HOUR * static::SECONDS_PER_MINUTE +
             $diff->i * static::SECONDS_PER_MINUTE +
@@ -4164,7 +4259,7 @@ class Carbon extends DateTime implements JsonSerializable
      */
     public function endOfDay()
     {
-        return $this->modify('23.59.59.999999');
+        return $this->modify('23:59:59.999999');
     }
 
     /**
@@ -4322,7 +4417,7 @@ class Carbon extends DateTime implements JsonSerializable
      */
     public function endOfHour()
     {
-        return $this->setTime($this->hour, 59, 59);
+        return $this->modify("$this->hour:59:59.999999");
     }
 
     /**
@@ -4342,7 +4437,27 @@ class Carbon extends DateTime implements JsonSerializable
      */
     public function endOfMinute()
     {
-        return $this->setTime($this->hour, $this->minute, 59);
+        return $this->modify("$this->hour:$this->minute:59.999999");
+    }
+
+    /**
+     * Modify to start of current minute, seconds become 0
+     *
+     * @return static
+     */
+    public function startOfSecond()
+    {
+        return $this->modify("$this->hour:$this->minute:$this->second.0");
+    }
+
+    /**
+     * Modify to end of current minute, seconds become 59
+     *
+     * @return static
+     */
+    public function endOfSecond()
+    {
+        return $this->modify("$this->hour:$this->minute:$this->second.999999");
     }
 
     /**
@@ -4616,13 +4731,28 @@ class Carbon extends DateTime implements JsonSerializable
     /**
      * Modify the current instance to the average of a given instance (default now) and the current instance.
      *
-     * @param \Carbon\Carbon|\DateTimeInterface|null $date
+     * @param \Carbon\Carbon|\DateTimeInterface|string|null $date
      *
      * @return static
      */
     public function average($date = null)
     {
-        return $this->addSeconds((int) ($this->diffInSeconds($this->resolveCarbon($date), false) / 2));
+        $date = $this->resolveCarbon($date);
+        $increment = $this->diffInRealSeconds($date, false) / 2;
+        $intIncrement = floor($increment);
+        $microIncrement = (int) (($date->micro - $this->micro) / 2 + 1000000 * ($increment - $intIncrement));
+        $micro = (int) ($this->micro + $microIncrement);
+        while ($micro >= 1000000) {
+            $micro -= 1000000;
+            $intIncrement++;
+        }
+        $this->addSeconds($intIncrement);
+
+        if (version_compare(PHP_VERSION, '7.1.8-dev', '>=')) {
+            $this->setTime($this->hour, $this->minute, $this->second, $micro);
+        }
+
+        return $this;
     }
 
     ///////////////////////////////////////////////////////////////////

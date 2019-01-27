@@ -13,9 +13,12 @@ class AddColumnsToNegociacions extends Migration
    */
   public function up()
   {
-    Schema::table('negociacions', function (Blueprint $table) {
-        $table->integer('estatus_autoriza_backoffice')->unsigned()->nullable();
-    });
+    if(!Schema::hasColumn('negociacions', 'estatus_autoriza_backoffice'))
+    {
+      Schema::table('negociacions', function (Blueprint $table) {
+          $table->integer('estatus_autoriza_backoffice')->unsigned()->nullable();
+      });
+    }
   }
 
   /**

@@ -36,9 +36,12 @@ class AddPosturaContraparteIdToPosturasMatches extends Migration
      */
     public function down()
     {
+      if (Schema::hasTable('posturasMatches'))
+      {
         Schema::table('posturasMatches', function (Blueprint $table) {
-            //
+            $table->dropForeign(['postura_contraparte_id']);
             $table->dropColumn('postura_contraparte_id');
         });
+      }
     }
 }

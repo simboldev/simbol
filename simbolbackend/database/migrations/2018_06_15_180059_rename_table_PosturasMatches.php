@@ -13,8 +13,11 @@ class RenameTablePosturasMatches extends Migration
      */
     public function up()
     {
-        //
+      //
+      if (Schema::hasTable('posturasMatches'))
+      {
         Schema::rename('posturasMatches', 'posturas_matches');
+      }
     }
 
     /**
@@ -25,6 +28,9 @@ class RenameTablePosturasMatches extends Migration
     public function down()
     {
         //
-        Schema::rename('posturas_matches', 'posturasMatches');
+        if (Schema::hasTable('posturasMatches'))
+        {
+          Schema::rename('posturasMatches', 'posturas_matches');
+        }
     }
 }
