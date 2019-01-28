@@ -10,6 +10,7 @@ class banco extends Model
     //
     // protected $primaryKey = 'idbancos';
     protected $fillable = [
+    	'code',
     	'nombre'
     ]; 
 

@@ -466,6 +466,7 @@ class ComposerStaticInit4841895ef5803f95644db1aa8396bdd3
     );
 
     public static $classMap = array (
+        'AddCodeToBancos' => __DIR__ . '/../..' . '/database/migrations/2019_01_27_192102_add_code_to_bancos.php',
         'AddColumnIdStatusNotificationsToNotificacions' => __DIR__ . '/../..' . '/database/migrations/2018_02_15_142905_add_column_id_status_notifications_to_notificacions.php',
         'AddColumnNotLeidaToNotificaciones' => __DIR__ . '/../..' . '/database/migrations/2018_01_29_210307_add_column_notLeida_to_notificaciones.php',
         'AddColumnPosturaMatchIdToNotificacionesHasUsers' => __DIR__ . '/../..' . '/database/migrations/2018_01_30_220821_add_column_postura_match_id_to_notificaciones_has_users.php',
