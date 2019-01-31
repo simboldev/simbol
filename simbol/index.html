@@ -489,4 +489,12 @@
       $("#btn_transferecia_"+$input.attr('id')).prop( "disabled", $disabled );
     };
 
+    function addCodeBankToInput()
+    {
+      var code = $('#neg_banco option:selected').data('code');
+
+      if( code !== '' || code !== undefined)
+        $('#nrocuenta').val(code);
+    }
+
 </script>

@@ -507,4 +507,3 @@
     <!--modal de operacion denunciada-->
   </div>       
 </div><!-- END ng-if="username != undefined" -->
-

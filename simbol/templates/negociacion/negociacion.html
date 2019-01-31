@@ -7,28 +7,28 @@
 							<label class="block-center">Banco {{idUserContrapate}}</label>
 						</div>
 						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-							<select ng-model="selectBanco.negBanco" name="negBanco" id="negBanco" class="form-control input_simbol font_bold " >
-								<option  ng-repeat="item in selectBancos" ng-value="item.idbancos">{{ item.nombre }}</option>
+							<select ng-model="negociacion.select_banco.neg_banco" name="neg_banco" id="neg_banco" class="form-control input_simbol font_bold" onchange="addCodeBankToInput()">
+								<option  ng-repeat="item in selectBancos" ng-value="item.idbancos" data-code="{{item.code}}">{{ item.nombre }}</option>
 							</select>
 						</div>
 					</div>
 
 					<!-- <div class="row nomargin nopadding" ng-if='idMonedaQuiero == 2'> -->
-					<div class="row nomargin nopadding">
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">
+					<div class="row nomargin nopadding" ng-if='idMonedaQuiero == 2'>
+						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " ng-if='idMonedaQuiero == 2' style="margin-left: 15%;">
 							<label class="block-center">ABA</label>
 						</div>
 						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-							<input type="text" id="aba" name="aba" class="input_simbol nomargin_top font_bold text-right" ng-model="aba"  maxlength="20" ng-value='' required />
+							<input type="text" id="aba" name="aba" class="input_simbol nomargin_top font_bold text-right" ng-model="negociacion.aba"  maxlength="20" ng-value='' required />
 						</div>
 					</div>
 
-					<div class="row nomargin nopadding" >
+					<div class="row nomargin nopadding">
 						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">
 							<label class="block-center">Número de Cuenta</label>
 						</div>
 						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-							<input type="text" id="nrocuenta" name="nrocuenta" class="input_simbol nomargin_top font_bold text-right" ng-model="nrocuenta" ng-value='' maxlength="20"  required />
+							<input type="text" id="nrocuenta" name="nrocuenta" class="input_simbol nomargin_top font_bold text-right" ng-model="negociacion.nrocuenta" ng-value='' maxlength="20"  required />
 						</div>
 					</div>
 
@@ -37,7 +37,7 @@
 							<label class="block-center">Correo Electrónico</label>
 						</div>
 						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-							<input type="text" id="email" name="email" class="input_simbol nomargin_top font_bold text-right" ng-model="email"   maxlength="100" required />
+							<input type="text" id="email" name="email" class="input_simbol nomargin_top font_bold text-right" ng-model="negociacion.email"   maxlength="100" required />
 						</div>
 					</div>
 
@@ -47,11 +47,11 @@
 						</div>
 						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 							
-							<select ng-model="selectNacionalidad.negNacionalidad" id="negNacionalidad" name="negNacionalidad" class=" input_simbol font_bold "   style="width: 20%;">
+							<select ng-model="negociacion.select_nacionalidad.neg_nacionalidad" id="negNacionalidad" name="negNacionalidad" class=" input_simbol font_bold "   style="width: 20%;">
 								<option  value="V">V</option>
 								<option  value="E">E</option>
 							</select>
-							<input type="text" id="nroidentificacion" name="nroidentificacion"  ng-model="nroidentificacion" class="input_simbol nomargin_top font_bold text-right" ng-minlength="1" maxlength="10" style="width: 75%;"  ng-value='' required />
+							<input type="text" id="nroidentificacion" name="nroidentificacion"  ng-model="negociacion.nroidentificacion" class="input_simbol nomargin_top font_bold text-right" ng-minlength="1" maxlength="10" style="width: 75%;"  ng-value='' required />
 						</div>
 					</div>
 					<div class="row nomargin nopadding" >

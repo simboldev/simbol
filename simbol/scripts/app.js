@@ -211,7 +211,7 @@
 			console.log(data['data']['data']);
 			if(data['data']['data'] == 0){
 				console.log("autenticación - objeto vacio");
-				$scope.mensaje = "¡¡Combinación Usuario y Password incorrecto, por favor ingrese nuevamente!!";
+				$scope.mensaje = "Usuario o contraseña incorrecto, intenta nuevamente!!";
         alert($scope.mensaje);
 			}else{
 
@@ -737,7 +737,7 @@
 }])
 	.controller('ChatCtrl',['$scope','envChat','$sce','$http',"$interval",'$cookieStore','$routeParams','$location',function($scope,envChat,$sce,$http,$interval,$cookieStore,$routeParams,$location){
 
-      	$scope.paramPost = $routeParams.id_posturas_match;
+    	$scope.paramPost = $routeParams.id_posturas_match;
 
 	    /*Paginación de las notificaciones*/
 	    $scope.post_current_page = 0;
@@ -752,6 +752,23 @@
 	    	negNacionalidad: null,
 	    }
 
+    $scope.init_negotiation = function()
+    {
+      var json =  {
+                    select_banco: { neg_banco:null },
+                    aba: '',
+                    nrocuenta: null,
+                    email: '',
+                    select_nacionalidad: { neg_nacionalidad: null },
+                    nroidentificacion: null, // (formatted: 7:29 PM)"",
+                    paramPost: $scope.paramPost,
+                    id : $scope.id,
+                    idUserContraparte : null
+                  }
+      return json;
+    }
+
+    $scope.negociacion = $scope.init_negotiation();
 
 	 /*METODO PARA EL ADMINISTRADOR CONFIRMAR TRANSFERENCIA*/
     $scope.autorizaTransf = function(id, btn_id)
@@ -1119,35 +1136,31 @@
     }
 
     $scope.guardarNegociacion = function(){
-			console.log("guardarNegociacion - abadat"+$scope.aba);
-      console.log($('#btn_send_data_negotiation'))
       var btn = $('#btn_send_data_negotiation')
+      $scope.negociacion.aba = $scope.negociacion.aba !== '' ? $scope.negociacion.aba : null
       $scope.disabled_btn(btn,true,'Guardando...','Enviar');
-      $http({method: 'GET',url: $scope.url_server+'/negociacion/saveNegociacion/'+
-        $scope.selectBanco.negBanco+'/'+
-        $scope.aba+'/'+
-        $scope.nrocuenta+'/'+
-        $scope.email+'/'+
-        $scope.selectNacionalidad.negNacionalidad+'/'+
-        $scope.nroidentificacion+'/'+
-        $scope.paramPost+'/'+
+      $http({method: 'GET',
+        url: $scope.url_server+'/negociacion/saveNegociacion/'+
+        $scope.negociacion.select_banco.neg_banco+'/'+
+        $scope.negociacion.aba+'/'+
+        $scope.negociacion.nrocuenta+'/'+
+        $scope.negociacion.email+'/'+
+        $scope.negociacion.select_nacionalidad.neg_nacionalidad+'/'+
+        $scope.negociacion.nroidentificacion+'/'+
+        $scope.negociacion.paramPost+'/'+
         $scope.id+'/'+
         $scope.idUserContraparte
       })
       .then(function (data){
         console.log("guardarNegociacion - data guardada "+data['data']['data']['estatusNeg']);
-        if(data['data']['data']['estatusNeg'] == 1){
+        if(data['data']['data']['estatusNeg'] == 1)
+        {
           console.log('guardarNegociacion - vamos para alla '+$location.url("/operacion/"+$scope.paramPost));
           console.log("guardarNegociacion - tipo de valor es "+typeof($scope.paramPost));
           // $scope.consEstatusNeg();
-          // $window.location.reload();
           $scope.disabled_btn(btn,true,'Guardando...','Enviar');
           window.location.reload();
         }
-        //     else if(data['data']['data']['estatusNeg'] == 2){
-        // 	console.log('guardarNegociacion - cayo en 2');
-        // 	$window.location.reload();
-        // }
       }
       ,function (xhr, ajaxOptions, thrownError){ 
         console.log("guardarNegociacion - APPTCONT:: Error guardando negociacion: \n Error: "+xhr.status+" "+thrownError);
@@ -1155,6 +1168,22 @@
       });
     }
 
+    $scope.normalize_json_negotiation = function(json)
+    {
+      var json_negotiation = 
+                            {
+                              idbancoNeg: json.select_banco.neg_banco,
+                              $abaNeg: json.aba,
+                              $nrocuentaNeg: json.nrocuenta,
+                              $emailNeg: json.email,
+                              $nacionalidadNeg: json.select_nacionalidad.neg_nacionalidad,
+                              $nroidentificacionNeg: json.nroidentificacion,
+                              $idposturamatchNeg: json.paramPost,
+                              $idUser: json.id,
+                              $iduser_contraparte: json.idUserContraparte
+                            }
+      return json_negotiation;
+    }
 
 	    $scope.consEstatusNeg = function(){
 	    	console.log("consEstatusNeg - si va "+$scope.selectBanco.negBanco+'--'+$scope.abadat+"--"+$scope.nrocuenta+"--"+$scope.email+"--"+$scope.selectNacionalidad.negNacionalidad+"--"+$scope.nroidentificacion);
@@ -2077,8 +2106,6 @@
 			$location.url("/postures/new");
 			setTimeout(function(){ location.reload(); }, 5000);
 		}
-
-		
 	}])
 	.factory('envChat',function($resource){
 		return $resource("http://52.170.252.66:8080/tracking/:id",
