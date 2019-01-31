@@ -14,7 +14,7 @@ class RenameTablePosturasMatchHasCalificaciones extends Migration
     public function up()
     {
         //
-        if (!Schema::hasTable('posturasMatch_has_calificaciones'))
+        if (Schema::hasTable('posturasMatch_has_calificaciones'))
         {
             Schema::rename('posturasMatch_has_calificaciones', 'posturas_match_has_calificaciones');
         }
@@ -27,7 +27,9 @@ class RenameTablePosturasMatchHasCalificaciones extends Migration
      */
     public function down()
     {
-        //
-        Schema::rename('posturas_match_has_calificaciones', 'posturasMatch_has_calificaciones');
+        if (Schema::hasTable('posturas_match_has_calificaciones'))
+        {
+            Schema::rename('posturas_match_has_calificaciones', 'posturasMatch_has_calificaciones');
+        }
     }
 }

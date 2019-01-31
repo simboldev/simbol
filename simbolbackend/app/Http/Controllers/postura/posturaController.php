@@ -63,58 +63,54 @@ class posturaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $data = [];
-        $postura_data = $request->all();
+      $data = [];
+      $postura_data = $request->all();
+      $rules = [
+                'quiero_moneda_id'      => 'required',
+                'tengo_moneda_id'       => 'required',
+                'tengo'                 => 'required',
+                'quiero'                => 'required',
+                'tasacambio'            => 'required',
+                'fechadesde'            => 'required',
+                'fechahasta'            => 'required',
+                'iduser'                => 'required',
+                'estatusPosturas_idestatusPosturas' => 'required',
+                'fraccionar'            => 'required',
+                'bancos_bs'             => 'required',
+                'bancos_usd'            => 'required'
+              ];
 
-        // Creamos las reglas de validación
-        $rules = [
-            'quiero_moneda_id'      => 'required',
-            'tengo_moneda_id'       => 'required',
-            'tengo'                 => 'required',
-            'quiero'                => 'required',
-            'tasacambio'            => 'required',
-            'fechadesde'            => 'required',
-            'fechahasta'            => 'required',
-            'iduser'                => 'required',
-            'estatusPosturas_idestatusPosturas' => 'required',
-            'fraccionar'            => 'required',
-            'bancos_bs'             => 'required',
-            'bancos_usd'            => 'required'
-            ];
-
-        // Ejecutamos el validador, en caso de que falle devolvemos la respuesta
         $validator = \Validator::make($postura_data, $rules);
         if ($validator->fails())
         {
-            $code       = "NOTOK";
-            $message    = $validator->errors()->all();
+          $code       = "NOTOK";
+          $message    = $validator->errors()->all();
         }
         else
         {
-            $postura = new \App\postura($postura_data);
-            if( $postura->save())
-            {
-                $this->save_posturas_bancos($postura->id,$postura_data['bancos_bs']);
-                $this->save_posturas_bancos($postura->id,$postura_data['bancos_usd']);
+          $postura = new \App\postura($postura_data);
+          if( $postura->save())
+          {
+            $this->save_posturas_bancos($postura->id,$postura_data['bancos_bs']);
+            $this->save_posturas_bancos($postura->id,$postura_data['bancos_usd']);
 
-                //notificacion via email
-                // $email = User::select('email')->where('id','=',$postura->iduser)->get();
+            //notificacion via email
+            // $email = User::select('email')->where('id','=',$postura->iduser)->get();
 
-                /*DESCOMENTAR LUEGO
-                $email = env('APP_SIMBOL_MAIL');
-                Mail::to($email)
-                    ->send(new nuevaPostura($postura));*/
+            /*DESCOMENTAR LUEGO
+            $email = env('APP_SIMBOL_MAIL');
+            Mail::to($email)
+                ->send(new nuevaPostura($postura));*/
 
-                $code       = "OK";
-                $message    = "";
-                $data       = $postura->id;
-            }
-            else
-            {
-                $code       = "NOTOK";
-                $message    = "Ocurrio un problema al intentar guardar la postura";
-            }
+            $code       = "OK";
+            $message    = "";
+            $data       = $postura->id;
+          }
+          else
+          {
+            $code       = "NOTOK";
+            $message    = "Ocurrio un problema al intentar guardar la postura";
+          }
         }
 
         return response()->json([

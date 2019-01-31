@@ -24,8 +24,11 @@ class bancoController extends Controller
 
         $code       = "OK";
         $message    = "Success";
+        $data       =  banco::join( 'bancos_pais_monedas',
+                                    'bancos_pais_monedas.idbanco',
+                                    'bancos.idbancos')
+                              ->get();
 
-        $data       =   banco::get();
        
         return response()->json([
             'code'=> $code,

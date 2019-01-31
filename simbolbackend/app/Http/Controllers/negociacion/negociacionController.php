@@ -300,6 +300,7 @@ class negociacionController extends Controller
                         
       return $arr_negociacon;
     }
+
     public function saveNegociacion($idbancoNeg,$abaNeg,$nrocuentaNeg,$emailNeg,$nacionalidadNeg,$nroidentificacionNeg,$idposturamatchNeg,$iduser,$iduser_contraparte)
     {
         error_log("===============saveNegociacion NEGOCIACION========");
@@ -324,10 +325,9 @@ class negociacionController extends Controller
         $negociacion->estatusnegociacion = 1;
         $negociacion->iduser = $iduser;
 
-        $data = ['estatusNeg'=>1];
-
         if($negociacion->save())
         {
+          $data = ['estatusNeg'=>1];
           $negociaciones = negociacion::where('iduser','!=', $negociacion->iduser)->where('estatusnegociacion',$negociacion->estatusnegociacion)->where('idposturamatch',$negociacion->idposturamatch)->get();
 
           $postura_match = posturasMatches::find($negociacion->idposturamatch);
@@ -391,6 +391,117 @@ class negociacionController extends Controller
         ],200);
 
     }
+
+    // public function saveNegotiation(Request $request)
+    // {
+    //     error_log("===============saveNegociacion NEGOCIACION========");
+    //     error_log('$request = '.$request);
+
+    //     $code       = "OKlklk";
+    //     $message    = "";
+    //     $data       = [];
+
+    //     $identificacion = $request->nacionalidadNeg.$request->nroidentificacionNeg;
+
+    //     $existNeg = negociacion::select('estatusnegociacion')
+    //         ->where('idposturamatch',$request->idposturamatchNeg)
+    //         ->get();
+    //     error_log($request->idbancoNeg);
+    //     // error_log($request['abaNeg']);
+    //     // error_log($request['nrocuentaNeg']);
+    //     // error_log($request['emailNeg']);
+    //     // error_log($request['idposturamatchNeg']);
+    //     // error_log($request['idUser']);
+    //     // error_log($request['iduser_contraparte']);
+
+    //     error_log($request['idbancoNeg']);
+    //     // error_log($request['abaNeg']);
+    //     error_log($request['nrocuentaNeg']);
+    //     error_log($request['emailNeg']);
+    //     error_log($request['idposturamatchNeg']);
+    //     error_log($request['idUser']);
+    //     error_log($request['iduser_contraparte']);
+
+    //     $negociacion = new \App\negociacion();
+    //     $negociacion->idbanco = $request['idbancoNeg'];
+    //     $negociacion->aba = $request['abaNeg'];
+    //     $negociacion->nrocuenta = $request['nrocuentaNeg'];
+    //     $negociacion->email = $request['emailNeg'];
+    //     $negociacion->nroidentificacion = $identificacion;
+    //     $negociacion->idposturamatch = $request['idposturamatchNeg'];
+    //     $negociacion->estatusnegociacion = 1;
+    //     $negociacion->iduser = $request['idUser'];
+    //     error_log('$negociacion = '.$negociacion);
+    //     if($negociacion->save())
+    //     {
+    //       $data = ['estatusNeg'=>1];
+    //       $negociaciones = negociacion::where('iduser','!=', $negociacion->iduser)
+    //                       ->where('estatusnegociacion',$negociacion->estatusnegociacion)
+    //                       ->where('idposturamatch',$negociacion->idposturamatch)
+    //                       ->get();
+
+    //       $postura_match = posturasMatches::find($negociacion->idposturamatch);
+    //       error_log('ssssssss postura_match = ');
+    //       error_log($postura_match);
+    //       error_log($postura_match->users_idusers);
+    //       error_log($negociacion->iduser);
+    //       if($postura_match->users_idusers == $negociacion->iduser)
+    //       {
+    //         error_log('ifff');
+    //           $postura = postura::where('idposturas',$postura_match->posturas_idposturas)->first();
+    //       }
+    //       else if($postura_match->iduser2 == $negociacion->iduser)
+    //       {
+    //         error_log('elseee');
+    //           $postura = postura::where('idposturas',$postura_match->postura_contraparte_id)->first();
+    //       }
+    //       error_log($postura);
+          
+    //       $user_emisor = User::find($request['idUser']);
+    //       $user_contraparte = User::find($request['iduser_contraparte']);
+    //       $tittle_noti = 'Negociación';
+          
+    //       if($postura->quiero_moneda_id == 1) // Bs
+    //       {
+
+    //         $estatus_negociacion = 'agregó los datos bancarios.';
+
+    //         if(count($negociaciones) > 0)
+    //         {
+    //           $estatus_negociacion = $estatus_negociacion.' Ya le puedes transferir.';
+    //         }
+    //         else
+    //         {
+    //           $estatus_negociacion = $estatus_negociacion.' Agrega tus datos para que puedas transferirle.';
+    //         }
+    //       }
+    //       else if($postura->quiero_moneda_id == 2) // USD
+    //       {
+    //         if(count($negociaciones) > 0)
+    //         {
+    //           $estatus_negociacion = 'está relizando la transferencia.';
+    //         }
+    //         else
+    //         {
+    //           $estatus_negociacion = 'espera que agregues tus datos bancarios para transferirte.';
+    //         }
+    //       }
+
+    //       $text_noti = strtoupper($user_emisor->username).' '.$estatus_negociacion;
+    //       $this->save_notification($user_contraparte->id,$tittle_noti, $text_noti, $negociacion->idposturamatch,1);
+    //       $message = "La negociación se ha guardado con exito";
+    //     }else{
+    //       $message = "La negociación no se ha podido guardar con exito";
+    //       error_log($message);
+    //     }
+
+    //     return response()->json([
+    //         'code'      => $code,
+    //         'msg'   => $message,
+    //         'data'      => $data
+    //     ],200);
+
+    // }
 
     public function saveComprobante(Request $request)
     {

@@ -18,7 +18,7 @@ class CreateNegociacions extends Migration
         Schema::create('negociacions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idbanco')->unsigned();
-            $table->string('aba',100);
+            $table->string('aba',100)->nullable();
             $table->string('nrocuenta',100);
             $table->string('email',100);
             $table->string('nroidentificacion',100);

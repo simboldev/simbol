@@ -30,9 +30,6 @@ Route::group(['prefix' => 'auth'], function ()
     });
 });
 
-Route::get('Auth/index', 'Auth\AuthController@index')->name('auth.index');
-Route::post('auth/signup', 'auth\AuthController@signup')->name('auth.signup');
-
 Route::get('amigos/consAmistad/{id1}/{id2}', 'amigo\amigoController@consAmistad')->name('amigos.consAmistad');
 Route::get('amigos/amigos_en_comun/{iduser_1}/{iduser_2}', 'amigo\amigoController@amigos_en_comun')->name('amigos.amigos_en_comun');
 Route::get('amigos/amigos_en_comun_tabla/{iduser_1}/{iduser_2}', 'amigo\amigoController@amigos_en_comun_tabla')->name('amigos.amigos_en_comun_tabla');

@@ -14,7 +14,7 @@ class RenameTableEstatusOperaciones extends Migration
     public function up()
     {
         //
-        if (!Schema::hasTable('estatusOperaciones'))
+        if (Schema::hasTable('estatusOperaciones'))
         {
             Schema::rename('estatusOperaciones', 'estatus_operacions');
         }
@@ -27,7 +27,9 @@ class RenameTableEstatusOperaciones extends Migration
      */
     public function down()
     {
-        //
-        Schema::rename('estatus_operacions', 'estatusOperaciones');
+        if (Schema::hasTable('estatus_operacions'))
+        {
+            Schema::rename('estatus_operacions', 'estatusOperaciones');
+        }
     }
 }
