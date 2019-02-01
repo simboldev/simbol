@@ -13,7 +13,7 @@ class CreateEstatusNegociacions extends Migration
      */
     public function up()
     {
-      if (!Schema::hasTable('negociacions'))
+      if (Schema::hasTable('negociacions'))
       {
         Schema::create('estatus_negociacions', function (Blueprint $table) {
             $table->increments('id');
