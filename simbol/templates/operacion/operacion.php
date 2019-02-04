@@ -1,6 +1,6 @@
 <div ng-if="username != undefined">
   <div>
-    <h2>Gesti&oacute;n de la Operaci&oacute;n</h2>
+    <h2 class="color_purple">Gesti&oacute;n de la Operaci&oacute;n</h2>
   </div>
   <!-- <div  class="row  index_posture_new_posture" class="container"  ng-controller="ChatCtrl" ng-init="refTrack();estatusOperacion();consEstatusNeg();"> -->
   <div  class="row  index_posture_new_posture" class="container"  ng-controller="ChatCtrl" ng-init="estatusOperacion();consEstatusNeg();">
@@ -49,7 +49,7 @@
 
                 <input type="hidden"  value="{{ negociaciones.negociacion_bs.idNeg }}" id="bo_id_negociacion_contraparte_1">
 
-                <button type="button" id="bo_btn_confirma_transf_bs" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf(1,'bo_btn_confirma_transf_bs');" ng-if="negociaciones.negociacion_moneda_extranjera.estatusNeg == 2 && negociaciones.negociacion_bs.estatusNeg == 2 && negociaciones.negociacion_bs.estatus_autoriza_backoffice == 0">
+                <button type="button" id="bo_btn_confirma_transf_bs" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf(1,'bo_btn_confirma_transf_bs');" ng-if="negociaciones.negociacion_moneda_extranjera.estatusNeg == 2 && negociaciones.negociacion_bs.estatusNeg == 2 && negociaciones.negociacion_bs.estatus_autoriza_backoffice == 0">
                   Confirmar transferencia de {{negociaciones.negociacion_moneda_extranjera.usuario_nombre_usuario}}
                 </button>
               </div>
@@ -116,7 +116,7 @@
                    </a>
                 </p>
 
-                <button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                <button type="button" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
                   Confirmar Transferencia
                 </button>
               </div>
@@ -132,7 +132,7 @@
                 
                 <input type="hidden"  value="{{ negociaciones.negociacion_moneda_extranjera.idNeg }}" id="bo_id_negociacion_contraparte_2">
 
-                <button type="button" id="bo_btn_confirma_transf_usd" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf(2,'bo_btn_confirma_transf_usd');" ng-if="negociaciones.negociacion_moneda_extranjera.estatusNeg == 4 && negociaciones.negociacion_bs.estatusNeg == 4 && negociaciones.negociacion_bs.estatus_autoriza_backoffice == 2">
+                <button type="button" id="bo_btn_confirma_transf_usd" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="autorizaTransf(2,'bo_btn_confirma_transf_usd');" ng-if="negociaciones.negociacion_moneda_extranjera.estatusNeg == 4 && negociaciones.negociacion_bs.estatusNeg == 4 && negociaciones.negociacion_bs.estatus_autoriza_backoffice == 2">
                   Confirmar Transferencia
                 </button>
               </div>
@@ -278,7 +278,7 @@
               <br>
               <input type = "file" name = "myFile"  id="myFile" onchange="mostrar_btn_transferencia_reliazada('myFile');" />
               <br>
-              <button type="button" id="btn_transferecia_myFile" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
+              <button type="button" id="btn_transferecia_myFile" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
                 'btn_transferecia_myFile',
                 document.getElementById('idUser').value,
                 document.getElementById('idNeg').value,
@@ -300,13 +300,13 @@
               <br><br><br>
             
                 <a href="{{ negociacion_contraparte.comprobante }}" target="_blank">
-                  <button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                  <button type="button" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
                       Descargar Comprobante
                   </button>
                 </a>
               <br><br>
               
-              <button type="button" id="btn_confirma_transf_bs" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf('btn_confirma_transf_bs');" >
+              <button type="button" id="btn_confirma_transf_bs" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf('btn_confirma_transf_bs');" >
                   Confirmar Transferencia
               </button>
               
@@ -370,7 +370,7 @@
               <br>
               <input type = "file" id="myFile2" onchange="mostrar_btn_transferencia_reliazada('myFile2');"/>
               <br>
-              <button type="button" id="btn_transferecia_myFile2" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
+              <button type="button" id="btn_transferecia_myFile2" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
                 'btn_transferecia_myFile2',
                 document.getElementById('idUser2').value,
                 document.getElementById('idNeg2').value,
@@ -392,13 +392,13 @@
               <br><br><br>
             
                 <a href="{{ negociacion_contraparte.comprobante }}" target="_blank">
-                  <button type="button" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                  <button type="button" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
                       Descargar Comprobante
                   </button>
                 </a>
               <br><br>
               
-                <button type="button" id="btn_confirma_transf_usd" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf('btn_confirma_transf_usd');">
+                <button type="button" id="btn_confirma_transf_usd" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf('btn_confirma_transf_usd');">
                     Confirmar Transferencia
                 </button>
             </div>
@@ -419,7 +419,7 @@
               ¡Felicitaciones! ya tu cambio fu&eacute; realizado.
             </div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 col-md-offset-4 col-ms-offset-4">
-              <button type="button" id="btn_go_home" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-md-4 col-sm-4 col-xs-12" ng-click="go_home()">
+              <button type="button" id="btn_go_home" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold col-md-4 col-sm-4 col-xs-12" ng-click="go_home()">
                   Ir al inicio
               </button>
             </div>
@@ -432,7 +432,7 @@
               ¡Felicitaciones! ya tu cambio fu&eacute; realizado.
             </div>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 col-md-offset-4 col-ms-offset-4">
-              <button type="button" id="btn_go_home" class="btn btn-secondary btn_orange_simbol pull-center font_weight_bold col-md-4 col-sm-4 col-xs-12" ng-click="go_home()">
+              <button type="button" id="btn_go_home" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold col-md-4 col-sm-4 col-xs-12" ng-click="go_home()">
                   Ir al inicio
               </button>
             </div>

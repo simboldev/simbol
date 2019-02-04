@@ -1,80 +1,86 @@
 <!DOCTYPE html>
 <html ng-app="app" ng-controller="appController">
-<head>
-	<title>{{tittle_page}}</title>
-	<meta charset="utf-8">
+  <head>
+    <title>{{tittle_page}}</title>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
-	
-	<link href="images/png/favicon1.ico" rel="shortcut icon">
-    <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="./css/simbol.css">
-	<link rel="stylesheet" href="./bower_components/angular-motion/dist/angular-motion.min.css"></link>
-    <link rel="stylesheet" href="./bower_components/angular-notify/dist/angular-notify.css"></link>
-    
 
-	<script type="text/javascript" src="./bower_components/angular/angular.js"></script>
+    <link href="images/png/favicon1.ico" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./css/simbol.css">
+    <link rel="stylesheet" href="./bower_components/angular-motion/dist/angular-motion.min.css"></link>
+    <link rel="stylesheet" href="./bower_components/angular-notify/dist/angular-notify.css"></link>
+
+
+    <script type="text/javascript" src="./bower_components/angular/angular.js"></script>
     <!--NOTIFICACIONES-->
     <!--<script type="text/javascript" src="./bower_components/angular-growl-notifications/dist/angular-growl-notifications.js"></script>-->
     <script type="text/javascript" src="./bower_components/angular-notify/dist/angular-notify.js"></script>
     <!--NOTIFICACIONES-->
-	<script type="text/javascript" src="./bower_components/angular-route/angular-route.min.js"></script>
-	<script type="text/javascript" src="./bower_components/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-resource/angular-resource.js"></script>
 
-	<script src="./bower_components/angular-strap/dist/angular-strap.min.js"></script>
-	<script src="./bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+    <script src="./bower_components/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="./bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
 
-	<script src="./bower_components/angular-flash-alert/dist/angular-flash.min.js"></script>
+    <script src="./bower_components/angular-flash-alert/dist/angular-flash.min.js"></script>
 
     <!--NOTIFICACIONES-->
     <link rel="stylesheet" href="./bower_components/angular-notify/dist/angular-notify.css"></link>
     <script src="./bower_components/angular-cookies/angular-cookies.js"></script>
-	
-	<script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
-	<script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- CONTROLLERS -->
-	<script type="text/javascript" src="./scripts/app.js"></script>
-	<script type="text/javascript" src="./scripts/postures_controllers.js"></script>
-	<script type="text/javascript" src="./scripts/matches_controllers.js"></script>
-	<!--<script type="text/javascript" src="./scripts/match_controllers.js"></script>-->
-	<script type="text/javascript" src="./scripts/login_controllers.js"></script>
-</head>
-	<body ng-init="index_init()">
-        <input type="hidden" name="url_server" id="url_server" ng-value="url_server" />
-	    <!--cabecera-->
-	    <div ng-if="username != undefined ">
-	        <div ng-include src="'templates/head.html'" class="container_header row nomargin nopadding" ></div>
-	    </div>
-	    <div ng-if="username == undefined">
-	        <div ng-include src="'templates/head_login.html'" class="container_header row nomargin nopadding" ></div>
-	    </div>
-	    <!--cabecera-->
-	    
-		<div class="row nomargin_right 	container_body_simbol">
-			<div class="container-fluid nomargin nopadding container-gral">
-				<div ng-if="username != undefined ">
-					<!--menu-->
-					<div ng-include src="'templates/layout_menu_izquierdo.html'" class="container_menu_left col-lg-1 col-md-1 col-sm-1 col-xs-12 nopadding_right"></div>
-					<!--menu-->
-                    <!--cuerpo-->
-                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 nomargin container_panel_central">
-                        <div ng-view class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
-                    </div>
-                    <!--cuerpo-->
-				</div>
-                <div ng-if="username == undefined ">
-                    <!--cuerpo index -->
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 nomargin container_panel_central">
-                        <div ng-include src="'templates/inicio/inicio.html'" class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-10 col-md-10 col-sm-10 col-xs-12"></div>
-                    </div>
-                    <!--cuerpo index -->
-                </div>
-				<!--panel derecho-->
-				<div ng-include src="'templates/layout_panel_right.html'" class="col-lg-3 col-md-3 col-sm-3 col-xs-12 nomargin container_panel_right"></div>
-				<!--panel derecho-->
-			</div>
-		</div>
+
+    <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- CONTROLLERS -->
+    <script type="text/javascript" src="./scripts/app.js"></script>
+    <script type="text/javascript" src="./scripts/postures_controllers.js"></script>
+    <script type="text/javascript" src="./scripts/matches_controllers.js"></script>
+    <!--<script type="text/javascript" src="./scripts/match_controllers.js"></script>-->
+    <script type="text/javascript" src="./scripts/login_controllers.js"></script>
+  </head>
+   <body ng-init="index_init()">
+      <input type="hidden" name="url_server" id="url_server" ng-value="url_server" />
+      <div ng-if="web_safari == true">
+        <div ng-include src="'templates/inicio/inicio.html'" class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-10 col-md-10 col-sm-10 col-xs-12">
+        </div>
+      </div>
+      <!-- LOGIN -->
+      <div ng-if="username == undefined && web_safari == false">
+        <div ng-include src="'templates/login.html'" class="container_login row nomargin nopadding" ></div>
+      </div>
+
+      <!-- INDEX -->
+      <div ng-if="username != undefined && web_safari == false">
+        <!--cabecera-->
+        <div ng-if="username != undefined ">
+          <div ng-include src="'templates/head.html'" class="container_header row nomargin nopadding" ></div>
+        </div>
+        <!--cabecera-->
+         
+        <div class="row nomargin_right container_body_simbol">
+          <div class="container-fluid nomargin nopadding container-gral">
+            <!--menu-->
+            <div ng-include src="'templates/layout_menu_izquierdo.html'" class="container_menu_left background_simbol col-lg-1 col-md-1 col-sm-1 col-xs-12 nopadding_right"></div>
+            <!--menu-->
+            <!--cuerpo-->
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 nomargin container_panel_central">
+                <div ng-view class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+            </div>
+            <!--cuerpo-->
+            <!--cuerpo index -->
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 nomargin container_panel_central">
+                
+            </div>
+            <!--cuerpo index -->
+            <!--panel derecho-->
+            <div ng-include src="'templates/layout_panel_right.html'" class="col-lg-3 col-md-3 col-sm-3 col-xs-12 nomargin container_panel_right background_simbol"></div>
+            <!--panel derecho-->
+          </div>
+        </div>
+      </div>
+
         <!--modal-->
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="myModaICanOper" role="dialog">
                 <div class="modal-dialog" title="">
@@ -95,7 +101,7 @@
         </div>
         <!--modal-->
 
-	</body>
+   </body>
 </html>
 
 
@@ -107,12 +113,23 @@
             $(".nav li").removeClass("active");
             $(this).addClass("active");
         });
+        center_element_in_window('section_card_login');
     });
 </script>
 
 <script>
-	// ============ FUNCTIONS ============
-
+   // ============ FUNCTIONS ============
+    function center_element_in_window($id_element)
+    {
+      var height_window = $(window).height();
+      // alert($id_element)
+      var $element = $("#"+$id_element);
+      // alert(height_window+' - '+$element.height())
+      var top_element = (height_window-$element.height())/2;
+      // alert(height_window-$element.height())
+      // alert(top_element)
+      $element.css("margin-top",top_element+'px');
+    }
     // ============  CRONOMETRO============
     var minutesTop = 89;
     var minuteRest;
@@ -205,7 +222,7 @@
         
         formData.append('posturasMatches_idposturasMatch',posturasMatches_idposturasMatch);
         var url =document.getElementById("url_server").value+'/chat';
-		//var url ='http://52.170.252.66:8080/chat';
+      //var url ='http://52.170.252.66:8080/chat';
 
 
         if(file.size <= 700000){

@@ -430,15 +430,14 @@ mainApp
     $scope.safari_web = ($scope.validar_navegador() == 2) ? true : false;
     if($scope.safari_web == true)
     {
-      $('#logo_sombol_init').hide();
+      // $('#logo_sombol_init').hide();
       $('#validation_safari').show();
     }
     else
     {
       $('#validation_safari').hide();
-      $('#logo_sombol_init').show();
+      // $('#logo_sombol_init').show();
     }
-
     $(".logo_simbol_body").css("margin-top",top_logo_simbol+'px');
   }
   

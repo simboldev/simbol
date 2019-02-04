@@ -78,7 +78,7 @@
 	<div ng-if="tipousuario_idtipousuario != 5" ng-controller="PostureCtrl">
 		<div class="row nomargin nopadding index_posture_new_posture_tittle">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<h2>Nueva postura</h2>
+				<h2 class="color_purple">Nueva postura</h2>
 			</div>
 		</div>
 		<div class="row nomargin nopadding index_posture_new_posture">
@@ -86,14 +86,14 @@
 	  			<form novalidate class="css-form form-new-posture text-center" name="form_new_posture">
 					<div class="row nomargin nopadding">
 						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 container_new_posture_i_want">
-							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Quiero</label> 
+							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 color_purple">Quiero</label> 
 								<!-- <input type="number" ng-model="posture.iwant" required /> -->
 								<select class="form-control input_simbol font_bold" ng-change="change_coin_have_rate()" ng-model="posture.iwant_id">
 									<option ng-selected="posture.iwant_id == item.id" ng-repeat="item in monedas" ng-value="item.idmonedas">{{item.admin_simbolo}}</option>
 							    </select>
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 container_new_posture_i_have">
-							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Monto</label>
+							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 color_purple">Monto</label>
 							<div id="ihave_coin_text" class="col-lg-2 col-md-2 col-sm-2 col-xs-4 nopadding">
 							<b>{{iwant_opt}}</b>
 							</div>
@@ -110,7 +110,7 @@
 							</div>
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 container_new_posture_rate">
-							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Tasa de cambio</label>
+							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 color_purple">Tasa de cambio</label>
 							<div id="rate_coin_text" class="col-lg-4 col-md-4 col-sm-4 col-xs-4 nopadding">
 							<b>{{iwant_opt_s}}/{{ihave_opt_s}}</b>
 							</div>
@@ -124,7 +124,7 @@
 					</div>
 					<div class="row nomargin nopadding">
 						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 container_new_posture_available_time">
-							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Tiempo disponible</label>
+							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 color_purple">Tiempo disponible</label>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								<!-- Condicion -->
 								<select class="input_simbol form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-change="unitChanged()" ng-model="posture.availableTime_condition">
@@ -157,7 +157,7 @@
 							</div>
 						</div>
 						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 container_new_posture_banks">
-							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Bancos</label>
+							<label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 color_purple">Bancos</label>
 								<table class="table table-responsive table_banks"> 
 		             				<tr>
 		             					<!-- Bancos en Bolivares -->
@@ -224,7 +224,7 @@
 				<!-- <pre>user = {{posture | json}}</pre> -->
 
 					<div id="container_btn_new_posture" class="row nomargin_bottom nopadding container_btn_new_posture">
-						<input type="submit" id="btn_new_posture" class="btn btn-default btn_orange_simbol col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-4 col-md-4 col-sm-4" ng-click="submit()" value="Publicar postura"/>
+						<input type="submit" id="btn_new_posture" class="btn btn-default btn_purple_simbol col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-4 col-md-4 col-sm-4" ng-click="submit()" value="Publicar postura"/>
 					</div>
 		  		</form>
 			</div>
@@ -234,7 +234,7 @@
 		<div class="row nomargin nopadding index_posture_my_postures">
 			<div class="row nomargin nopadding container_my_postures_table_tittle">
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-					<h3>Mis Posturas</h3>
+					<h3 class="color_purple">Mis Posturas</h3>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					<div class="col-lg-offset-5 col-md-offset-5 col-lg-7 col-md-7 container_search_my_talks">
@@ -278,7 +278,7 @@
 				              <!-- Disponible -->
 				              <td class="text-center">{{postura.fechahasta | date:'dd/MM/yyyy'}}</td>
 				              <!-- Boton Ver -->
-				              <td class="noborder_right text-center"><a href="{{base_href}}/postures/{{postura.idposturas}}/matches">ver</a></td>
+				              <td class="noborder_right text-center"><a href="{{base_href}}/postures/{{postura.idposturas}}/matches" class="color_purple_light">+</a></td>
 				            </tr>
 				            <tr>
 				            	<td class="noborder_bottom"></td>
@@ -293,9 +293,15 @@
 				        </table>
 				        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding'>
 				          <div class="pull-right btn-group">
-				          	<button type='button' class='btn btn-default' ng-disabled='post_current_page == 0' ng-click='post_current_page = post_current_page - 1'>&lt;</button>
-							<button type='button' class='btn btn-default' ng-disabled='post_current_page == page.no - 1' ng-click='setPage(page.no,0)' ng-repeat='page in post_pages'>{{page.no}}</button>
-							<button type='button' class='btn btn-default' ng-disabled='post_current_page >= mis_posturas.length/post_page_size - 1' , ng-click='post_current_page = post_current_page + 1'>&gt;</button>
+				          	<button type='button' class='btn btn-default btn_smaller_than color_purple_light' ng-disabled='post_current_page == 0' ng-click='post_current_page = post_current_page - 1'>
+				          		&lt;
+				          	</button>
+										<button type='button' class='btn btn-default color_purple_light' ng-disabled='post_current_page == page.no - 1' ng-click='setPage(page.no,0)' ng-repeat='page in post_pages'>
+											{{page.no}}
+										</button>
+										<button type='button' class='btn btn-default btn_greater_than color_purple_light' ng-disabled='post_current_page >= mis_posturas.length/post_page_size - 1' , ng-click='post_current_page = post_current_page + 1'>
+											&gt;
+										</button>
 				          </div>
 				        </div>
 					</div>
@@ -307,7 +313,7 @@
 		<div class="row nomargin nopadding index_posture_my_talks">
 			<div class="row nomargin nopadding container_my_talks_table_tittle">
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-					<h3>Mis Negociaciones</h3>
+					<h3 class="color_purple">Mis Negociaciones</h3>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					<div class="col-lg-offset-5 col-md-offset-5 col-lg-7 col-md-7 container_search_my_postures">
@@ -371,18 +377,18 @@
 				              <td class="noborder_right text-center">
 				              	
 				              	<!-- ACEPTAR/RECHAZAR MATCH -->
-				              	<a ng-if="id == negociacion.users_idusers && negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 0"  href="{{base_href}}/postures/{{negociacion.postura[0].idposturas}}/match/{{negociacion.postura_contraparte[0].idposturas}}">ver</a>
+				              	<a ng-if="id == negociacion.users_idusers && negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 0"  href="{{base_href}}/postures/{{negociacion.postura[0].idposturas}}/match/{{negociacion.postura_contraparte[0].idposturas}}" class="color_purple_light">+</a>
 
-				              	<a ng-if="id == negociacion.iduser2 && negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 0" href="{{base_href}}/postures/{{negociacion.postura_contraparte[0].idposturas}}/match/{{negociacion.postura[0].idposturas}}">ver</a>
+				              	<a ng-if="id == negociacion.iduser2 && negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 0" href="{{base_href}}/postures/{{negociacion.postura_contraparte[0].idposturas}}/match/{{negociacion.postura[0].idposturas}}" class="color_purple_light">+</a>
 
 				              	<!-- CHAT -->
-				              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 1" href="{{base_href}}/operacion/{{negociacion.idposturasMatch}}">ver</a>
+				              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion == 1 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 1" href="{{base_href}}/operacion/{{negociacion.idposturasMatch}}" class="color_purple_light">+</a>
 
 				              	<!-- CONCRETADA -->
-				              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion == 3 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 1" href="{{base_href}}/detalle_negociacion/{{negociacion.idposturasMatch}}">ver</a>
+				              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion == 3 && negociacion.acepta_user_propietario == 1 && negociacion.acepta_user_contraparte == 1" href="{{base_href}}/detalle_negociacion/{{negociacion.idposturasMatch}}" class="color_purple_light">+</a>
 
 				              	<!-- OTROS ESTADOS -->
-				              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion > 3" href="#">ver</a>
+				              	<a ng-if="negociacion.estatusOperaciones_idestatusOperacion > 3" href="#" class="color_purple_light">+</a>
 
 				              </td>
 				            </tr>
@@ -399,9 +405,15 @@
 				        </table>
 				        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding'>
 				          <div class="pull-right btn-group">
-				          	<button type='button' class='btn btn-default' ng-disabled='talks_current_page == 0' ng-click='talks_current_page = talks_current_page - 1'>&lt;</button>
-							<button type='button' class='btn btn-default' ng-disabled='talks_current_page == page.no - 1' ng-click='setPage(page.no,1)' ng-repeat='page in talks_pages'>{{page.no}}</button>
-							<button type='button' class='btn btn-default' ng-disabled='talks_current_page >= mis_negociaciones.length/talks_page_size - 1' , ng-click='talks_current_page = talks_current_page + 1'>&gt;</button>
+				          	<button type='button' class='btn btn-default btn_smaller_than color_purple_light' ng-disabled='talks_current_page == 0' ng-click='talks_current_page = talks_current_page - 1'>
+				          		&lt;
+				          	</button>
+										<button type='button' class='btn btn-default color_purple_light' ng-disabled='talks_current_page == page.no - 1' ng-click='setPage(page.no,1)' ng-repeat='page in talks_pages'>
+											{{page.no}}
+										</button>
+										<button type='button' class='btn btn-default btn_greater_than color_purple_light' ng-disabled='talks_current_page >= mis_negociaciones.length/talks_page_size - 1' , ng-click='talks_current_page = talks_current_page + 1'>
+											&gt;
+										</button>
 				          </div>
 				        </div>
 					</div>
@@ -409,5 +421,4 @@
 			</div>
 		</div>
 	</div>
-	
 </div>

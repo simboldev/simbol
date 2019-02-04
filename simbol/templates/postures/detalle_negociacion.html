@@ -87,9 +87,9 @@
 		</div>
 		<div class="row nopadding nomargin row_btns_list_match">
 			<div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-				<button id="btn_denunciar_{{posture_match.idposturas}}" type="button" class="btn btn-secondary btn_orange_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-if="postura_match_det.postura[0].usuario.id == current_user_id" ng-click="denunciar_posture(postura_match_det.idposturasMatch,postura_match_det.postura_contraparte[0].usuario.id)">Denunciar</button>
+				<button id="btn_purple_{{posture_match.idposturas}}" type="button" class="btn btn-secondary btn_orange_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-if="postura_match_det.postura[0].usuario.id == current_user_id" ng-click="denunciar_posture(postura_match_det.idposturasMatch,postura_match_det.postura_contraparte[0].usuario.id)">Denunciar</button>
 
-				<button id="btn_denunciar_{{posture_match.idposturas}}" type="button" class="btn btn-secondary btn_orange_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-if="postura_match_det.postura_contraparte[0].usuario.id == current_user_id" ng-click="denunciar_posture(postura_match_det.idposturasMatch,postura_match_det.postura[0].usuario.id)">Denunciar</button>
+				<button id="btn_denunciar_{{posture_match.idposturas}}" type="button" class="btn btn-secondary btn_purple_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-if="postura_match_det.postura_contraparte[0].usuario.id == current_user_id" ng-click="denunciar_posture(postura_match_det.idposturasMatch,postura_match_det.postura[0].usuario.id)">Denunciar</button>
 			</div>
 		</div>
 		<!-- <div><pre>{{postura_match_det | json}}</pre></div> -->

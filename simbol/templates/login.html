@@ -1,0 +1,67 @@
+<div id="container_background_simbol" class="col-md-12 col-sm-12 col-xs-12 nomargin nopadding background_simbol">
+  <div id="section_card_login" class="col-md-offset-3 col-sm-offset-3 col-xs-offset-3 col-md-6 col-sm-6 col-xs-12 text-center">
+    <div id="section_logo_login" class="row nopadding">
+      <a class="" href="#">
+        <img src="images/png/LOGO_SIMBOL_RGB.png" alt="Logo simbol" class="logo_400px"></img>
+      </a>
+    </div>
+    <div id="section_form_login" class="row nomargin nopadding" ng-if="web_safari == false" ng-controller="appController" ng-init="cargaPrimaria();">
+      <!-- <div  class="col-md-9 col-sm-10 col-xs-12 pull-right" style="padding-top: 14px; padding-left: 0;" > -->
+        <form role="form" name="aut" class="col-md-12 col-sm-12 col-xs-12 nomargin nopadding">
+          <div class="col-md-12 col-sm-12 col-xs-12 nomargin nopadding">
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3">
+              <input type="text" name="user" id="user" placeholder="Usuario" class="inp-user col-md-12 col-sm-12 col-xs-12" ng-model="user" required="true" ng-keypress="activaBoton();"  ng-mouseover="activaBoton();"/>
+            </div>
+<!--               <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3">
+              <input id="password" type="password" name="password" placeholder="Contraseña" class="inp-user col-md-12 col-sm-12 col-xs-12" ng-model="password" required="true" ng-keypress="activaBoton();" ng-keyup="activaBoton();" ng-blur="desenfoqueBoton();" ng-mouseover="activaBoton();"/>
+            </div> -->
+              <!--ng-minlength="7"-->
+<!--               <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3"> 
+              <button id="btn-login" ng-if="boton == 0" class='butt-login-inactivo btn-login col-md-12 col-sm-12 col-xs-12 nopadding' ng-click="autenticar();" readonly="readonly" ng-mouseover="activaBoton();">
+            </div> -->
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3">
+              <input id="password" type="password" name="password" placeholder="Contraseña" class="inp-user col-md-12 col-sm-12 col-xs-12" ng-model="password" required="true" ng-keypress="activaBoton();" ng-blur="desenfoqueBoton();" ng-minlength="7" ng-mouseover="desenfoqueBoton();"/>
+            </div>
+
+            <div>
+              <a class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3 forgot_password text-center" href="#" data-toggle='modal' data-target='#modalRecovPass' >
+                &#191;Olvidó su Contraseña?
+              </a>
+            </div>
+            <div>
+              <a class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3 forgot_password text-center" href="#" data-toggle='modal' data-target='#modalApplyRegiter' >
+                &#191;No tienes cuenta? Aplica
+              </a>
+            </div>
+        
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3">
+              <button id="btn-login" ng-if="boton == 0" class='butt-login-inactivo btn-login col-md-12 col-sm-12 col-xs-12' ng-click="autenticar();" disabled="true" ng-mouseover="desenfoqueBoton();">
+                <span class='lett-login' >Iniciar Sesión</span>
+              </button>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3">
+              <button ng-if="boton == 1" class='butt-login-inactivo btn-login col-md-12 col-sm-12 col-xs-12' id="btn-login" ng-click="autenticar();" readonly="readonly" ng-mouseover="activaBoton();">
+                <span class='lett-login' >Iniciar Sesión</span>
+              </button>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3">
+              <button ng-if="boton == 2" class='btn_purple_simbol btn-login col-md-12 col-sm-12 col-xs-12 nopadding' id="btn-login"  ng-click="login(user,password);"  ng-mouseover="activaBoton();">
+                <span class='lett-login' >Iniciar Sesión</span>
+              </button>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3">
+              <button ng-if="boton == 3" class='butt-login-inactivo btn-login col-md-12 col-sm-12 col-xs-12' id="btn-login" ng-click="autenticar();" readonly="readonly" ng-mouseover="activaBoton();">
+                <span class='lett-login' >Iniciar Sesión</span>
+              </button>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3">
+              <button ng-if="boton == 4" class='butt-login-inactivo btn-login col-md-12 col-sm-12 col-xs-12' id="btn-login" ng-click="autenticar();" readonly="readonly" ng-mouseover="activaBoton();">
+                <span class='lett-login' >Iniciar Sesión</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      <!-- </div> -->
+    </div>
+  </div>
+</div>

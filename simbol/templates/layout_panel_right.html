@@ -16,18 +16,21 @@
 </div>
 
 <!--tasa de cambio -->
-<div class="row container_rate_exchange">
-	<div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 nopadding container_statistics">
-		<div id="" class="col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-10 col-sm-10 col-xs-10 tag_statistics_tittle">
-			Promedio transacciones diarias
-			<br>
-			<span class="tag_statistics_tittle_date">{{indicadores.tasa.fecha}}</span> 
-		</div>
-		<div id="tag_statistics_body_rate_exchange" class="col-md-12 col-sm-12 col-xs-12 tag_statistics_body">
-			<div id="" class="col-md-12 tag_statistics_body_box_rate">
-				<p class="box_text_big" id="tag_statistics_text_rate_exchange">BsS/USD: 330 - 342</p>
-			</div>
-		</div>
+<div class="row container_rate_exchange_one">
+	<div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 nopadding">
+		<div class="row nomargin">
+      <div class="col-md-12 col-sm-12 col-xs-12 nopdding text-center color_white">
+        <h5 class="title_transactions">PROMEDIO DE TRANSACCIONES DIARIAS</h5>
+        <span class="tag_statistics_tittle_date">{{indicadores.tasa.fecha}}</span>
+      </div>
+    </div>
+    <div class="row nomargin">
+      <div class="col-md-12 col-sm-12 col-xs-12 tag_statistics_body_box_rate">
+        <span class="box_text_big" id="tag_statistics_text_rate_exchange">
+          {{txt_bs}}/{{txt_usd}}: 330 - 342
+        </span>
+      </div>
+    </div>
 	</div>
 </div>
 

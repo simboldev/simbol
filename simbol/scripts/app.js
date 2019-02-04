@@ -7,6 +7,9 @@
     $scope.contNot=1;
     $scope.not=0;
     $scope.actCrono=null;
+    $scope.txt_bs = 'BsS';
+    $scope.txt_usd = 'USD';
+    $scope.plus = '+';
     
     $scope.reload_page = function($url)
     {
@@ -21,6 +24,11 @@
 
     $scope.go_home = function(){
       $scope.reload_page($scope.base_href);
+    }
+
+    $scope.go_back = function()
+    {
+      window.history.back();
     }
 
     //Método para capturar url
@@ -559,29 +567,25 @@
 		
 		if(pass.length >= 8 ){
 
-			if(angular.isUndefined($scope.user) && angular.isUndefined($scope.password)){
-
+			if(angular.isUndefined($scope.user) && angular.isUndefined($scope.password))
+      {
 				$scope.boton = 1;
-
-			}else if(!angular.isUndefined($scope.user) && !angular.isUndefined($scope.password)){
-
+			}else if(!angular.isUndefined($scope.user) && !angular.isUndefined($scope.password))
+      {
 				$scope.boton = 2;
-
-			}else if(!angular.isUndefined($scope.user) && angular.isUndefined($scope.password)){
-
+			}else if(!angular.isUndefined($scope.user) && angular.isUndefined($scope.password))
+      {
 				$scope.boton = 3;
-
-			}else if(angular.isUndefined($scope.user) && !angular.isUndefined($scope.password)){
-
+			}else if(angular.isUndefined($scope.user) && !angular.isUndefined($scope.password))
+      {
 				$scope.boton = 4;
-
 			}
-
-		}else if(pass.length <= 7){
+		}
+    else if(pass.length <= 7)
+    {
 			console.log("cont "+pass.length);
 			$scope.boton = 1;
 		}
-
 	}
 
 	$scope.desenfoqueBoton = function(){
