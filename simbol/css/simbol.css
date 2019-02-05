@@ -1388,7 +1388,10 @@ margin-top: 20px
 {
   border: 1px solid #DDDDDD;
 }
-
+#btn_send_data_negotiation
+{
+  margin-top: 20px;
+}
 /* END DETALLE NEGOCIACION*/
 
 /* RESPONDIVE 
@@ -1430,7 +1433,7 @@ margin-top: 20px
     .navbar-default .navbar-nav > .open > a:focus 
     {
         color: #FFFFFF;
-        background-color: #FF8E00;
+        background-color: #6241D0;
     }
 
     nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
@@ -1466,7 +1469,7 @@ margin-top: 20px
     .navbar-default .navbar-nav > li > a:focus
     {
       color: #FFFFFF;
-      background-color: #FF8E00;
+      background-color: #6241D0;
       height: 60px;
     }
 
@@ -1568,7 +1571,7 @@ margin-top: 20px
   .navbar-default .navbar-nav > .active > a:focus
   {
     color: #FFFFFF;
-    background-color: #FF8E00;
+    background-color: #6241D0;
   }
   .navbar-default .navbar-nav > li > a:hover,
   .navbar-default .navbar-nav > li > a:focus {

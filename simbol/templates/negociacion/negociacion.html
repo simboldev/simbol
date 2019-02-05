@@ -1,12 +1,12 @@
-<div id="negociacion"  ng-app="app">
+<div id="negociacion"  ng-app="app" row nomargin nopadding>
 	<form role="form" name="envNeg" enctype="multipart/form-data">
-		<div  class="container" ng-controller="ChatCtrl" ng-init="cargaSelectBanco();" >
+		<div  class="container col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-controller="ChatCtrl" ng-init="cargaSelectBanco();" >
 			<div id="negociacion" >
 					<div class="row nomargin nopadding" >
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">
-							<label class="block-center">Banco {{idUserContrapate}}</label>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+							<label class="font_weight_100">Banco</label>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 							<select ng-model="negociacion.select_banco.neg_banco" name="neg_banco" id="neg_banco" class="form-control input_simbol font_bold" onchange="addCodeBankToInput()">
 								<option  ng-repeat="item in selectBancos" ng-value="item.idbancos" data-code="{{item.code}}">{{ item.nombre }}</option>
 							</select>
@@ -14,50 +14,52 @@
 					</div>
 
 					<!-- <div class="row nomargin nopadding" ng-if='idMonedaQuiero == 2'> -->
-					<div class="row nomargin nopadding" ng-if='idMonedaQuiero == 2'>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " ng-if='idMonedaQuiero == 2' style="margin-left: 15%;">
-							<label class="block-center">ABA</label>
+					<div class="row nomargin nopadding" ng-if="idMonedaQuiero == 2">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" ng-if='idMonedaQuiero == 2'>
+							<label class="font_weight_100">ABA</label>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 							<input type="text" id="aba" name="aba" class="input_simbol nomargin_top font_bold text-right" ng-model="negociacion.aba"  maxlength="20" ng-value='' required />
 						</div>
 					</div>
 
 					<div class="row nomargin nopadding">
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">
-							<label class="block-center">Número de Cuenta</label>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
+							<label class="font_weight_100">Número de Cuenta</label>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 							<input type="text" id="nrocuenta" name="nrocuenta" class="input_simbol nomargin_top font_bold text-right" ng-model="negociacion.nrocuenta" ng-value='' maxlength="20"  required />
 						</div>
 					</div>
 
 					<div class="row nomargin nopadding" >
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="margin-left: 15%;">
-							<label class="block-center">Correo Electrónico</label>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+							<label class="font_weight_100">Correo Electrónico</label>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 							<input type="text" id="email" name="email" class="input_simbol nomargin_top font_bold text-right" ng-model="negociacion.email"   maxlength="100" required />
 						</div>
 					</div>
 
 					<div class="row nomargin nopadding" >
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin-left: 15%;">
-							<label class="block-center">Número de Identificación</label>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+							<label class="font_weight_100">Número de Identificación</label>
 						</div>
-						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-							
-							<select ng-model="negociacion.select_nacionalidad.neg_nacionalidad" id="negNacionalidad" name="negNacionalidad" class=" input_simbol font_bold "   style="width: 20%;">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 nomargin nopadding">
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 nopadding_right">
+								<select ng-model="negociacion.select_nacionalidad.neg_nacionalidad" id="negNacionalidad" name="negNacionalidad" class="input_simbol font_bold nomargin_top">
 								<option  value="V">V</option>
 								<option  value="E">E</option>
 							</select>
-							<input type="text" id="nroidentificacion" name="nroidentificacion"  ng-model="negociacion.nroidentificacion" class="input_simbol nomargin_top font_bold text-right" ng-minlength="1" maxlength="10" style="width: 75%;"  ng-value='' required />
+							</div>
+							<div class="text-right col-lg-9 col-md-9 col-sm-9 col-xs-8 nomargin">
+								<input type="text" id="nroidentificacion" name="nroidentificacion"  ng-model="negociacion.nroidentificacion" class="input_simbol nomargin_top font_bold nopadding_right" ng-minlength="1" maxlength="10"  ng-value='' required />
+							</div>
 						</div>
 					</div>
 					<div class="row nomargin nopadding" >
-						<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-
-							<button id="btn_send_data_negotiation" type="button" class="btn btn-secondary btn_green_simbol pull-right font_weight_bold col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-click="guardarNegociacion();">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<button id="btn_send_data_negotiation" type="button" class="btn btn-secondary btn_green_simbol pull-right font_weight_bold  col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-4 col-md-4 col-sm-4 col-xs-12" ng-click="guardarNegociacion();">
 								Enviar
 							</button>
 						</div>
