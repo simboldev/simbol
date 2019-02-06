@@ -66,7 +66,7 @@ class negociacionController extends Controller
         ->join('estatus_negociacions','estatus_negociacions.id','negociacions.estatusnegociacion')
         ->join('posturas_matches','posturas_matches.idposturasMatch','negociacions.idposturamatch')
         // ->join('posturas','posturas.idposturas','posturas_matches.posturas_idposturas')
-        ->whereIn('negociacions.estatusnegociacion',[2,3])
+        ->whereIn('negociacions.estatusnegociacion',[2,3,5])
         ->orderBy('negociacions.id','DESC')
         ->get();
 
@@ -94,7 +94,7 @@ class negociacionController extends Controller
       }
 
       $data = $query_neg;
-
+      error_log(count($data));
       return response()->json([
           'code'      => $code,
           'msg'       => $message,

@@ -8,18 +8,18 @@
 	<!-- <div ng-if="titles_my_postures_tablesuario_idtipousuario == 5"> -->
   <div ng-if="tipousuario_idtipousuario == 5">
 		<div class="row nomargin nopadding index_posture_my_postures">
-			<div class="row nomargin nopadding container_my_postures_table_tittle">
-				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-					<h3>Monitor de Negociaciones</h3>
+			<div class="row nomargin nopadding index_posture_new_posture_tittle maging_b_">
+				<div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
+					<h2 class="color_purple">Monitor de Negociaciones</h2>
 				</div>
-				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-					<div class="col-lg-offset-5 col-md-offset-5 col-lg-7 col-md-7 container_search_my_talks">
-			            <form action="#" method="get">
-			                <div class="input-group">
-			                    <input class="form-control seacrh_box" id="search_talks" name="" placeholder="Buscar" type="text" ng-model="buscador_mis_neglist">
-			                </div>
-			            </form>
-			        </div>
+				<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+					<div class="col-lg-offset-4 col-md-offset-4 col-lg-8 col-md-8 container_search_my_talks">
+            <form action="#" method="get">
+              <div class="input-group">
+                <input class="form-control seacrh_box" id="search_talks" name="" placeholder="Buscar" type="text" ng-model="buscador_mis_neglist">
+              </div>
+            </form>
+	        </div>
 				</div>
 			</div>
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 container_posture_my_talks">
@@ -28,27 +28,45 @@
 				        <table ng-init='configPagesTableNeg()' class='table table-hover table-list-search table_simbol text-center' show-filter="true">
 				          <thead>
 				            <tr class="titles_my_postures_table">
-				              <th class="text-center">Id Negociación</th>
+				              <th class="text-center">Id</th>
 				              <th class="text-center">Estatus</th>
 				              <th class="text-center">Fecha</th>
 				              <th class="text-center">Tasa</th>
-				              <th class="text-center">USD</th>
-				              <th class="text-center">BsS</th>
+				              <th class="text-center">{{txt_usd}}</th>
+				              <th class="text-center">{{txt_bs}}</th>
 				              <th class="text-center"></th>
 				            </tr>
 				          </thead>
 				          <tbody>
 				            <tr ng-repeat='neg in listNeg | filter: buscador_mis_neglist | startFromGrid: post_current_page * post_page_size | limitTo: post_page_size' , class="fila_postura">
-				              <td class="text-right">{{neg.id}}</td>
-				              <td class="text-center" >{{neg.estatus_negociacion}} ({{neg.usuario_nombre_usuario}})</td>
-				              <td class="text-center">{{neg.fecha}}</td>
-				              <td class="text-center">{{neg.tasa_cambio}}</td>
-				              <td class="text-center" ng-if="neg.quiero_moneda_id == 2">{{neg.quiero}}</td>
-                      <td class="text-center" ng-if="neg.tengo_moneda_id == 2">{{neg.tengo}}</td>
-				              <td class="text-center" ng-if="neg.quiero_moneda_id == 1">{{neg.quiero}}</td>
-                      <td class="text-center" ng-if="neg.tengo_moneda_id == 1">{{neg.tengo}}</td>
+				              <td class="text-right">
+				              	{{neg.id}}
+				              </td>
+				              <td class="text-center" >
+				              	{{neg.estatus_negociacion}} ({{neg.usuario_nombre_usuario}})
+				              </td>
 				              <td class="text-center">
-				              	<button class="btn-white btn btn-sm"  ng-click="irNegociacion(neg.id_postura_match);">Ver</button>
+				              	{{neg.fecha}}
+				              </td>
+				              <td class="text-center">
+				              	{{neg.tasacambio}}
+				              </td>
+				              <td class="text-center" ng-if="neg.quiero_moneda_id == 2">
+				              	{{neg.quiero}}
+			              	</td>
+                      <td class="text-center" ng-if="neg.tengo_moneda_id == 2">
+                      	{{neg.tengo}}
+                      </td>
+				              <td class="text-center" ng-if="neg.quiero_moneda_id == 1">
+				              	{{neg.quiero}}
+				              </td>
+                      <td class="text-center" ng-if="neg.tengo_moneda_id == 1">
+                      	{{neg.tengo}}
+                      </td>
+				              <td class="text-center">
+				              	<a ng-click="irNegociacion(neg.id_postura_match);" class="nopadding etiqNot color_purple_light link_plus">
+                          {{plus}}
+                        </a>
 				              </td>
 				            </tr>
 				            <tr>

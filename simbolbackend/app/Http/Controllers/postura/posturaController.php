@@ -30,12 +30,12 @@ class posturaController extends Controller
         //
         // return view('front.posturas.posturas');
 
-        $code       = "OK";
-        $message    = "Success";
-        $data       = DB::table('posturas as post')
-            ->select('post.*')
-            ->orderBy('post.idposturas', 'desc')
-            ->get();
+        $code     = "OK";
+        $message  = "Success";
+        $data     = DB::table('posturas as post')
+                          ->select('post.*')
+                          ->orderBy('post.idposturas', 'desc')
+                          ->get();
 
         return response()->json([
             'code'=> $code,

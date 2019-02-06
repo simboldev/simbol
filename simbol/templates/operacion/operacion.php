@@ -4,42 +4,77 @@
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <h2 class="color_purple">GESTIÓN DE LA OPERACIÓN</h2>
       </div>
+      <div ng-if="tipousuario_idtipousuario == 5" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        ID: {{paramPost}}
+      </div>
     </div>
     <div class="row nomargin nopadding index_posture_my_postures" class="container">
       <!--SI EL ROL ES ADMINISTRADOR-->
-      <div ng-if="tipousuario_idtipousuario == 5" ng-init="verNegociacion()" ng-init="montosXposturas();" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="row nopadding margin_tb_20">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 border_right_gray_simbol">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="border-style:solid;height: 350px;">
-                <table id="transferencia_bs" class="tg">
-                  <tr>
-                    <th class="tg-0pky" colspan="2"><span style="font-weight:700;font-style:normal">Datos Transferencia en Bolívares</span></th>
-                  </tr>
-                  <tr>
-                    <td class="tg-0lax"></td>
-                    <td class="tg-0lax"></td>
-                  </tr>
-                  <tr>
-                    <td class="tg-v47y">Banco</td>
-                    <td class="tg-qtf5">{{negociaciones.negociacion_bs.banco}}</td>
-                  </tr>
-                  <tr>
-                    <td class="tg-v47y">Nro. Cuenta</td>
-                    <td class="tg-qtf5">{{negociaciones.negociacion_bs.nrocuenta}}<br></td>
-                  </tr>
-                  <tr>
-                    <td class="tg-v47y">Correo</td>
-                    <td class="tg-qtf5">{{negociaciones.negociacion_bs.email}}</td>
-                  </tr>
-                  <tr>
-                    <td class="tg-v47y">Nro. Identificación</td>
-                    <td class="tg-qtf5">{{negociaciones.negociacion_bs.nroidentificacion}}</td>
-                  </tr>
-                </table>
-                  <br>
-
-                  <!-- Confirma transf. En BS -->
+      <div ng-if="tipousuario_idtipousuario == 5" ng-init="verNegociacion()" ng-init="montosXposturas();" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
+        <div class="row nomargin nopadding">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 
+            border_right_gray_simbol nopadding_left">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4 class="color_purple">
+                  Datos Transferencia en {{txt_bs}}
+                </h4>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p class="font_weight_bold">
+                    Banco:
+                  </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p>
+                    {{negociaciones.negociacion_bs.banco}}
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p class="font_weight_bold">
+                    Número de cuenta:
+                  </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p>
+                    {{negociaciones.negociacion_bs.nrocuenta}}
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p class="font_weight_bold">
+                    Correo:
+                  </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p>
+                    {{negociaciones.negociacion_bs.email}}
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p class="font_weight_bold">
+                    Número de identificación:
+                  </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p>
+                    {{negociaciones.negociacion_bs.nroidentificacion}}
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p class="font_weight_bold">
+                    Comprobante:
+                  </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div ng-if="negociaciones.negociacion_moneda_extranjera.estatusNeg == 2 && negociaciones.negociacion_bs.estatusNeg == 2">
                     <p>
                       <a href="{{ negociaciones.negociacion_moneda_extranjera.comprobante }}" target="_blank">
@@ -71,45 +106,82 @@
                       </a>
                     </p>
                   </div>
-
+                </div>
               </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 " style="border-style:solid;height: 350px;">
-                  <table id="transferencia_bs" class="tg">
-                    <tr>
-                      <th class="tg-0pky" colspan="2"><span style="font-weight:700;font-style:normal">Datos Transferencia en Dolares</span></th>
-                    </tr>
-                    <tr>
-                      <td class="tg-0lax"></td>
-                      <td class="tg-0lax"></td>
-                    </tr>
-                    <tr>
-                      <td class="tg-v47y">Banco</td>
-                      <td class="tg-qtf5">{{negociaciones.negociacion_moneda_extranjera.banco}}</td>
-                    </tr>
-                    <tr>
-                      <td class="tg-0pky">ABA</td>
-                      <td class="tg-0pky">{{negociaciones.negociacion_moneda_extranjera.aba}}</td>
-                    </tr>
-                    <tr>
-                      <td class="tg-v47y">Nro. Cuenta</td>
-                      <td class="tg-qtf5">{{negociaciones.negociacion_moneda_extranjera.nrocuenta}}</td>
-                    </tr>
-                    <tr>
-                      <td class="tg-v47y">Correo</td>
-                      <td class="tg-qtf5">{{negociaciones.negociacion_moneda_extranjera.email}}</td>
-                    </tr>
-                    <tr>
-                      <td class="tg-v47y">Nro. Identificación</td>
-                      <td class="tg-qtf5">{{negociaciones.negociacion_moneda_extranjera.nroidentificacion}}</td>
-                    </tr>
-                    <tr>
-                      <td class="tg-v47y"></td>
-                      <td class="tg-qtf5"></td>
-                    </tr>
-                  </table>
-                  <br>
-                  
-                  <!-- Confirma transf. En USD -->
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4 class="color_purple">
+                  Datos Transferencia en {{txt_usd}}
+                </h4>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p class="font_weight_bold">
+                    Banco:
+                  </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p>
+                    {{negociaciones.negociacion_moneda_extranjera.banco}}
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p class="font_weight_bold">
+                    ABA:
+                  </p>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <p>
+                    {{negociaciones.negociacion_moneda_extranjera.aba}}
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p class="font_weight_bold">
+                    Número de cuenta:
+                  </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p>
+                    {{negociaciones.negociacion_moneda_extranjera.nrocuenta}}
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p class="font_weight_bold">
+                    Correo:
+                  </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p>
+                    {{negociaciones.negociacion_moneda_extranjera.email}}
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p class="font_weight_bold">
+                    Número de identificación:
+                  </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p>
+                    {{negociaciones.negociacion_moneda_extranjera.nroidentificacion}}
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <p class="font_weight_bold">
+                    Comprobante:
+                  </p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div ng-if="negociaciones.negociacion_moneda_extranjera.estatusNeg == 3 && negociaciones.negociacion_bs.estatusNeg == 3">
                     <p>
                        <a href="">
@@ -146,13 +218,12 @@
                       </a>
                     </p>
                   </div>
-
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <!--SI EL ROL NO ES ADMINISTRADOR-->
       <div ng-if="tipousuario_idtipousuario != 5" ng-controller="PostureCtrl" ng-init="montosXposturas();" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="row nopadding margin_tb_20">
@@ -232,68 +303,118 @@
             <p>Esperamos a que tu contraparte envíe los datos para que puedas transferirle.</p>
           </div>
 
-          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center" ng-if="mi_negociacion.estatusNeg == 1 && mi_negociacion.quiero_moneda == 2 && mi_negociacion.iduser == id && negociacion_contraparte_length > 0 ">
-            <b><p>Datos de la Transferencia</p></b>
-            <br>
-            <table class="table-responsive">
-              <input type="hidden"  value="{{ mi_negociacion.idNeg }}" id="idNeg">
-              <input type="hidden"  value="{{ mi_negociacion.iduser }}" id="idUser">
-              <input type="hidden"  value="{{ negociacion_contraparte.idNeg }}" id="idNegContraparte">
-              <input type="hidden"  value="{{mi_negociacion.estatusNeg+1}}" id="estatusNeg">
-              <tbody>
-                <tr>
-                  <th>Banco:&nbsp;&nbsp; </th>
-                  <th>{{ negociacion_contraparte.banco }}</th>
-                </tr>
-                <tr>
-                  <th>Número de Cuenta:&nbsp;&nbsp; </th>
-                  <th>{{ negociacion_contraparte.nrocuenta }}</th>
-                </tr>
-                <tr>
-                  <th>Correo Electrónico:&nbsp;&nbsp; </th>
-                  <th>{{ negociacion_contraparte.email }}</th>
-                </tr>
-                <tr>
-                  <th>Nro Identificación:&nbsp;&nbsp; </th>
-                  <th>{{ negociacion_contraparte.nroidentificacion }}</th>
-                </tr>
-              </tbody>
-            </table>
-            <br>
-            <p>Una vez realices la transferencia sube tu comprobante en formato pdf o jpg para que podamos validarlo</p>
-            <br>
-            <input type ="file" name = "myFile"  id="myFile" onchange="mostrar_btn_transferencia_reliazada('myFile');" />
-            <br>
-            <button type="button" id="btn_transferecia_myFile" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
-              'btn_transferecia_myFile',
-              document.getElementById('idUser').value,
-              document.getElementById('idNeg').value,
-              document.getElementById('myFile'),
-              document.getElementById('idNegContraparte').value,
-              document.getElementById('estatusNeg').value);">
-              Ya transfer&iacute;
-            </button>
+          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 margin_top_20" ng-if="mi_negociacion.estatusNeg == 1 && mi_negociacion.quiero_moneda == 2 && mi_negociacion.iduser == id && negociacion_contraparte_length > 0">
+            <div class="col-md-12 col-sm-12 col-xs-12 margin_tb_20">
+              <h4 class="color_purple">
+                Datos de la Transferencia
+              </h4>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p class="font_weight_bold">
+                  Banco:
+                </p>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p>
+                  {{negociacion_contraparte.banco}}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p class="font_weight_bold">
+                  Número de Cuenta:
+                </p>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p>
+                  {{negociacion_contraparte.nrocuenta}}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p class="font_weight_bold">
+                  Correo Electrónico:
+                </p>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p>
+                  {{negociacion_contraparte.email}}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p class="font_weight_bold">
+                  Nro Identificación:
+                </p>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p>
+                  {{negociacion_contraparte.nroidentificacion}}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin_tb_20">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <p>
+                  Una vez realices la transferencia sube tu comprobante en formato pdf o jpg para que podamos validarlo.
+                </p>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <input type="hidden"  value="{{ mi_negociacion.idNeg }}" id="idNeg">
+                <input type="hidden"  value="{{ mi_negociacion.iduser }}" id="idUser">
+                <input type="hidden"  value="{{ negociacion_contraparte.idNeg }}" id="idNegContraparte">
+                <input type="hidden"  value="{{mi_negociacion.estatusNeg+1}}" id="estatusNeg">
+                <input type ="file" name = "myFile"  id="myFile" onchange="mostrar_btn_transferencia_reliazada('myFile');" />
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin_tb_20 text-center">
+                <button type="button" id="btn_transferecia_myFile" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
+                  'btn_transferecia_myFile',
+                  document.getElementById('idUser').value,
+                  document.getElementById('idNeg').value,
+                  document.getElementById('myFile'),
+                  document.getElementById('idNegContraparte').value,
+                  document.getElementById('estatusNeg').value);">
+                  Ya transfer&iacute;
+                </button>
+              </div>
+            </div>
           </div>
 
           <!-- CASO 2 CONF. RECIBI. BS -->
-          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center" ng-if="mi_negociacion.estatusNeg == 2 && mi_negociacion.quiero_moneda == 1 && negociacion_contraparte.estatus_autoriza_backoffice == 2 && mi_negociacion.iduser == id ">
-            <br>
-            <p>La transferencia fu&eacute; realizada, puedes descargar el comprobante y confirmar la recepción de los fondos.</p>
-            <br><br><br>
-            <a href="{{ negociacion_contraparte.comprobante }}" target="_blank">
-              <button type="button" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
-                Descargar Comprobante
-              </button>
-            </a>
-            <br><br>
-            <button type="button" id="btn_confirma_transf_bs" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf('btn_confirma_transf_bs');" >
-                Confirmar Transferencia
-            </button>
+          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center margin_top_20" ng-if="mi_negociacion.estatusNeg == 2 && mi_negociacion.quiero_moneda == 1 && negociacion_contraparte.estatus_autoriza_backoffice == 2 && mi_negociacion.iduser == id ">
+            <div class="col-md-12 col-sm-12 col-xs-12 margin_tb_20">
+              <p>
+                La transferencia fué; realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
+              </p>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 margin_top_20">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <a href="{{ negociacion_contraparte.comprobante }}" target="_blank">
+                  <button type="button" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                    Descargar Comprobante
+                  </button>
+                </a>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <button type="button" id="btn_confirma_transf_bs" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf('btn_confirma_transf_bs');" >
+                  Confirmar Transferencia
+                </button>
+              </div>
+            </div>
           </div>
           <!-- monedaInternacional.indexOf(mi_negociacion.quiero_moneda) != -1 -->
-          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center" ng-if="mi_negociacion.estatusNeg == 2  && mi_negociacion.quiero_moneda == 2 && estatus_neg_valido(3,mi_negociacion.estatus_autoriza_backoffice) && mi_negociacion.iduser == id">
-            <br>
-            <p>Tu contraparte está revisando la información de la transferencia, por favor espera a que te confirmemos para que valides los fondos en tu banca online.</p>
+          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 text-center margin_top_20" ng-if="mi_negociacion.estatusNeg == 2  && mi_negociacion.quiero_moneda == 2 && estatus_neg_valido(3,mi_negociacion.estatus_autoriza_backoffice) && mi_negociacion.iduser == id">
+            <div class="col-md-12 col-sm-12 col-xs-12 margin_tb_20">
+              <p>
+                Tu contraparte está revisando la información de la transferencia, por favor espera a que te confirmemos para que valides los fondos en tu banca online.
+              </p>
+            </div>
           </div>
           <!-- CASO 3 CONF. TRRANSF. MONEDA EXTRANJERA -->
           <!-- <div class="Cell" ng-if="mi_negociacion.estatusNeg == 3 && monedaInternacional.indexOf(mi_negociacion.quiero_moneda) !== -1 && mi_negociacion.iduser==id"> -->
@@ -301,69 +422,129 @@
             <p>Tu contraparte está realizando la transferencia en {{simMonedaQuiero}}, por favor espera a que te confirmemos para que valides los fondos en tu banca online.</p>
           </div>
           <!-- <div class="Cell" ng-if="mi_negociacion.estatusNeg == 3 && mi_negociacion.quiero_moneda == monedaBs[0] && mi_negociacion.iduser==id"> -->
-          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center" ng-if="mi_negociacion.estatusNeg == 3  && mi_negociacion.quiero_moneda == 1 && negociacion_contraparte.estatus_autoriza_backoffice == 2 && mi_negociacion.iduser == id && negociacion_contraparte_length > 0 ">
-            <h3>Datos para transferencia</h3>
-            <br>
-            <h4>Agrega los datos de tu cuenta bancaria donde deseas recibir tus fondos</h4>
-            <br>
-            <table class="table-responsive">
-              <input type="hidden"  value="{{ mi_negociacion.idNeg }}" id="idNeg2">
-              <input type="hidden"  value="{{ mi_negociacion.id }}" id="idUser2">
-              <input type="hidden"  value="{{ negociacion_contraparte.idNeg }}" id="idNegContraparte2">
-              <input type="hidden"  value="{{mi_negociacion.estatusNeg+1}}" id="estatusNeg2">
-              <tbody>
-                <tr>
-                  <th>Banco:&nbsp;&nbsp;</th>
-                  <th>{{ negociacion_contraparte.banco }}</th>
-                </tr>
-                <tr>
-                  <th>Número de Cuenta:&nbsp;&nbsp; </th>
-                  <th>{{ negociacion_contraparte.nrocuenta }}</th>
-                </tr>
-                <tr>
-                  <th>Correo Electrónico:&nbsp;&nbsp; </th>
-                  <th>{{ negociacion_contraparte.email }}</th>
-                </tr>
-                <tr>
-                  <th>Nro Identificación:&nbsp;&nbsp; </th>
-                  <th>{{ negociacion_contraparte.nroidentificacion }}</th>
-                </tr>
-              </tbody>
-            </table>
-            <br>
-            <p>Una vez realices la transferencia sube tu comprobante en formato pdf o jpg para que podamos validarlo</p>
-            <br>
-            <input type = "file" id="myFile2" onchange="mostrar_btn_transferencia_reliazada('myFile2');"/>
-            <br>
-            <button type="button" id="btn_transferecia_myFile2" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
-              'btn_transferecia_myFile2',
-              document.getElementById('idUser2').value,
-              document.getElementById('idNeg2').value,
-              document.getElementById('myFile2'),
-              document.getElementById('idNegContraparte2').value,
-              document.getElementById('estatusNeg2').value);">
-              Ya transfer&iacute;
-            </button>
+          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 margin_top_20" ng-if="mi_negociacion.estatusNeg == 3  && mi_negociacion.quiero_moneda == 1 && negociacion_contraparte.estatus_autoriza_backoffice == 2 && mi_negociacion.iduser == id && negociacion_contraparte_length > 0 ">
+            <div class="col-md-12 col-sm-12 col-xs-12 margin_tb_20">
+              <h4 class="color_purple">
+                Datos de la Transferencia
+              </h4>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p class="font_weight_bold">
+                  Banco:
+                </p>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p>
+                  {{negociacion_contraparte.banco}}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p class="font_weight_bold">
+                  ABA:
+                </p>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p>
+                  {{negociacion_contraparte.aba}}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p class="font_weight_bold">
+                  Número de Cuenta:
+                </p>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p>
+                  {{negociacion_contraparte.nrocuenta}}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p class="font_weight_bold">
+                  Correo Electrónico:
+                </p>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p>
+                  {{negociacion_contraparte.email}}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p class="font_weight_bold">
+                  Nro Identificación:
+                </p>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p>
+                  {{negociacion_contraparte.nroidentificacion}}
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin_tb_20">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <p>
+                  Una vez realices la transferencia sube tu comprobante en formato pdf o jpg para que podamos validarlo.
+                </p>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <input type="hidden"  value="{{ mi_negociacion.idNeg }}" id="idNeg2">
+                <input type="hidden"  value="{{ mi_negociacion.id }}" id="idUser2">
+                <input type="hidden"  value="{{ negociacion_contraparte.idNeg }}" id="idNegContraparte2">
+                <input type="hidden"  value="{{mi_negociacion.estatusNeg+1}}" id="estatusNeg2">
+                <input type = "file" id="myFile2" onchange="mostrar_btn_transferencia_reliazada('myFile2');"/>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin_tb_20 text-center">
+                <button type="button" id="btn_transferecia_myFile2" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-6 col-md-6 col-sm-4 col-xs-12" disabled onclick="evidenciaNeg(
+                  'btn_transferecia_myFile2',
+                  document.getElementById('idUser2').value,
+                  document.getElementById('idNeg2').value,
+                  document.getElementById('myFile2'),
+                  document.getElementById('idNegContraparte2').value,
+                  document.getElementById('estatusNeg2').value);">
+                  Ya transfer&iacute;
+                </button>
+              </div>
+            </div>
           </div>
           <!-- CASO 4 CONF. RECIBI. MONEDA EXTRANJERA -->
-          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center" ng-if="mi_negociacion.estatusNeg == 4  && mi_negociacion.quiero_moneda == 2 && negociacion_contraparte.estatus_autoriza_backoffice == 4 && mi_negociacion.iduser == id">
-            <br>
-            <p>La transferencia fu&eacute; realizada, puede descargar el comprobante y confirmar la recepción de los fondos.</p>
-            <br><br><br>
-            <a href="{{ negociacion_contraparte.comprobante }}" target="_blank">
-              <button type="button" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
-                  Descargar Comprobante
-              </button>
-            </a>
-            <br><br>
-            <button type="button" id="btn_confirma_transf_usd" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf('btn_confirma_transf_usd');">
-                Confirmar Transferencia
-            </button>
+          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center margin_top_20" ng-if="mi_negociacion.estatusNeg == 4  && mi_negociacion.quiero_moneda == 2 && negociacion_contraparte.estatus_autoriza_backoffice == 4 && mi_negociacion.iduser == id">
+            <div class="col-md-12 col-sm-12 col-xs-12 margin_tb_20">
+              <p>
+                La transferencia fué; realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
+              </p>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 margin_top_20">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <a href="{{ negociacion_contraparte.comprobante }}" target="_blank">
+                  <button type="button" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                      Descargar Comprobante
+                  </button>
+                </a>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <button type="button" id="btn_confirma_transf_usd" class="btn btn-secondary btn_green_simbol pull-center font_weight_bold col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-click="confTransf('btn_confirma_transf_usd');">
+                  Confirmar Transferencia
+                </button>
+              </div>
+            </div>
           </div>
           <!-- monedaInternacional.indexOf(mi_negociacion.quiero_moneda) != monedaBs[0] -->
-          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center" ng-if="mi_negociacion.estatusNeg == 4  && mi_negociacion.quiero_moneda == 1 && estatus_neg_valido(3,negociacion_contraparte.estatus_autoriza_backoffice) && mi_negociacion.iduser == id">
-            <br>
-            <p>Tu contraparte está revisando la información de la transferencia, por favor espera a que te confirmemos para que valides los fondos en tu banca online.</p>
+          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 margin_top_20" ng-if="mi_negociacion.estatusNeg == 4  && mi_negociacion.quiero_moneda == 1 && estatus_neg_valido(3,negociacion_contraparte.estatus_autoriza_backoffice) && mi_negociacion.iduser == id">
+            <div class="col-md-12 col-sm-12 col-xs-12 margin_tb_20">
+              <p>
+                Tu contraparte está revisando la información de la transferencia, por favor espera a que te confirmemos para que valides los fondos en tu banca online.
+              </p>
+            </div>
           </div>
           <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 text-center" ng-if="mi_negociacion.estatusNeg == 5 && mi_negociacion.quiero_moneda == 1 && mi_negociacion.iduser == id ">
             <br>
