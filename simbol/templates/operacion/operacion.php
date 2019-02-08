@@ -289,17 +289,17 @@
             <?php include('../negociacion/negociacion.html'); ?>
           </div>
 
-          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center" ng-if="mi_negociacion.estatusNeg == 1  && mi_negociacion.quiero_moneda == 1 && mi_negociacion.iduser == id && negociacion_contraparte_length == 0">
+          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center margin_top_20" ng-if="mi_negociacion.estatusNeg == 1  && mi_negociacion.quiero_moneda == 1 && mi_negociacion.iduser == id && negociacion_contraparte_length == 0">
             <p>Esperamos a que la contraparte envíe los datos para que pueda transferirte.</p>
           </div>
 
           <!-- CASO 1 CONF. TRANSF. BS -->
           <!-- <div class="Cell" ng-if="mi_negociacion.estatusNeg == 1 && mi_negociacion.quiero_moneda == 1 && negociacion_contraparte.estatus_autoriza_backoffice == 0 && mi_negociacion.iduser==id"> -->
-          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center" ng-if="estatus_neg_valido(1,mi_negociacion.estatusNeg) && mi_negociacion.quiero_moneda == 1 && negociacion_contraparte.estatus_autoriza_backoffice == 0 && mi_negociacion.iduser==id">
+          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 text-center margin_top_20" ng-if="estatus_neg_valido(1,mi_negociacion.estatusNeg) && mi_negociacion.quiero_moneda == 1 && negociacion_contraparte.estatus_autoriza_backoffice == 0 && mi_negociacion.iduser==id">
             <p>Tu contraparte está realizando la transferencia en {{simMonedaQuiero}}, por favor espera a que te confirmemos para que valides los fondos en tu banca online.</p>
           </div>
 
-          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center" ng-if="mi_negociacion.estatusNeg == 1  && mi_negociacion.quiero_moneda == 2 && mi_negociacion.iduser == id && negociacion_contraparte_length == 0">
+          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 text-center margin_top_20" ng-if="mi_negociacion.estatusNeg == 1  && mi_negociacion.quiero_moneda == 2 && mi_negociacion.iduser == id && negociacion_contraparte_length == 0">
             <p>Esperamos a que tu contraparte envíe los datos para que puedas transferirle.</p>
           </div>
 
@@ -423,7 +423,7 @@
           </div>
           <!-- CASO 3 CONF. TRRANSF. MONEDA EXTRANJERA -->
           <!-- <div class="Cell" ng-if="mi_negociacion.estatusNeg == 3 && monedaInternacional.indexOf(mi_negociacion.quiero_moneda) !== -1 && mi_negociacion.iduser==id"> -->
-          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center" ng-if="estatus_neg_valido(2,mi_negociacion.estatusNeg) && mi_negociacion.quiero_moneda == 2 && negociacion_contraparte.estatus_autoriza_backoffice == 2 && mi_negociacion.iduser==id"><br>
+          <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center margin_top_20" ng-if="estatus_neg_valido(2,mi_negociacion.estatusNeg) && mi_negociacion.quiero_moneda == 2 && negociacion_contraparte.estatus_autoriza_backoffice == 2 && mi_negociacion.iduser==id"><br>
             <p>Tu contraparte está realizando la transferencia en {{simMonedaQuiero}}, por favor espera a que te confirmemos para que valides los fondos en tu banca online.</p>
           </div>
           <!-- <div class="Cell" ng-if="mi_negociacion.estatusNeg == 3 && mi_negociacion.quiero_moneda == monedaBs[0] && mi_negociacion.iduser==id"> -->
