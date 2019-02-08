@@ -100,7 +100,37 @@
                 </div>
         </div>
         <!--modal-->
-
+        <!--Modal para cambiar la contraseña la primera vez que se accede al sistema-->
+        <div ng-if="web_safari == false" ng-controller="LoginCtrl" class="modal fade" id="modalChangPass" role="dialog">
+            <div class="modal-dialog" title="">
+              <div class="modal-content doublemyinput" >
+                <div class="modal-header onlyheaderModal" >
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">&times;</button>
+                  <h4 class="modal-title text-center">Cambiar Contraseña</h4>
+                </div>
+                <div class="modal-body" >
+                  <p>¡Hola! tienes una contraseña génerica, antes de ingresar al sistema debes cambiarla por un personal.</p>
+                  
+                  <input type="hidden" name="userCP" id="userCP" placeholder="Usuario" class="inp-user" ng-model="userCP" />
+                </div>
+                <div style="text-align: center;">
+                  <label>Nueva Contraseña:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input type="password" ng-model="password" class="inp-user" required="true" >
+                </div>
+                <div style="text-align: center;">
+                  <label>Confirmar Contraseña:</label> 
+                  <input type="password" ng-model="passwordCH" class="inp-user" required="true" >
+                </div>
+                <div style="text-align: center;" id="mensaje"></div>
+                <!--data-dismiss="modal"-->
+                 <div class="modal-footer">
+                  <button type="button" class="btn btn-primary"  ng-click="cambiarPassword();" >Cambiar</button>
+                  <button type="button" class="btn btn-default" class="close" data-dismiss="modal" ng-click="closeModal()">Cerrar</button>
+                </div>
+              </div>
+          </div>
+        </div>
+        <!--Modal para cambiar la contraseña la primera vez que se accede al sistema-->
    </body>
 </html>
 

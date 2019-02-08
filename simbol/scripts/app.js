@@ -2,8 +2,8 @@
  var mainApp = angular.module("app", ["ngRoute","ngResource",'mgcrea.ngStrap','ngCookies','cgNotify']);
  mainApp.controller('appController', function($scope,$http,$cookieStore,$sce,$window,$location,$routeParams,notify,$interval) {
     $scope.tittle_page = "Simbol";
-    $scope.url_server = "https://api.simbol.club"
-    $scope.base_href = '/#!';
+    $scope.url_server = "http://localhost:8000";
+    $scope.base_href =  '/simbol2019/simbol/simbol/#!';
     $scope.contNot=1;
     $scope.not=0;
     $scope.actCrono=null;
@@ -1942,6 +1942,11 @@
 				}
 			});
 		}
+
+    $scope.closeModal = function($id_modal)
+    {
+      $($id_modal).modal('toggle');
+    }
 
 		//Método de inicio para notificar via email los cambios del tracking
 		$scope.notificarTrack = function(v){
