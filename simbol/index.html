@@ -108,39 +108,17 @@
 <script>
   $(function()
   {
-    $(document).ready(function() {
-      center_element_in_window('section_card_login');
-      calculate_height_panel_central();
-    });
-
     $(".nav li").on("click", function()
     {
-        $(".nav li").removeClass("active");
-        $(this).addClass("active");
+      $(".nav li").removeClass("active");
+      $(this).addClass("active");
     });
   });
 </script>
 
 <script>
    // ============ FUNCTIONS ============
-    function center_element_in_window($id_element)
-    {
-      var height_window = $(window).height();
-      // alert($id_element)
-      var $element = $("#"+$id_element);
-      // alert(height_window+' - '+$element.height())
-      var top_element = (height_window-$element.height())/2;
-      // alert(height_window-$element.height())
-      // alert(top_element)
-      $element.css("margin-top",top_element+'px');
-    }
-    function calculate_height_panel_central()
-    {
-      var header_height = $('.nav_header').height();
-      var height_window = $(window).height();
-      var new_height = height_window-header_height;
-      $('.container_panel_central').css('min-height',new_height+'px');
-    }
+
     // ============  CRONOMETRO============
     var minutesTop = 89;
     var minuteRest;

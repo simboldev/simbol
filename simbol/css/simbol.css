@@ -388,9 +388,7 @@ input, select
 {
   background: #FFF;
   position: absolute;
-  /*left: 50%;*/
-  /*top: 50%;*/
-  /*transform: translate(50%, 50%);*/
+  top: calc(20vh);
 }
 #section_logo_login
 {
@@ -589,12 +587,9 @@ margin-top: 20px
   background-color: #FFFFFF;
   height: 100%;
   left: 0;
+  min-height: 100vh;
   right: 0;
   margin-top: 0 !important;
-/*  -webkit-box-shadow: 6px 3px 4px 0px rgba(50, 50, 50, 0.28);
-  -moz-box-shadow:    6px 3px 4px 0px rgba(50, 50, 50, 0.28);
-  box-shadow:         6px 3px 4px 0px rgba(50, 50, 50, 0.28);
-  z-index: 55;*/
 }
 
 /* colunma derecha*/
