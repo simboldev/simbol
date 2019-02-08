@@ -306,8 +306,13 @@
           <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 margin_top_20" ng-if="mi_negociacion.estatusNeg == 1 && mi_negociacion.quiero_moneda == 2 && mi_negociacion.iduser == id && negociacion_contraparte_length > 0">
             <div class="col-md-12 col-sm-12 col-xs-12 margin_tb_20">
               <h4 class="color_purple">
-                Datos de la Transferencia
+                Transfiere a tu contraparte
               </h4>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <p class="font_weight_bold">
+                Datos de la Transferencia
+              </p>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -390,7 +395,7 @@
           <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center margin_top_20" ng-if="mi_negociacion.estatusNeg == 2 && mi_negociacion.quiero_moneda == 1 && negociacion_contraparte.estatus_autoriza_backoffice == 2 && mi_negociacion.iduser == id ">
             <div class="col-md-12 col-sm-12 col-xs-12 margin_tb_20">
               <p>
-                La transferencia fué; realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
+                La transferencia fué realizada, puedes descargar el comprobante y confirmar la recepción de los fondos.
               </p>
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12 margin_top_20">
@@ -425,8 +430,13 @@
           <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12 margin_top_20" ng-if="mi_negociacion.estatusNeg == 3  && mi_negociacion.quiero_moneda == 1 && negociacion_contraparte.estatus_autoriza_backoffice == 2 && mi_negociacion.iduser == id && negociacion_contraparte_length > 0 ">
             <div class="col-md-12 col-sm-12 col-xs-12 margin_tb_20">
               <h4 class="color_purple">
-                Datos de la Transferencia
+                Transfiere a tu contraparte
               </h4>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <p class="font_weight_bold">
+                Datos de la Transferencia
+              </p>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -520,7 +530,7 @@
           <div class="col-md-offset-1 col-sm-offset-1 col-md-10 col-sm-10 col-xs-12  text-center margin_top_20" ng-if="mi_negociacion.estatusNeg == 4  && mi_negociacion.quiero_moneda == 2 && negociacion_contraparte.estatus_autoriza_backoffice == 4 && mi_negociacion.iduser == id">
             <div class="col-md-12 col-sm-12 col-xs-12 margin_tb_20">
               <p>
-                La transferencia fué; realizada, puede descargar el comprobante y confirmar la recepción de los fondos.
+                La transferencia fué realizada, puedes descargar el comprobante y confirmar la recepción de los fondos.
               </p>
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12 margin_top_20">
@@ -550,7 +560,7 @@
             <br>
             <p>¡Felicitaciones! ya tu cambio fu&eacute; realizado.</p>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 col-md-offset-4 col-ms-offset-4">
-              <button type="button" id="btn_go_home" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold col-md-4 col-sm-4 col-xs-12" ng-click="go_home()">
+              <button type="button" id="btn_go_home" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold margin_top_20 col-md-4 col-sm-4 col-xs-12" ng-click="go_home()">
                 Ir al inicio
               </button>
             </div>
@@ -560,7 +570,7 @@
             <br>
             <p>¡Felicitaciones! ya tu cambio fu&eacute; realizado.</p>
             <div class="col-lg-8 col-md-8 col-sm-8col-xs-8 col-md-offset-4 col-ms-offset-4">
-              <button type="button" id="btn_go_home" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold col-md-4 col-sm-4 col-xs-12" ng-click="go_home()">
+              <button type="button" id="btn_go_home" class="btn btn-secondary btn_purple_simbol pull-center font_weight_bold margin_top_20 col-md-4 col-sm-4 col-xs-12" ng-click="go_home()">
                 Ir al inicio
               </button>
             </div>
