@@ -372,9 +372,13 @@ mainApp
       if($confirm == true)
       {
         submit_button_disabled_act(0);
+        // var ihave_amount = calculate_want_have_amount($scope.posture.iwant_id,
+        //   parseFloat($scope.posture.iwant.replace(/,/g,'')).toFixed(2),
+        //   parseFloat($scope.posture.rate.replace(/,/g,'')).toFixed(2)
+        //   );
         var ihave_amount = calculate_want_have_amount($scope.posture.iwant_id,
-          parseFloat($scope.posture.iwant.replace(/,/g,'')).toFixed(2),
-          parseFloat($scope.posture.rate.replace(/,/g,'')).toFixed(2)
+          $scope.format_number_decimal($scope.posture.iwant),
+          $scope.format_number_decimal($scope.posture.rate)
           );
         var fechadesde = "";
         var fechahasta = "";
@@ -385,8 +389,8 @@ mainApp
 	            'quiero_moneda_id'  : $scope.posture.iwant_id,
 	            'tengo_moneda_id'   : $scope.posture.ihave_id,
 	            'tengo'             : ihave_amount,
-              'quiero'            : parseFloat($scope.posture.iwant.replace(/,/g,'')).toFixed(2),
-	            'tasacambio'        : parseFloat($scope.posture.rate.replace(/,/g,'')).toFixed(2),
+              'quiero'            : $scope.format_number_decimal($scope.posture.iwant),
+	            'tasacambio'        : $scope.format_number_decimal($scope.posture.rate),
 	            'fechadesde'        : $scope.format_date_db($scope.posture.availableTime_date,2),
 	            'fechahasta'        : $scope.format_date_db($scope.posture.availableTime_time,2),
 	            'comentarios'       : '',
@@ -422,6 +426,48 @@ mainApp
       }
 		}
 	}
+  $scope.validate_rate_range = function()
+  {
+    var resp = false;
+    $scope.rate_range.initial_amount = $scope.format_number_decimal($scope.rate_range.initial_amount);
+    $scope.rate_range.final_amount = $scope.format_number_decimal($scope.rate_range.final_amount);
+    resp = $scope.rate_range.initial_amount < $scope.rate_range.final_amount;
+
+    if(!resp)
+      alert('El monto inicial debe ser mayor al monto final');
+
+    return resp;
+  }
+
+  $scope.create_rate_range = function()
+  {
+    if( $scope.form_edit_rate_range.$valid && ( !!$scope.form_edit_rate_range.$error.required == false) &&
+        $scope.validate_rate_range())
+    {
+      $confirm = confirm("¿Confirmas que deseas actualizar la tasa?");
+      if($confirm == true)
+      {
+        var btn = $('#btn_edit_rate_range');
+        $scope.disabled_btn(btn,true,'Guardando...','Actualizar');
+        // $scope.rate_range.initial_amount = $scope.format_number_decimal($scope.rate_range.initial_amount);
+        // $scope.rate_range.final_amount = $scope.format_number_decimal($scope.rate_range.final_amount);
+        $http({ method: 'POST',
+                url: $scope.url_server+'/rate_range',
+                data: $scope.rate_range})
+              .then(function successCallback(data){
+                alert("Tasa actualizada.");
+                $scope.disabled_btn(btn,false,'Guardando...','Actualizar');
+                $scope.rate_range.initial_amount = $scope.format_number_decimal(data['data']['data']['initial_amount']);
+                $scope.rate_range.final_amount = $scope.format_number_decimal(data['data']['data']['final_amount']);
+                $scope.reload_page(window.location);
+              }
+              ,function errorCallback(xhr, ajaxOptions, thrownError){ 
+                console.log("POSTCONT:: Error al actualizar el rango de la tasa: \n Error: "+xhr.status+" "+ xhr.responseText+"  / "+thrownError);
+                $scope.disabled_btn(btn,false,'Guardando...','Actualizar');
+              });
+      }
+    }
+  }
 
   $scope.navbar_height_cal = function()
   {
@@ -467,7 +513,7 @@ mainApp
       $http({method: 'GET',url: $scope.url_server+'/negociacion'})
       .then(function (data){
           console.log('buenooo neg '+data['data']['data'][0]['divisa1']);
-          $scope.listNeg = data['data']['data'];
+        $scope.listNeg = data['data']['data'];
       },
       function(error){
           console.log("POSTCONT:: Error en la consulta de estatus de  negociacion: "+error)
@@ -848,6 +894,11 @@ mainApp
       ,function (xhr, ajaxOptions, thrownError){
           console.log("POSTCONT:: Error al agregar nuevo amigo a circulo de confianza:\n Error: "+xhr.status+" "+thrownError);
       });
+    }
+
+    $scope.edit_rate_range = function()
+    {
+      $scope.init_rate_range();
     }
 }])
 .filter('startFromGrid', function() {

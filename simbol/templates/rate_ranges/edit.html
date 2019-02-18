@@ -1,0 +1,56 @@
+<div ng-if="username != undefined ">
+  <div ng-controller="PostureCtrl" ng-if="tipousuario_idtipousuario == 5" ng-init="edit_rate_range()">
+    <div class="row nomargin nopadding index_posture_new_posture_tittle">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h2 class="color_purple">
+          TASA DEL DÍA
+        </h2>
+      </div>
+    </div>
+    <div class="row nomargin nopadding index_posture_new_posture">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding container_posture_new_posture">
+        <div id="container_form_edit_rate_range" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding nomargin">
+          <div class="">
+            <h4 class="color_gray">
+              Actualizar tasa
+            </h4>
+          </div>
+          <form novalidate class="css-form form-edit-rate-range text-center" name="form_edit_rate_range" id="form_edit_rate_range">
+            <div class="row nomargin nopadding">
+              <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-lg-4 col-md-4 col-sm-4 col-xs-12 container_edit_rate_range_min">
+                <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 color_purple">  Monto inicial
+                </label> 
+                <input type="text" id="rate_range_min_input" name="rate_range_min" class="input_simbol nomargin_top font_bold text-right" ng-model="rate_range.initial_amount" ng-minlength="1" ng-change="validate_number(0,'rate_range_min_input')" ng-keyup="input_format_calculator($event,'rate_range_min_input')" ng-click="set_input('rate_range_min_input')" required />
+                <span id="rate_range_min_input_ng_error_required" ng-show="form_edit_rate_range.rate_range_min_input.$error.required" class="text-error">
+                  Ingrese toda la información.
+                </span>
+                <span id="rate_range_min_input_ng_error_minval" ng-show="form_edit_rate_range.rate_range_min_input.$error.minlength" class="text-error">
+                  Debes ofrecer un monto mayor a 0.01
+                </span>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 container_edit_rate_range_max">
+                <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12 color_purple">  Monto final
+                </label>
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8 nopadding nomargin">
+                  <input type="text" id="rate_range_max_input" name="rate_range_max" class="input_simbol nomargin_top font_bold text-right" ng-model="rate_range.final_amount" ng-minlength="1" ng-change="validate_number(0,'rate_range_max_input')" ng-keyup="input_format_calculator($event,'rate_range_max_input')" ng-click="set_input('rate_range_max_input')" required />
+                <span id="rate_range_max_input_ng_error_required" ng-show="form_edit_rate_range.rate_range_max_input.$error.required" class="text-error">
+                  Ingrese toda la información.
+                </span>
+                <span id="rate_range_max_input_ng_error_minval" ng-show="form_edit_rate_range.rate_range_max_input.$error.minlength" class="text-error">
+                  Debes ofrecer un monto mayor a 0.01
+                </span>
+                </div>
+              </div>
+            </div>
+            <div id="container_btn_edit_rate_range" class="row nomargin_bottom nopadding">
+              <!-- <input type="submit" id="btn_edit_rate_range" class="btn btn-default btn_purple_simbol col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-4 col-md-4 col-sm-4" ng-click="create_rate_range()" value="Actualizar"/>Actualizar -->
+              <button id="btn_edit_rate_range" type="button" class="btn btn-default btn_purple_simbol font_weight_bold col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-4 col-md-4 col-sm-4 col-xs-12" ng-click="create_rate_range();">
+                Actualizar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

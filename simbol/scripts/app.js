@@ -1,25 +1,29 @@
  'use strict';
  var mainApp = angular.module("app", ["ngRoute","ngResource",'mgcrea.ngStrap','ngCookies','cgNotify']);
  mainApp.controller('appController', function($scope,$http,$cookieStore,$sce,$window,$location,$routeParams,notify,$interval) {
-    $scope.tittle_page = "Simbol";
-    $scope.url_server = "http://localhost:8000";
-    $scope.base_href =  '/simbol2019/simbol/simbol/#!';
+    $scope.tittle_page = "Simbol";    
+    $scope.url_server = 'https://api.simbol.club';
+    $scope.base_href =  '/#!';
     $scope.contNot=1;
     $scope.not=0;
     $scope.actCrono=null;
     $scope.txt_bs = 'BsS';
     $scope.txt_usd = 'USD';
     $scope.plus = '+';
-    
+    $scope.rate_range = {
+      initial_amount: 0,
+      final_amount: 0
+    }
     $scope.reload_page = function($url)
     {
-		$window.location = $url;
-		$window.location.reload();
+  		$window.location = $url;
+  		$window.location.reload();
     }
 
     $scope.index_init = function()
     {
     	$scope.web_safari = $scope.validar_navegador() == 2 ? true : false;
+      $scope.init_rate_range();
     }
 
     $scope.go_home = function(){
@@ -30,6 +34,31 @@
     {
       window.history.back();
     }
+
+
+  $scope.format_number_decimal = function($number_string)
+  {
+    return parseFloat($number_string.toString().replace(/,/g,'')).toFixed(2);
+  }
+
+  $scope.init_rate_range = function()
+  {
+    var last_rate = -1
+    $http({method: 'GET',
+           url: $scope.url_server+'/rate_range/'+last_rate})
+          .then(function (data)
+          {
+            if(data['data']['data'] != null)
+            {
+              $scope.rate_range.initial_amount = parseFloat(data['data']['data']['initial_amount']);
+              $scope.rate_range.final_amount = parseFloat(data['data']['data']['final_amount']);
+            }
+          }
+          ,function(error)
+          {
+            console.log("APPCONT:: Error obteniendo data de el rango de la tasa del día: "+error)
+          });
+  }
 
     //Método para capturar url
     $scope.captUrl = function(){
@@ -629,8 +658,9 @@
 				}
 			}
 			,function(error) {
-				console.log("POSTCONT:: Error obteniendo data indicadores de mercado: "+error);
+				console.log("APPCONT:: Error obteniendo data indicadores de mercado: "+error);
 			});
+      $scope.init_rate_range();
 	}
 
   $scope.estatus_neg_valido = function(type,idStatus)
@@ -663,9 +693,9 @@
 
 	$interval(function()
 	{
-		console.log('====== Interval APP ======');		
-		$scope.get_indicadores_de_mercado()
-	},4000); //60000
+    if($scope.tipousuario_idtipousuario != 5)
+		  $scope.get_indicadores_de_mercado();
+	},4000);
  })
 .config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.headers.common['Accept'] = 'application/json, text/javascript';
@@ -735,6 +765,10 @@
 		templateUrl: 'templates/postures/detalle_negociacion.html',
 		controller: 'MatchesCtrl'
 	})
+  .when('/admin_tasa',{
+    templateUrl: 'templates/rate_ranges/edit.html',
+    controller: 'appController'
+  })
 	.otherwise({
 		redirectTo: '/'
 	});

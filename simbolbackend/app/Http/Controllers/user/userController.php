@@ -204,7 +204,7 @@ class userController extends Controller
     }
     //metodo para consultar por username
     public function consUsername($username,$password,$control){
-        
+        error_log('===============consUsername====================');
         $code   =   "OK";
         $message=   "";
         $data   =   [];

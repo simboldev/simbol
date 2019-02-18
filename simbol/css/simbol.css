@@ -408,7 +408,8 @@ input, select
 /* END INICIO*/
 
 /* NUEVA POSTURA */
-.form-new-posture div.row label
+.form-new-posture div.row label,
+.form-edit-rate-range div.row label,
 {
   font-weight: 100 !important;
 }
@@ -439,11 +440,13 @@ border-radius: 4px;
 /*font-weight: bold;*/
 margin-top: 20px
 }
-#container_btn_new_posture
+#container_btn_new_posture,
+#container_btn_edit_rate_range
 {
   margin-bottom: 0 !important;
 }
-#btn_new_posture
+#btn_new_posture,
+#btn_edit_rate_range
 {
   margin-top: 40px !important;
   margin-bottom: 15px !important;
@@ -535,6 +538,13 @@ margin-top: 20px
 }
 
 /* END NUEVA POSTURA */
+
+/* EDIT RATE RANGE*/
+#form_edit_rate_range
+{
+  margin-top: 40px;
+}
+/* END EDIT RATE RANGE*/
 
 /* HEADER*/
 .container_header

@@ -124,3 +124,7 @@ Route::resource('log_user','LogUserController');
 
 
 Route::resource('posturas_rechazada','posturasRechazada\posturasRechazadaController');
+
+Route::resource('log_user','LogUserController');
+
+Route::resource('rate_range','rateRangeController');
