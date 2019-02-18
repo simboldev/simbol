@@ -1,7 +1,7 @@
  'use strict';
  var mainApp = angular.module("app", ["ngRoute","ngResource",'mgcrea.ngStrap','ngCookies','cgNotify']);
  mainApp.controller('appController', function($scope,$http,$cookieStore,$sce,$window,$location,$routeParams,notify,$interval) {
-    $scope.tittle_page = "Simbol";    
+    $scope.tittle_page = "Simbol";
     $scope.url_server = 'https://api.simbol.club';
     $scope.base_href =  '/#!';
     $scope.contNot=1;

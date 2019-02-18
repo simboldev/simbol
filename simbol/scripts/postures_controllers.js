@@ -431,10 +431,11 @@ mainApp
     var resp = false;
     $scope.rate_range.initial_amount = $scope.format_number_decimal($scope.rate_range.initial_amount);
     $scope.rate_range.final_amount = $scope.format_number_decimal($scope.rate_range.final_amount);
+
     resp = $scope.rate_range.initial_amount < $scope.rate_range.final_amount;
 
     if(!resp)
-      alert('El monto inicial debe ser mayor al monto final');
+      alert('El monto inicial debe ser menor al monto final');
 
     return resp;
   }
