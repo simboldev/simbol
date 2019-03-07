@@ -15,6 +15,7 @@ use App\estatusOperacion;
 use App\log_user;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\invitationNewUser;
 use Illuminate\Support\Facades\Mail;
 
 class userController extends Controller
@@ -478,6 +479,29 @@ class userController extends Controller
             'msg'   => 'Success',
             'data'  => $posturas_matches
         ],200);
+    }
+
+    public function send_invitation($param, $value)
+    {
+      error_log('------send_invitation---------'.$param.' / '.$value);
+      $code       = "OK";
+      $message    = "Success";
+      $data       = [];
+
+      $user=User::where($param,'=',$value)->get()->first();
+      error_log($user);
+      Mail::to($user->email)->send(new invitationNewUser($user));
+      if(count(Mail::failures()) > 0)
+      {
+        $code = 'NOTOK';
+        $message = Mail::failures();
+      }
+
+      return response()->json([
+            'code'  => $code,
+            'msg'   => $message,
+            'data'  => ''
+      ],200);
     }
 
     private function get_status_postura($postura_match)

@@ -12,7 +12,9 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Simbol'),
+    'name' => env('APP_NAME', 'Club Simbol'),
+    'contact_mail' => env('CONTACT_MAIL', 'info@club.simbol'),
+    'url_fornt' => env('APP_URL_FRONT','https://simbol.club'),
 
     /*
     |--------------------------------------------------------------------------

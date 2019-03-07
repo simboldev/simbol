@@ -112,6 +112,7 @@ Route::get('users/{id}/notCP/{id_s}', 'user\userController@notCP')->name('users.
 Route::get('users/{id}/banks/{id_bank}', 'user\userController@banks')->name('users.banks');
 Route::get('users/{id}/negociaciones', 'user\userController@negociaciones')->name('users.negociaciones');
 Route::get('users/cambPass/{pass}/{user}', 'user\userController@cambPass')->name('users.cambPass');
+Route::get('users/send_invitation/{param}/{value}', 'user\userController@send_invitation')->name('users.send_invitation');
 Route::resource('users','user\userController');
 
 
@@ -128,3 +129,5 @@ Route::resource('posturas_rechazada','posturasRechazada\posturasRechazadaControl
 Route::resource('log_user','LogUserController');
 
 Route::resource('rate_range','rateRangeController');
+
+Route::post('send', ['as' => 'send', 'uses' => 'MailController@send'] );

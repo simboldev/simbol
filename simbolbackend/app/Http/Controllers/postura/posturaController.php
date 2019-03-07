@@ -95,12 +95,14 @@ class posturaController extends Controller
             $this->save_posturas_bancos($postura->id,$postura_data['bancos_usd']);
 
             //notificacion via email
-            // $email = User::select('email')->where('id','=',$postura->iduser)->get();
+            $email = User::select('email')->where('id','=',$postura->iduser)->get();
 
-            /*DESCOMENTAR LUEGO
-            $email = env('APP_SIMBOL_MAIL');
+            /*DESCOMENTAR LUEGO*/
+            error_log(ENV('APP_SIMBOL_MAIL'));
+            $email = 'martiro12@gmail.com';//env('APP_SIMBOL_MAIL');
+            error_log('EMAIIIIIIIL : '.$email);
             Mail::to($email)
-                ->send(new nuevaPostura($postura));*/
+                ->send(new nuevaPostura($postura));
 
             $code       = "OK";
             $message    = "";

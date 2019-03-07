@@ -1,0 +1,24 @@
+<div>
+@component('mail::message')
+  <div class="color_purple font_bold text-center">
+    <h2 class="color_purple font_bold text-center">¡Hola {{ $user->nombres }} {{$user->apellidos }}!</h2>
+  </div>
+  <div class="color_purple text-center">
+    <div>
+      <p class="color_purple text-center">
+        Te invitamos a conocer nuestra plataforma Simbol, para que formes parte de en un selecto club de finanzas, que te permitirá agilizar todas tus actividades de cambio de divisas con personas de confianza.
+      </p>
+    </div>
+    <div>
+      <p class="color_purple text-center">Ingresa con los siguientes datos:</p>
+      <p class="color_purple text-center">Usuario: {{ $user->username }}</p>
+      <p class="color_purple text-center">Contraseña: {{ $user->password }}</p>
+    </div>
+  </div>
+  <div>
+    @component('mail::button', ['url' => config('app.url_front'), 'color' => 'purple-light-simbol'])
+    Ingresar
+    @endcomponent
+  </div>
+@endcomponent
+</div>

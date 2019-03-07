@@ -1,12 +1,11 @@
 @component('mail::message')
-# Notificación Nueva Postura
+  <p class="color_purple font_bold text-center">Notificación Nueva Postura</p>
 
-Simbol informa:<br>
+  <p class="color_purple text-center">Simbol informa:</p>
 
-<p>Se ha registrado una nueva postura.</p>
+  <p class="color_purple text-center">Se ha registrado una nueva postura.</p>
 
-@component('mail::button', ['url' => env('APP_URL_FRONT').'/postures/'.$postura->id]) 
-Ver información de postura
-@endcomponent
-
+  @component('mail::button', ['url' => config('app.url_front').'/postures/'.$postura->id, 'color' => 'purple-light-simbol']) 
+    Ver información de postura
+  @endcomponent
 @endcomponent

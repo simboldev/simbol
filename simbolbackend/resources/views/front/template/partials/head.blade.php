@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" style="margin-bottom:0px;">
+<nav class="navbar navbar-default" style="margin-bottom:0px; background: green;">
 	<div class="Rectangle">
 		<div style="margin-left: 155px;margin-top: 26px;margin-bottom: 20px;">
 			<a href="http://simbol.dev">
