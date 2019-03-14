@@ -16,7 +16,7 @@
     </div>
   </div>
   <div>
-    @component('mail::button', ['url' => config('app.url_front'), 'color' => 'purple-light-simbol'])
+    @component('mail::button', ['url' => 'https://simbol.club', 'color' => 'purple-light-simbol'])
     Ingresar
     @endcomponent
   </div>

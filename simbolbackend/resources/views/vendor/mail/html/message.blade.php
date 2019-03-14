@@ -1,8 +1,8 @@
 @component('mail::layout')
     {{-- Header --}}
     @slot('header')
-        @component('mail::header', ['url' => config('app.url')])
-            <img src="{{ asset('img/logo_simbol_rgb.png') }}" alt="{{ config('app.name') }} Logo" width="300">
+        @component('mail::header', ['url' => 'https://simbol.club'])
+            <img src="https://api.simbol.club/storage/img/logo_simbol_rgb.png" alt="{{ ENV('APP_NAME') }} Logo" width="300">
         @endcomponent
     @endslot
 
