@@ -28,6 +28,6 @@ class invitationNewUser extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.invitationNewUser');
+        return $this->markdown('emails.invitationNewUser')->subject('Invitación Simbol Club');
     }
 }
