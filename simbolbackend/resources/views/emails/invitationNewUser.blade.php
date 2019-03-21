@@ -8,6 +8,9 @@
       <p class="color_purple text-center">
         Te invitamos a conocer nuestra plataforma Simbol, para que formes parte de en un selecto club de finanzas, que te permitirá agilizar todas tus actividades de cambio de divisas con personas de confianza.
       </p>
+      <p class="color_purple text-center">
+        Para iniciar sesión por primera vez deberás ingresar con el usuario y contraseña proporcionados, posteriormente Simbol te pedirá cambiar tu clave por una de tu preferencia.
+      </p>
     </div>
     <div>
       <p class="color_purple text-center">Ingresa con los siguientes datos:</p>

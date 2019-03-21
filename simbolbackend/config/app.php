@@ -13,7 +13,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Club Simbol'),
-    'contact_mail' => env('CONTACT_MAIL', 'info@club.simbol'),
+    'contact_mail' => env('CONTACT_MAIL', 'info@simbol.club'),
     'url_fornt' => env('APP_URL_FRONT','https://simbol.club'),
 
     /*
@@ -53,7 +53,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/simbol-web/simbol'),
+    'url' => env('APP_URL', 'https://simbol.club'),
 
     /*
     |--------------------------------------------------------------------------
