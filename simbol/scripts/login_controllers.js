@@ -153,30 +153,38 @@ mainApp
     }
     else if($scope.password==="undefined" && $scope.passwordCH=="undefined")
     {
-      alert("¡Los campos, deben contener información!");
+      alert("¡Debes ingresar información solicitada!");
     }
-
     else if($scope.password==$scope.passwordCH)
     {
-      $http({method:'GET',url: $scope.url_server+'/users/cambPass/'+$scope.password+'/'+user})
-      .then(function(data){
-        if(data['data']['code'] == 'OK')
+      $http({method:'PUT',
+             url: $scope.url_server+'/change_password',
+             data: {
+                'username': user,
+                'password': $scope.password
+              }
+      })
+      .then(function(data)
+      {
+        if(data['status'] != 200)
         {
-          $("#password").val("");
-          $("#passwordCH").val("");
-          alert("¡Tu contraseña ha sido cambiada!");
-          $('#modalChangPass').modal('toggle');
+          alert(data['data']['data']);
         }
         else
         {
           $("#password").val("");
           $("#passwordCH").val("");
-          alert("¡No se ha podido cambiar la contraseña, intente nuevamente!");
+          alert(data['data']['data']['message']);
+          $('#modalChangPass').modal('toggle');
         }
       },
-      function(error)
+      function (xhr, textStatus, errorThrown)
       {
-        console.log("POSTCONT:: Error obteniendo data recPass: "+error)
+        $("#password").val("");
+        $("#passwordCH").val("");
+        if(xhr.status == 422)
+          alert(xhr['data']['data']);
+        console.log("LOGINCONT:: Error obteniendo data cambiarPassword:  \n Error: "+xhr.status+" "+xhr.responseText+"/ "+textStatus+"  / "+errorThrown);
       });
     }
   }

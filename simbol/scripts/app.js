@@ -237,81 +237,138 @@
     	notify(sms);
     }
 
+    // //metodo para autenticar
+    // $scope.login = function(user,password){
+    //   console.log('login')
+    //   console.log(user+" autenticación");
+    //   var control = 1;
+    //   $http({  method:'GET',
+    //           url: $scope.url_server+'/users/'+user+'/password/'+password+'/control/'+control})
+    //   .then(function(data){
+    //     console.log(data['data']['data']);
+    //     if(data['data']['data'] == 0){
+    //       console.log("autenticación - objeto vacio");
+    //       $scope.mensaje = "Usuario o contraseña incorrecto, intenta nuevamente!!";
+    //       alert($scope.mensaje);
+    //     }else{
+
+    //       if(data['data']['data'][0].created_at == data['data']['data'][0].updated_at){
+            
+    //         //$scope.userCP = data['data']['data'][0].username;
+    //         $("#userCP").val(data['data']['data'][0].username);
+    //         $("#modalChangPass").modal('show');
+    //       }else{
+            
+    //         console.log("autenticación - objeto lleno");
+    //         $scope.user="";
+    //         $scope.password="";
+    //         console.log(data['data']['data'][0]);
+    //         $cookieStore.put("id",data['data']['data'][0].id);
+    //         $cookieStore.put("username",data['data']['data'][0].username);
+    //         $cookieStore.put("email",data['data']['data'][0].email);
+    //         $cookieStore.put("estatususuario",data['data']['data'][0].estatususuario);
+    //         $cookieStore.put("recomendado_por_user_id",data['data']['data'][0].recomendado_por_user_id);
+    //         $cookieStore.put("tipousuario_idtipousuario",data['data']['data'][0].tipousuario_idtipousuario);
+    //         $cookieStore.put("verification_token",data['data']['data'][0].verification_token);
+    //         $cookieStore.put("online",data['data']['data'][0].online);
+
+    //         $scope.username = $cookieStore.get('username');
+    //         $scope.reload_page($scope.base_href);
+    //       }
+
+          
+    //     }
+    //   },function (error){ 
+    //       console.log("POSTCONT:: Error obteniendo data consUsername: "+error)
+    //   });
+    // }
+
     //metodo para autenticar
-    $scope.login = function(user,password){
-    	console.log('login')
-    	console.log(user+" autenticación");
+    $scope.login = function(user,password) {
     	var control = 1;
-    	$http({  method:'GET',
-              url: $scope.url_server+'/users/'+user+'/password/'+password+'/control/'+control})
-		.then(function(data){
-			console.log(data['data']['data']);
-			if(data['data']['data'] == 0){
-				console.log("autenticación - objeto vacio");
-				$scope.mensaje = "Usuario o contraseña incorrecto, intenta nuevamente!!";
-        alert($scope.mensaje);
-			}else{
-
-				if(data['data']['data'][0].created_at == data['data']['data'][0].updated_at){
-					
-					//$scope.userCP = data['data']['data'][0].username;
-					$("#userCP").val(data['data']['data'][0].username);
-					$("#modalChangPass").modal('show');
-				}else{
-					
-					console.log("autenticación - objeto lleno");
-					$scope.user="";
-					$scope.password="";
-					console.log(data['data']['data'][0]);
-					$cookieStore.put("id",data['data']['data'][0].id);
-					$cookieStore.put("username",data['data']['data'][0].username);
-					$cookieStore.put("email",data['data']['data'][0].email);
-					$cookieStore.put("estatususuario",data['data']['data'][0].estatususuario);
-					$cookieStore.put("recomendado_por_user_id",data['data']['data'][0].recomendado_por_user_id);
-					$cookieStore.put("tipousuario_idtipousuario",data['data']['data'][0].tipousuario_idtipousuario);
-					$cookieStore.put("verification_token",data['data']['data'][0].verification_token);
-					$cookieStore.put("online",data['data']['data'][0].online);
-
-					$scope.username = $cookieStore.get('username');
-					$scope.reload_page($scope.base_href);
-				}
-
-				
-			}
-		},function (error){ 
-				console.log("POSTCONT:: Error obteniendo data consUsername: "+error)
-		});
-
+    	$http({ method:'POST',
+              url: $scope.url_server+'/login',
+              data: {
+                'username': user,
+                'password': password
+              }
+      })
+      .then(function(data)
+      {
+  			if(data['status'] != 200)
+        {
+          alert(data['data']['data']);
+  			}
+        else
+        {
+  				if(data['data']['data']['user'].created_at == data['data']['data']['user'].updated_at)
+          {
+  					$("#userCP").val(data['data']['data']['user'].username);
+  					$("#modalChangPass").modal('show');
+  				}
+          else
+          {
+  					$scope.user='';
+  					$scope.password="";
+  					$cookieStore.put("id",data['data']['data']['user'].id);
+  					$cookieStore.put("username",data['data']['data']['user'].username);
+  					$cookieStore.put("email",data['data']['data'].email);
+  					$cookieStore.put("estatususuario",data['data']['data']['user'].estatususuario);
+  					$cookieStore.put("recomendado_por_user_id",data['data']['data']['user'].recomendado_por_user_id);
+  					$cookieStore.put("tipousuario_idtipousuario",data['data']['data']['user'].tipousuario_idtipousuario);
+  					$cookieStore.put("token",data['data']['data']['token']);
+  					$cookieStore.put("online",data['data']['data']['user'].online);
+  					$scope.username = $cookieStore.get('username');
+  					$scope.reload_page($scope.base_href);
+  				}
+  			}
+  		},function (xhr, textStatus, errorThrown) {
+          if(xhr.status == 422)
+            alert(xhr['data']['data']);
+				console.log("POSTCONT:: Error obteniendo data LOGIN:  \n Error: "+xhr.status+" "+xhr.responseText+"/ "+textStatus+"  / "+errorThrown);
+  		});
     }
 
-    $scope.logout = function(){
-    	var control = 0;
-    	$http({method:'GET',url: $scope.url_server+'/users/'+$scope.username+'/control/'+control})
-    	.then(function(data){
-    		console.log(data['data']['data']);
-    		if(data['data']['data'] == 0){
-				console.log("objeto vacio");
-				$scope.mensaje = "¡¡Combinación Usuario y Password incorrecto, por favor ingrese nuevamente!!";
-			}else{
-				console.log("logout - objeto lleno");
-				console.log(data['data']['data'][0]);
-				console.log("cerrando sesión");
-    			$cookieStore.remove('id');
-    			$cookieStore.remove('username');
-    			$cookieStore.remove('email');
-    			$cookieStore.remove('estatususuario');
-    			$cookieStore.remove('recomendado_por_user_id');
-    			$cookieStore.remove('tipousuario_idtipousuario');
-    			$cookieStore.remove('verification_token');
-    			$cookieStore.remove('online');
+   //  $scope.logout = function(){
+   //  	var control = 0;
+   //  	$http({method:'GET',url: $scope.url_server+'/users/'+$scope.username+'/control/'+control})
+   //  	.then(function(data){
+   //  		console.log(data['data']['data']);
+   //  		if(data['data']['data'] == 0){
+			// 	console.log("objeto vacio");
+			// 	$scope.mensaje = "¡¡Combinación Usuario y Password incorrecto, por favor ingrese nuevamente!!";
+			// }else{
+			// 	console.log("logout - objeto lleno");
+			// 	console.log(data['data']['data'][0]);
+			// 	console.log("cerrando sesión");
+   //  			$cookieStore.remove('id');
+   //  			$cookieStore.remove('username');
+   //  			$cookieStore.remove('email');
+   //  			$cookieStore.remove('estatususuario');
+   //  			$cookieStore.remove('recomendado_por_user_id');
+   //  			$cookieStore.remove('tipousuario_idtipousuario');
+   //  			$cookieStore.remove('verification_token');
+   //  			$cookieStore.remove('online');
     			
-    			$scope.reload_page($scope.base_href);
+   //  			$scope.reload_page($scope.base_href);
 
-			}
-    	},function (error){ 
-				console.log("POSTCONT:: Error obteniendo data consUsername: "+error)
-		});
-		
+			// }
+   //  	},function (error){ 
+			// 	console.log("POSTCONT:: Error obteniendo data consUsername: "+error)
+		 //  });		
+   //  }
+
+    $scope.logout = function()
+    {
+      $cookieStore.remove('id');
+      $cookieStore.remove('username');
+      $cookieStore.remove('email');
+      $cookieStore.remove('estatususuario');
+      $cookieStore.remove('recomendado_por_user_id');
+      $cookieStore.remove('tipousuario_idtipousuario');
+      $cookieStore.remove('verification_token');
+      $cookieStore.remove('online');
+      $scope.reload_page($scope.base_href);
     }
 
     $scope.disabled_btn = function($btn,$option,$msg,$text_btn)
