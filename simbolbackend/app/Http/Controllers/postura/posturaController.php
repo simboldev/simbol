@@ -98,11 +98,11 @@ class posturaController extends Controller
             $email = User::select('email')->where('id','=',$postura->iduser)->get();
 
             /*DESCOMENTAR LUEGO*/
-            error_log(ENV('APP_SIMBOL_MAIL'));
-            $email = 'martiro12@gmail.com';//env('APP_SIMBOL_MAIL');
-            error_log('EMAIIIIIIIL : '.$email);
-            Mail::to($email)
-                ->send(new nuevaPostura($postura));
+            // error_log(ENV('APP_SIMBOL_MAIL'));
+            // $email = 'martiro12@gmail.com';//env('APP_SIMBOL_MAIL');
+            // error_log('EMAIIIIIIIL : '.$email);
+            // Mail::to($email)
+            //     ->send(new nuevaPostura($postura));
 
             $code       = "OK";
             $message    = "";
