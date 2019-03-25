@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\user;
 
 use DB;
+use Hash;
 use App\User;
 use App\moneda;
 use App\Mail\emailLogin;
@@ -325,8 +326,8 @@ class userController extends Controller
         $message    = "";
 
         if(
-        $user = User::where('username',$user)
-            ->update(['password'=>$passs])
+        $user = User::where('username', $user)
+            ->update(Hash::make(['password'=>$passs]))
         ){
 
             return response()->json([
@@ -342,10 +343,7 @@ class userController extends Controller
             ],200); 
 
         }
-
-
     }
-
 
     //metodo para notificación o email para la contraparte en el proceso de tracking
     public function notCP($id_user,$idd){

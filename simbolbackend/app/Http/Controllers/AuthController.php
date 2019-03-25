@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Hash;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -39,7 +41,7 @@ class AuthController extends Controller
       'password' => bcrypt($request->password),
       'tipousuario_idtipousuario' => $request->idtipousuario,
     ]);
-// $user = new \App\user(['username'=> 'prueba1','email'=> 'p1@sc.co','password' => bcrypt('123123123')]);
+
     if($user->save())
     {
       $this->msg = 'Usuario creado!';
@@ -51,48 +53,6 @@ class AuthController extends Controller
     return response()->json([
       'message' => $this->msg], 201);
   }
-
-  public function login(Request $request)
-  {
-    $request->validate([
-        'email'       => 'required|string|email',
-        'password'    => 'required|string',
-        'remember_me' => 'boolean',
-    ]);
-
-    $credentials = request(['email', 'password']);
-    if (!Auth::attempt($credentials)) {
-      return response()->json(['message' => 'Unauthorized'], 401);
-    }
-
-    $user = $request->user();
-    $tokenResult = $user->createToken('Personal Access Token');
-    $token = $tokenResult->token;
-
-    if ($request->remember_me) {
-      $token->expires_at = Carbon::now()->addWeeks(1);
-    }
-
-    $token->save();
-
-    return response()->json([
-      'access_token' => $tokenResult->accessToken,
-      'token_type'   => 'Bearer',
-      'expires_at'   => Carbon::parse(
-          $tokenResult->token->expires_at)
-              ->toDateTimeString(),
-    ]);
-  }
-
-
-  public function logout(Request $request)
-  {
-    $request->user()->token()->revoke();
-
-    return response()->json(['message' => 
-        'Successfully logged out']);
-  }
-
 
   public function user(Request $request)
   {
@@ -112,5 +72,106 @@ class AuthController extends Controller
           'data'=> $data
       ],
       200);
+  }
+
+  public function register (Request $request) {
+    $validator = Validator::make($request->all(), [
+      'username' => 'required|string|max:255',
+      'nombres' => 'required|string|max:255',
+      'apellidos' => 'required|string|max:255',
+      'tipousuario_idtipousuario' => 'required|integer',
+      'email' => 'required|string|email|max:255|unique:users',
+      'password' => 'required|string|min:8|confirmed',
+    ]);
+
+    if ($validator->fails())
+    {
+      return response(['errors'=>$validator->errors()->all()], 422);
+    }
+
+    $request['password']=Hash::make($request['password']);
+    $user = User::create($request->toArray());
+
+    $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+    $response = ['token' => $token];
+
+    return response()->json([
+        'code'  => 'OK',
+        'msg'   => 'Success',
+        'data'  => $response
+    ],200);
+  }
+
+  public function login (Request $request) {
+    $code_msg = 'NOTOK';
+    $msg = 'Error';
+    $user = User::where('username',$request['username'])->first();
+    if ($user) {
+      if (Hash::check($request['password'], $user->password)) {
+        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        $response = ['user' => $user, 'token' => $token];
+        $code_msg = 'OK';
+        $msg = 'Success';
+        $code = 200;
+      } else {
+        $response = "Contraseña incorrecta, intenta nuevamente!!";;
+        $code = 422;
+      }
+    } else {
+      $response = 'Usuario no existe';
+      $code = 422;
+    }
+    // return response($response, $code);
+    return response()->json([
+        'code'  => $code_msg,
+        'msg'   => $msg,
+        'data'  => $response
+    ],$code);
+  }
+
+  public function logout (Request $request) {
+    $token = $request->user()->token();
+    $token->revoke();
+    $response = 'Vuelve pronto';
+    // return response($response, 200);
+    return response()->json([
+        'code'  => 'OK',
+        'msg'   => 'Success',
+        'data'  => $response
+    ],200);
+  }
+
+  public function change_password (Request $request) {
+    error_log($request);
+    error_log('------------------username = '.$request['username']);
+    $code_msg = 'NOTOK';
+    $msg = 'Error';
+    $user = User::where('username', $request['username'])->first();
+    
+    if ($user) {
+      if($user->update(['password'=>Hash::make($request['password'])]))
+      {
+        $code_msg = 'OK';
+        $msg    = "Success";
+        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        $response = ['message' => 'Cambio de contraseña exitoso, puedes ingresar con tu nueva clave.',
+                     'token' => $token];
+        $code =  200;
+      }
+      else
+      {
+        $response = "Cambio de contraseña no exitoso, intenta nuevamente.";
+        $code = 422;
+      }
+    } else {
+      $response = 'Usuario no existe';
+      $code = 422;
+    }
+    // return response($response, $code);
+    return response()->json([
+        'code'  => $code_msg,
+        'msg'   => $msg,
+        'data'  => $response
+    ],$code);
   }
 }

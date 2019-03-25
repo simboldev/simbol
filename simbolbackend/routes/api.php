@@ -18,18 +18,31 @@ use Illuminate\Http\Request;
 });*/
 
 //112 rutas
-Route::group(['prefix' => 'auth'], function ()
-{
-    Route::post('login', 'AuthController@login');
-    // Route::post('signup', 'AuthController@signup');
+// Route::group(['prefix' => 'auth'], function ()
+// {
+//     Route::post('login', 'AuthController@login');
+//     // Route::post('signup', 'AuthController@signup');
   
-    Route::group(['middleware' => 'auth:api'], function()
-    {
-        Route::get('logout', 'AuthController@logout');
-        Route::get('user', 'AuthController@user');
-    });
+//     Route::group(['middleware' => 'auth:api'], function()
+//     {
+//         Route::get('logout', 'AuthController@logout');
+//         Route::get('user', 'AuthController@user');
+//     });
+// });
+
+Route::middleware('auth')->get('/user', function (Request $request) {
+    return $request->user();
 });
 
+// public routes
+Route::put('/change_password', 'AuthController@change_password')->name('change_password');
+Route::post('/login', 'AuthController@login')->name('login');
+Route::post('/register', 'AuthController@register')->name('register');
+
+// private routes
+Route::middleware('auth')->group(function () {
+    Route::get('/logout', 'AuthController@logout')->name('logout');
+});
 Route::get('amigos/consAmistad/{id1}/{id2}', 'amigo\amigoController@consAmistad')->name('amigos.consAmistad');
 Route::get('amigos/amigos_en_comun/{iduser_1}/{iduser_2}', 'amigo\amigoController@amigos_en_comun')->name('amigos.amigos_en_comun');
 Route::get('amigos/amigos_en_comun_tabla/{iduser_1}/{iduser_2}', 'amigo\amigoController@amigos_en_comun_tabla')->name('amigos.amigos_en_comun_tabla');
@@ -104,8 +117,8 @@ Route::resource('recomendaciones','recomendacion\recomendacionController');
 Route::resource('tipousuarios','tipousuario\tipousuarioController');
 
 // Route::get('users/{iduser}/{id_id}', 'user\userController@shows')->name('users.shows');
-Route::post('users/login', 'user\userController@login')->name('users.login');
-Route::get('users/{v_username}/control/{v_control}', 'user\userController@logout')->name('users.logout');
+// Route::post('users/login', 'user\userController@login')->name('users.login');
+// Route::get('users/{v_username}/control/{v_control}', 'user\userController@logout')->name('users.logout');
 Route::get('users/{v_username}', 'user\userController@recPass')->name('users.recPass');
 Route::get('users/{v_username}/password/{v_password}/control/{v_control}', 'user\userController@consUsername')->name('users.consUsername');
 Route::get('users/{id}/notCP/{id_s}', 'user\userController@notCP')->name('users.notCP');
@@ -125,8 +138,6 @@ Route::resource('log_user','LogUserController');
 
 
 Route::resource('posturas_rechazada','posturasRechazada\posturasRechazadaController');
-
-Route::resource('log_user','LogUserController');
 
 Route::resource('rate_range','rateRangeController');
 
