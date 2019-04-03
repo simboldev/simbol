@@ -15,11 +15,11 @@
     <div>
       <p class="color_purple text-center">Ingresa con los siguientes datos:</p>
       <p class="color_purple text-center">Usuario: {{ $user->username }}</p>
-      <p class="color_purple text-center">Contraseña: {{ $user->password }}</p>
+      <p class="color_purple text-center">Contraseña: {{ $user->password }}`</p>
     </div>
   </div>
   <div>
-    @component('mail::button', ['url' => 'https://simbol.club', 'color' => 'purple-light-simbol'])
+    @component('mail::button', ['url' => 'https://simbol.club/#!/', 'color' => 'purple-light-simbol'])
     Ingresar
     @endcomponent
   </div>
